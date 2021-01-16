@@ -1,0 +1,8 @@
+for (var i in fon) { 
+   presets.physicsMoveCollision(fon[i]); 
+   }; 
+ fon - массив элементов, с которыми можно сталкиваться 
+
+
+ 	
+presets.physicsMoveInit(player, 3, 9.8, 0.02, 3, 0, 0.3, 3, 1, ["D", "RIGHT"], ["A", "LEFT"], ["W"], ["LEFT"] ); 
