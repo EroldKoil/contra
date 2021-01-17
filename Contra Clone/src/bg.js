@@ -1,18 +1,19 @@
-/*import { game, contra, tiles } from './index.js';
-import Platform from './platform.js';*/
+/*import { game, contra, tiles } from './index.js';*/
+import Platform from './platform.js';
+import sprObject from './sprObject';
 
-class Bg extends sprObject {
-  constructor(name, spriteInfo, width, height, x, y, level, canJumpDown) {
+export default class Bg extends sprObject {
+  constructor(name, spriteInfo, width, height, x, y, level, canJumpDown, pjs) {
       super(x, y, width, height);
 
       switch (name) {
         case 'p1':
         case 'pw1':
         case 'pw2':
-          this.platforms = [new Platform(width - 4, 1, x + 2, y + 6, 'BOTTOM', canJumpDown)];
+          this.platforms = [new Platform(width - 4, 1, x + 2, y + 6, 'BOTTOM', canJumpDown, pjs)];
           break;
         case 'p2':
-          this.platforms = [new Platform(width - 4, 1, x + 2, y + height / 2 + 6, 'BOTTOM', canJumpDown)];
+          this.platforms = [new Platform(width - 4, 1, x + 2, y + height / 2 + 6, 'BOTTOM', canJumpDown, pjs)];
           break;
         case 'w':
         case 'w2':
@@ -20,26 +21,26 @@ class Bg extends sprObject {
         case 'w6':
         case 'w8':
           if (y > 190) {
-            this.platforms = [new Platform(width, 3, x, y + height / 2, 'WATER')];
+            this.platforms = [new Platform(width, 3, x, y + height / 2, 'WATER', canJumpDown, pjs)];
           }
           break;
         case 'w4':
           this.platforms = [
-            new Platform(3, height, x + width + 3, y + 6, 'WATERLEFT'),
-            new Platform(width, 3, x, y + height / 2, 'WATER')
+            new Platform(3, height, x + width + 3, y + 6, 'WATERLEFT', canJumpDown, pjs),
+            new Platform(width, 3, x, y + height / 2, 'WATER', canJumpDown, pjs)
           ];
           break;
         case 'w5':
           this.platforms = [
-            new Platform(3, height, x - 6, y + 6, 'WATERRIGHT'),
-            new Platform(width, 3, x, y + height / 2, 'WATER')
+            new Platform(3, height, x - 6, y + 6, 'WATERRIGHT', canJumpDown, pjs),
+            new Platform(width, 3, x, y + height / 2, 'WATER', canJumpDown, pjs)
           ];
           break;
         default:
           break;
       }
 
-      this.sprite = this.createSprite(spriteInfo, level, game, this.x, this.y);
+      this.sprite = this.createSprite(spriteInfo, level, pjs.game, this.x, this.y);
       /*	game.newAnimationObject({
         animation: level.levelSprites.getAnimation(spriteInfo.x, spriteInfo.y, this.width, this.height, spriteInfo.w / this.height),
         x: this.x,
