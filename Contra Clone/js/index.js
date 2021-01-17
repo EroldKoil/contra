@@ -2,7 +2,7 @@
 import Player from './player.js';
 import Joystick from './joystick.js'*/
 
-let joystick = new Joystick();
+
 
 let pjs = new PointJS(256, 224, { backgroundColor: '#000000' })
 const game = pjs.game;
@@ -15,8 +15,11 @@ pjs.keyControl.initControl();
 
 window.onresize = resize;
 
+
+
 function startSession() {
   contra = {
+    joystick: new Joystick(pjs),
     options: null,
     selectedLevel: null,
     menu: null,
@@ -33,6 +36,8 @@ function startSession() {
   // Здесь можно сделать проверку локалстореж и в зависимости от этого создавать опции. А после этого создавать меню
   // когда в меню нажмем START , вызовем через 5 секунд метод contra.startGame(). А в это время будет заставка экрана перед уровнем
 
+ // pjs.touchControl.initTouchControl();
+  pjs.mouseControl.initMouseControl();
   contra.player = new Player('default', game);
   contra.startGame();
   game.start();

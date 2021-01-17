@@ -474,6 +474,8 @@ class Level {
     }
   }
 
+  
+
   startLevel(game, contra, keyControl, pjs, level) {
     game.newLoop('myGame', function() {
       //game.clear();
@@ -484,18 +486,59 @@ class Level {
         el.sprites.forEach(sp => {
           sp.draw();
         });
+
+        
+
       });
 
+let a;
+let b;
+let start;
+let j
+	
+      if (contra.joystick) { 
+
+        for( let key in contra.joystick.buttonSprites ){
+          contra.joystick.buttonSprites[key].draw();
+        };
+
+
+
+        a = contra.joystick.buttonSprites.a;
+        b = contra.joystick.buttonSprites.b;
+        start = contra.joystick.buttonSprites.start;
+        j = contra.joystick.buttons;
+
+
+       if (pjs.mouseControl.isPeekObject( "A", contra.joystick.buttonSprites.a)) {
+        console.log('a is touched')
+       }
+
+       if (pjs.mouseControl.isPeekObject( "B", contra.joystick.buttonSprites.b)) {
+        console.log('b is touched')
+       }
+
+       if (pjs.mouseControl.isPeekObject( "START", contra.joystick.buttonSprites.start)) {
+        console.log('start is touched')
+       }
+       
+
+    }
+
+    
       contra.player.calculateMoves(contra, pjs, [
-        keyControl.isDown('UP') || keyControl.isDown('W') || joystick.buttons.up,
-        keyControl.isDown('RIGHT') || keyControl.isDown('D') || joystick.buttons.right,
-        keyControl.isDown('BOTTOM') || keyControl.isDown('S') || joystick.buttons.down,
-        keyControl.isDown('LEFT') || keyControl.isDown('A') || joystick.buttons.left,
-        keyControl.isDown('P'),
-        keyControl.isDown('O'),
-        keyControl.isDown('SPACE')
+        keyControl.isDown('UP') || keyControl.isDown('W') || (contra.joystick && j.up),
+        keyControl.isDown('RIGHT') || keyControl.isDown('D') || (contra.joystick && j.right),
+        keyControl.isDown('BOTTOM') || keyControl.isDown('S') || (contra.joystick && j.down),
+        keyControl.isDown('LEFT') || keyControl.isDown('A') || (contra.joystick && j.left),
+        keyControl.isDown('P') || (contra.joystick && j.a),
+        keyControl.isDown('O') || (contra.joystick && j.b),
+        keyControl.isDown('SPACE') || (contra.joystick && j.pause)
+        
       ]);
-      contra.player.spritesMesh.draw()
+
+      contra.player.spritesMesh.draw();
+
     })
 
     game.setLoop('myGame');

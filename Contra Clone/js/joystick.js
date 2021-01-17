@@ -1,5 +1,5 @@
  class Joystick {
-    constructor() {
+    constructor(pjs) {
          this.buttons = {
             up: false,
             right: false,
@@ -78,6 +78,32 @@
                 this.buttons.left = false;
                 console.log('this.buttons: ', this.buttons)
             }
-        )
+        );
+
+        this.buttonSprites = {
+            a: pjs.game.newImageObject(   { 
+                file : '../src/sprites/buttons/a_button.png', 
+                x : 100, 
+                y : 100, 
+                w : 50, 
+                h : 50, 
+            }),
+
+            b: pjs.game.newImageObject(   { 
+                file : '../src/sprites/buttons/b_button.png', 
+                x : 150, 
+                y : 150, 
+                w : 50, 
+                h : 50, 
+            }),
+
+            start: pjs.game.newImageObject(   { 
+                file : '../src/sprites/buttons/start_button.png', 
+                x : 50, 
+                y : 50, 
+                w : 50, 
+                h : 50, 
+            }),
+        }
     }
 }
