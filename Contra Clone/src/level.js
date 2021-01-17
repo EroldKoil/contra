@@ -1,4 +1,7 @@
-//import Bg from './bg.js';
+import Bg from './bg.js';
+import Platform from './platform';
+import ElementCreator from './elements/elementCreator';
+import EnemyCreator from './enemy/enemyCreator';
 
 const map = {
   blockSize: 32,
@@ -371,7 +374,7 @@ const map = {
   }
 }
 
-class Level {
+export default class Level {
   constructor(number, pjs, contra) {
     this.levelNumber = number;
 
@@ -391,9 +394,10 @@ class Level {
     this.bulletsArray = [];
     this.playerBulletsArray = [];
 
-    this.deathPlatform = new Platform(map.blockSize * 9, 2, -map.blockSize * 0.5, map.blockSize * 7 - 2, 'DEATH');
-    this.leftBorder = new Platform(2, map.blockSize * 8, -4, -map.blockSize * 0.5, 'LEFTBORDER');
-    this.levelBorder = new Platform(map.blockSize * 12, map.blockSize * 11, -map.blockSize * 2, -map.blockSize * 2, 'LEVELBORDER');
+    ////// ЗДЕСЬ true на спрыгивании стоит от балды!!!
+    this.deathPlatform = new Platform(map.blockSize * 9, 2, -map.blockSize * 0.5, map.blockSize * 7 - 2, 'DEATH', true, pjs);
+    this.leftBorder = new Platform(2, map.blockSize * 8, -4, -map.blockSize * 0.5, 'LEFTBORDER', true, pjs);
+    this.levelBorder = new Platform(map.blockSize * 12, map.blockSize * 11, -map.blockSize * 2, -map.blockSize * 2, 'LEVELBORDER', true, pjs);
 
     this.platformActual.push(this.deathPlatform);
     this.platformActual.push(this.leftBorder);
@@ -410,7 +414,7 @@ class Level {
               canJumpDown = false;
             }
             name[0];
-            new Bg(name[0], map.spritesInfo[name[0]], bs, bs, i * bs, j * bs, this, canJumpDown);
+            new Bg(name[0], map.spritesInfo[name[0]], bs, bs, i * bs, j * bs, this, canJumpDown, pjs);
           }
         }
       }
@@ -421,7 +425,7 @@ class Level {
             createBG(from[i], i);
             break;
           case 'ENEMY':
-            new EnemyCreater(from[i], this);
+            new EnemyCreator(from[i], this);
             break;
           case 'ELEMENT':
             new ElementCreator(from[i], this, pjs.game);
@@ -432,7 +436,7 @@ class Level {
       }
     }
 
-    this.levelSprites = pjs.tiles.newImage(`../src/sprites/levels/${number + 1}/spritesheet.png`)
+    this.levelSprites = pjs.tiles.newImage(`./assets/sprites/levels/${number + 1}/spritesheet.png`)
     this.spritesInfo = map.spritesInfo;
     createElement(map.levels[this.levelNumber].bg, 'BG');
     createElement(map.levels[this.levelNumber].enemy, 'ENEMY');

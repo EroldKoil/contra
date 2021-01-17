@@ -1,7 +1,8 @@
 //import game from './index.js';
+import Weapon from './weapon';
 
 class Person {
-  constructor(name, xCenter, yBottom, health, sprites, game, path) {
+  constructor(name, xCenter, yBottom, health, sprites, path, pjs) {
     this.name = name;
     this.xCenter = xCenter;
     this.yBottom = yBottom;
@@ -15,15 +16,17 @@ class Person {
     this.states = {};
     this.dontShoot = true; // flag to understand? am I shoot now
 
+    this.pjs = pjs;
+
     let spritesArr = [];
     sprites.forEach(element => {
       spritesArr.push(element.sprite);
-      let sp = this.createSprite(...(element.data), path, xCenter, yBottom, game);
+      let sp = this.createSprite(...(element.data), path, xCenter, yBottom, this.pjs.game);
       this.states[element.name] = { name: element.name, sprite: sp };
       spritesArr.push(sp);
     });
 
-    this.spritesMesh = game.newMesh({
+    this.spritesMesh = this.pjs.game.newMesh({
       x: 35,
       y: 35,
       add: spritesArr
@@ -134,7 +137,7 @@ class Person {
             this.selectState('stay');
             this.vectorJumpX = 0;
             this.pose = 'PLATFORM';
-            // this.needCalc = false;	
+            // this.needCalc = false;
           } else if (waterColArray.length > 0) {
             dy = waterColArray[0].sprite.y - (this.states['run'].sprite.y + this.states['run'].sprite.h);
             this.startSwim();
@@ -215,7 +218,6 @@ class Person {
       this.die();
     }
 
-
     let level = contra.selectedLevel;
     if (dx < 0 && level.leftBorder.sprite.isStaticIntersect(this.states['run'].sprite.getStaticBoxA(-this.moveSpeed))) {
       dx = 0;
@@ -232,7 +234,7 @@ class Person {
 
   createSprite(xS, yS, w, h, frames, delay, xCoef, yCoef, path, xCenter, yBottom, game) {
     return game.newAnimationObject({
-      animation: tiles.newImage(path).getAnimation(xS, yS, w, h, frames),
+      animation: this.pjs.tiles.newImage(path).getAnimation(xS, yS, w, h, frames),
       x: xCenter - w / 2 + xCoef,
       y: yBottom - h + yCoef,
       w: w,
@@ -242,4 +244,4 @@ class Person {
   }
 }
 
-//export { Person, createSprite };
+export { Person };

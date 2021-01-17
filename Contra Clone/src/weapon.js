@@ -1,4 +1,4 @@
-class Weapon {
+export default class Weapon {
   constructor(name, count) {
     this.name = name;
     this.reloading = 500;

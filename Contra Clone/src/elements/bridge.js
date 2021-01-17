@@ -1,4 +1,6 @@
-class Bridge extends sprObject {
+import sprObject from './../sprObject';
+
+export default class Bridge extends sprObject {
   constructor(blockCount, x, y, level, game) {
     super(x, y, 32, 32);
 

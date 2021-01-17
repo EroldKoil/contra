@@ -1,4 +1,4 @@
-//import { Person, createSprite } from './person.js';
+import { Person } from './person.js';
 
 const playerSprites = [
   { name: 'stay', data: [1, 8, 22, 34, 1, 10, 0, 0] },
@@ -25,21 +25,22 @@ const playerSprites = [
   { name: 'fall', data: [89, 45, 20, 34, 1, 10, 0, 0] },
 ];
 
-let path = `../src/sprites/player/player.png`;
+let path = './assets/sprites/player/player.png';
 let xCenter = 40;
 let yBottom = 5;
 let health = 1;
 
 
-class Player extends Person {
-  constructor(name, game) {
-    super(name, xCenter, yBottom, health, playerSprites, game, path);
+export default class Player extends Person {
+  constructor(name, pjs) {
+    super(name, xCenter, yBottom, health, playerSprites, path, pjs);
     this.lifes = 2;
     this.assailable = false; // Уязвим ли
 
     this.selectState('jump');
     // this.states['runAndFire'].sprite.visible = true;
   }
+
   startSwim() {
     this.pose = 'WATER';
     this.selectState('dip');
