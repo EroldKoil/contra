@@ -1,5 +1,8 @@
 /*import Level from './level.js';
-import Player from './player.js';*/
+import Player from './player.js';
+import Joystick from './joystick.js'*/
+
+let joystick = new Joystick();
 
 let pjs = new PointJS(256, 224, { backgroundColor: '#000000' })
 const game = pjs.game;
@@ -54,19 +57,22 @@ game.newLoop('myGame', function() {
     });
   });
 
+  console.log('buttons in index: ', joystick.buttons )
+
   contra.player.calculateMoves(contra, pjs, [
-    keyControl.isDown('UP') || keyControl.isDown('W'),
-    keyControl.isDown('RIGHT') || keyControl.isDown('D'),
-    keyControl.isDown('BOTTOM') || keyControl.isDown('S'),
-    keyControl.isDown('LEFT') || keyControl.isDown('A'),
+    keyControl.isDown('UP') || keyControl.isDown('W') || joystick.buttons.up,
+    keyControl.isDown('RIGHT') || keyControl.isDown('D') || joystick.buttons.right,
+    keyControl.isDown('BOTTOM') || keyControl.isDown('S') || joystick.buttons.down,
+    keyControl.isDown('LEFT') || keyControl.isDown('A') || joystick.buttons.left,
     keyControl.isDown('P'),
     keyControl.isDown('O'),
     keyControl.isDown('SPACE')
   ]);
-  contra.player.spritesMesh.draw()
+  
+ // contra.player.spritesMesh.draw()
 })
-
-game.setLoop('myGame');*/
+*/
+//game.setLoop('myGame');
 
 
 function resize() {

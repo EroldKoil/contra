@@ -487,10 +487,10 @@ class Level {
       });
 
       contra.player.calculateMoves(contra, pjs, [
-        keyControl.isDown('UP') || keyControl.isDown('W'),
-        keyControl.isDown('RIGHT') || keyControl.isDown('D'),
-        keyControl.isDown('BOTTOM') || keyControl.isDown('S'),
-        keyControl.isDown('LEFT') || keyControl.isDown('A'),
+        keyControl.isDown('UP') || keyControl.isDown('W') || joystick.buttons.up,
+        keyControl.isDown('RIGHT') || keyControl.isDown('D') || joystick.buttons.right,
+        keyControl.isDown('BOTTOM') || keyControl.isDown('S') || joystick.buttons.down,
+        keyControl.isDown('LEFT') || keyControl.isDown('A') || joystick.buttons.left,
         keyControl.isDown('P'),
         keyControl.isDown('O'),
         keyControl.isDown('SPACE')

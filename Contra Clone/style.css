@@ -5,6 +5,14 @@ body {
   align-items: center;
 }
 
+.zone_joystick {
+  height: 250px;
+  width: 250px;
+  position: absolute;
+  top:200px;
+  left:200px;
+}
+
 canvas {
   margin: 0 auto;
   width: 100%;
