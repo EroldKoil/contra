@@ -1,12 +1,19 @@
-class Weapon{
-  constructor(name, count){
+class Weapon {
+  constructor(name, count) {
     this.name = name;
-    this.reloading = 1;
+    this.reloading = 500;
     this.damage = 1;
     this.speed = 1;
     this.isApgreid = false;
   }
-  shoot(vectorMove,vectorShoot, x, y){
+  shoot(sniper, vectorMove, vectorShoot, x, y) {
 
+
+
+
+    sniper.canShoot = false;
+    setTimeout(() => {
+      sniper.canShoot = true;
+    }, this.reloading);
   }
 }

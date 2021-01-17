@@ -18,9 +18,7 @@ window.onresize = resize;
 
 let contra = {
   options: {
-    zoom: 1,
-    screenWidth: 256,
-    screenHeight: 224,
+
   },
   player: new Player('default', game),
   cameraPositionX: 0,
@@ -31,20 +29,26 @@ let contra = {
 }
 
 
-pjs.camera.scale(p(contra.options.zoom, contra.options.zoom));
+//pjs.camera.scale(p(contra.options.zoom, contra.options.zoom));
 
 contra.selectedLevel = new Level(0, pjs);
+
 
 game.newLoop('myGame', function() {
   game.clear();
 
-  [...contra.selectedLevel.bgArray, ...contra.selectedLevel.platformActual].forEach(el => {
+  contra.selectedLevel.bgArray.forEach(el => {
     el.sprite.draw();
   });
-
-  contra.selectedLevel.platformActual.forEach(element => {
-    element.sprite.drawStaticBox();
+  contra.selectedLevel.elementsArray.forEach(el => {
+    el.sprites.forEach(sp => {
+      sp.draw();
+    });
   });
+  /*
+    contra.selectedLevel.platformActual.forEach(element => {
+      element.sprite.drawStaticBox();
+    });*/
 
 
   //pjs.camera.move(pjs.vector.point(1, 0));
@@ -53,8 +57,8 @@ game.newLoop('myGame', function() {
     keyControl.isDown('RIGHT') || keyControl.isDown('D'),
     keyControl.isDown('BOTTOM') || keyControl.isDown('S'),
     keyControl.isDown('LEFT') || keyControl.isDown('A'),
+    keyControl.isDown('P'),
     keyControl.isDown('O'),
-    keyControl.isDown('I'),
     keyControl.isDown('SPACE')
   ]);
 
@@ -71,8 +75,28 @@ game.newLoop('myGame', function() {
     }*/
 
   contra.player.spritesMesh.draw()
-  contra.player.selectedState.sprite.drawStaticBox();
+    //  contra.player.selectedState.sprite.drawStaticBox();
 })
 
 game.setLoop('myGame');
 game.start();
+
+function resize() {
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  let wNorm = 256;
+  let hNorm = 224;
+  let canvas = document.querySelector('canvas');
+  if (width / height > wNorm / hNorm) {
+    width = wNorm / hNorm * height;
+  } else {
+    height = width / wNorm * hNorm
+  }
+  canvas.style.width = width + 'px';
+  canvas.style.left = (window.innerWidth - width) / 2 + 'px';
+  canvas.style.top = (window.innerHeight - height) / 2 + 'px';
+}
+
+setTimeout(() => {
+  resize();
+}, 500);

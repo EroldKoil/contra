@@ -2,17 +2,17 @@
 import Platform from './platform.js';*/
 
 class Bg extends sprObject {
-  constructor(name, spriteInfo, levelSprites, width, height, x, y, level, canJumpDown) {
+  constructor(name, spriteInfo, width, height, x, y, level, canJumpDown) {
       super(x, y, width, height);
 
       switch (name) {
         case 'p1':
         case 'pw1':
         case 'pw2':
-          this.platforms = [new Platform(width - 4, 3, x + 2, y + 6, 'BOTTOM', canJumpDown)];
+          this.platforms = [new Platform(width - 4, 1, x + 2, y + 6, 'BOTTOM', canJumpDown)];
           break;
         case 'p2':
-          this.platforms = [new Platform(width - 4, 3, x + 2, y + height / 2 + 6, 'BOTTOM', canJumpDown)];
+          this.platforms = [new Platform(width - 4, 1, x + 2, y + height / 2 + 6, 'BOTTOM', canJumpDown)];
           break;
         case 'w':
         case 'w2':
@@ -39,14 +39,15 @@ class Bg extends sprObject {
           break;
       }
 
-      this.sprite = game.newAnimationObject({
-        animation: levelSprites.getAnimation(spriteInfo.x, spriteInfo.y, this.width, this.height, spriteInfo.w / this.height),
+      this.sprite = this.createSprite(spriteInfo, level, game, this.x, this.y);
+      /*	game.newAnimationObject({
+        animation: level.levelSprites.getAnimation(spriteInfo.x, spriteInfo.y, this.width, this.height, spriteInfo.w / this.height),
         x: this.x,
         y: this.y,
         w: this.width,
         h: this.height,
         delay: spriteInfo.delay ? spriteInfo.delay : 100,
-      });
+      });*/
 
       level.bgArray.push(this);
       if (this.platforms) {

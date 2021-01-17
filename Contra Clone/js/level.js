@@ -1,7 +1,7 @@
 //import Bg from './bg.js';
 
 const map = {
-  blockSaize: 32,
+  blockSize: 32,
   levels: [{
     bg: [
       ['s1', 's2', 0, 0, 'w', 'w1', 'w'],
@@ -28,19 +28,19 @@ const map = {
       [0, 's1', 'g2', 'p1', 'p2', 'r1', 'w5'],
       ['s1', 's2', 'g2', 'p1', 'p2', 'r1', 'w3'],
       [0, 0, 'g3', 'p1', 'r1', 'rw3', 'w6'],
-      ['s1', 0, 0, 'b1', 'w', 'w7', 'w'],
-      ['s2', 0, 's2', 'b2', 'w', 'w', 'w'],
-      [0, 's1', 0, 'b2', 'w', 'w', 'w'],
-      ['s3', 's2', 0, 'b3', 'w', 'w1', 'w'],
+      ['s1', 0, 0, 'b4', 'w', 'w7', 'w'],
+      ['s2', 0, 's2', 0, 'w', 'w', 'w'],
+      [0, 's1', 0, 0, 'w', 'w', 'w'],
+      ['s3', 's2', 0, 'b5', 'w', 'w1', 'w'],
       ['s2', 's1', 'g1', 'p1', 'r1', 'rw1', 'w'],
       ['s2', 's1', 'g2', 'p1', 'r1', 'rw1', 'w'],
       [0, 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
       ['s1', 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
       [0, 's2', 'g3', 'p1', 'r1', 'rw1', 'w'],
-      [0, 's2', 0, 'b1', 'w', 'w7', 'w'],
-      [0, 0, 0, 'b2', 'w', 'w', 'w'],
-      ['s2', 's1', 0, 'b2', 'w', 'w', 'w'],
-      ['s1', 0, 0, 'b3', 'w', 'w1', 'w'],
+      [0, 's2', 0, 'b4', 'w', 'w7', 'w'],
+      [0, 0, 0, 0, 'w', 'w', 'w'],
+      ['s2', 's1', 0, 0, 'w', 'w', 'w'],
+      ['s1', 0, 0, 'b5', 'w', 'w1', 'w'],
       [0, 0, 'g1', 'p1', 'r1', 'rw1', 'w'],
       ['s2', 0, 'g2', 'p1', 'r1', 'rw4', 'w2'],
       ['m1', 'm2', 'g2', 'p1', 'r1', 'r1', 'w3'],
@@ -87,7 +87,7 @@ const map = {
       ['g5', 'g7', 'g7', 'g7', 'g6', 'p1', 'r1'],
       ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
       ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'p1-n'],
-      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'r1'],
+      ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'r1'],
       ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
       ['g8', 'g9', 'g6', 'p1', 'r1', 'r1', 'r1'],
       ['g8', 'g5', 'g6', 'p1', 'p1', 'r1', 'r1'],
@@ -111,10 +111,10 @@ const map = {
       [0, 'g10', 'g7', 'g7', 'g7', 'g7', 'p1-n'],
       [0, 0, 0, 0, 0, 0, 'p1']
     ],
-    elements: [],
-    /*{ name: 'bot1', x: 70, y: 200 },
-    { name: 'bot1', x: 80, y: 200 },
-    { name: 'boss1', x: 80, y: 200 }*/
+    elements: [
+      { name: 'bridge', x: 768, y: 96, blockCount: 4 },
+      // { name: 'bridge', x: 31 * this.blockSize, y: 4 * this.blockSize, width: 4 },
+    ],
     enemy: [],
 
     //playerStartPos: { x: 2, y: 2 }
@@ -137,6 +137,16 @@ const map = {
       y: 35,
       w: 96,
       delay: 20
+    },
+    b4: {
+      x: 268,
+      y: 206,
+      w: 32,
+    },
+    b5: {
+      x: 268,
+      y: 171,
+      w: 32,
     },
     g1: {
       x: 231,
@@ -382,13 +392,16 @@ class Level {
     this.bulletsArray = [];
     this.playerBulletsArray = [];
 
-    this.deathPlatform = new Platform(map.blockSaize * 9, 2, -map.blockSaize * 0.5, map.blockSaize * 7 - 2, 'DEATH');
-    this.leftBorder = new Platform(2, map.blockSaize * 8, -2, -map.blockSaize * 0.5, 'LEFTBORDER');
-    this.levelBorder = new Platform(map.blockSaize * 12, map.blockSaize * 11, -map.blockSaize * 2, -map.blockSaize * 2, 'LEVELBORDER');
+    this.deathPlatform = new Platform(map.blockSize * 9, 2, -map.blockSize * 0.5, map.blockSize * 7 - 2, 'DEATH');
+    this.leftBorder = new Platform(2, map.blockSize * 8, -4, -map.blockSize * 0.5, 'LEFTBORDER');
+    this.levelBorder = new Platform(map.blockSize * 12, map.blockSize * 11, -map.blockSize * 2, -map.blockSize * 2, 'LEVELBORDER');
+
+    this.platformActual.push(this.deathPlatform);
+    this.platformActual.push(this.leftBorder);
 
     // Create All elements
     let createElement = (from, type) => {
-      let bs = map.blockSaize;
+      let bs = map.blockSize;
       let createBG = (bgColumn, i) => {
         for (let j = 0; j < bgColumn.length; j++) {
           if (bgColumn[j] !== 0) {
@@ -398,7 +411,7 @@ class Level {
               canJumpDown = false;
             }
             name[0];
-            new Bg(name[0], map.spritesInfo[name[0]], levelSprites, bs, bs, i * bs, j * bs, this, canJumpDown);
+            new Bg(name[0], map.spritesInfo[name[0]], bs, bs, i * bs, j * bs, this, canJumpDown);
           }
         }
       }
@@ -412,7 +425,7 @@ class Level {
             new EnemyCreater(from[i], this);
             break;
           case 'ELEMENT':
-
+            new ElementCreator(from[i], this, pjs.game);
             break;
           default:
             break;
@@ -420,7 +433,8 @@ class Level {
       }
     }
 
-    let levelSprites = pjs.tiles.newImage(`../src/sprites/levels/${number + 1}/spritesheet.png`)
+    this.levelSprites = pjs.tiles.newImage(`../src/sprites/levels/${number + 1}/spritesheet.png`)
+    this.spritesInfo = map.spritesInfo;
     createElement(map.levels[this.levelNumber].bg, 'BG');
     createElement(map.levels[this.levelNumber].enemy, 'ENEMY');
     createElement(map.levels[this.levelNumber].elements, 'ELEMENT');
@@ -446,7 +460,7 @@ class Level {
 
     //addElements(this.bgArray, 'BG');
     //addElements(this.enemyArray, 'ENEMY');
-    //addElements(this.elementsArray, 'ELEMENT');
+    addElements(this.elementsArray, 'ELEMENT');
   }
 
   pause(isPausePress) {

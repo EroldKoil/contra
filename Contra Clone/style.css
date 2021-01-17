@@ -1,5 +1,5 @@
 body {
-  background-color: lavender;
+  background-color: rgb(14 14 30);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,4 +7,5 @@ body {
 
 canvas {
   margin: 0 auto;
+  width: 100%;
 }
