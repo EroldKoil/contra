@@ -372,9 +372,8 @@ const map = {
 }
 
 class Level {
-  constructor(number, pjs, mode) {
+  constructor(number, pjs, contra) {
     this.levelNumber = number;
-    this.mode = mode;
 
     this.lastCameraX = 0;
     this.pausePress = false;
@@ -438,6 +437,8 @@ class Level {
     createElement(map.levels[this.levelNumber].bg, 'BG');
     createElement(map.levels[this.levelNumber].enemy, 'ENEMY');
     createElement(map.levels[this.levelNumber].elements, 'ELEMENT');
+
+    this.startLevel(pjs.game, contra, pjs.keyControl, pjs, this);
   }
 
   // Проверка сместился ли экран на 32 пикселя. Если да, то добавляем справа новые элементы
@@ -472,4 +473,32 @@ class Level {
       this.pausePress = true;
     }
   }
+
+  startLevel(game, contra, keyControl, pjs, level) {
+    game.newLoop('myGame', function() {
+      //game.clear();
+      level.bgArray.forEach(el => {
+        el.sprite.draw();
+      });
+      level.elementsArray.forEach(el => {
+        el.sprites.forEach(sp => {
+          sp.draw();
+        });
+      });
+
+      contra.player.calculateMoves(contra, pjs, [
+        keyControl.isDown('UP') || keyControl.isDown('W'),
+        keyControl.isDown('RIGHT') || keyControl.isDown('D'),
+        keyControl.isDown('BOTTOM') || keyControl.isDown('S'),
+        keyControl.isDown('LEFT') || keyControl.isDown('A'),
+        keyControl.isDown('P'),
+        keyControl.isDown('O'),
+        keyControl.isDown('SPACE')
+      ]);
+      contra.player.spritesMesh.draw()
+    })
+
+    game.setLoop('myGame');
+  }
+
 }

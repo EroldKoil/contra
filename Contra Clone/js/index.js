@@ -1,41 +1,49 @@
 /*import Level from './level.js';
 import Player from './player.js';*/
-//export { contra, game, tiles };
 
 let pjs = new PointJS(256, 224, { backgroundColor: '#000000' })
 const game = pjs.game;
 let tiles = pjs.tiles;
-let keyControl = pjs.keyControl;
-let p = pjs.vector.point;
-let camera = pjs.camera;
+//let p = pjs.vector.point;
+//let camera = pjs.camera;
+let contra;
 
-keyControl.initControl();
-//pjs.system.setSmoothing(true);
-
-//pjs.system.initFullPage();
+pjs.keyControl.initControl();
 
 window.onresize = resize;
 
-let contra = {
-  options: {
-
-  },
-  player: new Player('default', game),
-  cameraPositionX: 0,
-
-  startGame: () => {
-
+function startSession() {
+  contra = {
+    options: null,
+    selectedLevel: null,
+    menu: null,
+    player: new Player('default', game),
+    startGame: () => {
+      if (this.selectedLevel) {
+        contra.selectedLevel = new Level(this.selectedLevel.levelNumber + 1, pjs, contra);
+      } else {
+        contra.selectedLevel = new Level(0, pjs, contra);
+      }
+    }
   }
+
+  // Здесь можно сделать проверку локалстореж и в зависимости от этого создавать опции. А после этого создавать меню
+  // когда в меню нажмем START , вызовем через 5 секунд метод contra.startGame(). А в это время будет заставка экрана перед уровнем
+
+  contra.player = new Player('default', game);
+  contra.startGame();
+  game.start();
+
+  setTimeout(() => {
+    resize();
+  }, 500);
 }
 
 
-//pjs.camera.scale(p(contra.options.zoom, contra.options.zoom));
 
-contra.selectedLevel = new Level(0, pjs);
-
-
+/*
 game.newLoop('myGame', function() {
-  game.clear();
+  //game.clear();
 
   contra.selectedLevel.bgArray.forEach(el => {
     el.sprite.draw();
@@ -45,13 +53,7 @@ game.newLoop('myGame', function() {
       sp.draw();
     });
   });
-  /*
-    contra.selectedLevel.platformActual.forEach(element => {
-      element.sprite.drawStaticBox();
-    });*/
 
-
-  //pjs.camera.move(pjs.vector.point(1, 0));
   contra.player.calculateMoves(contra, pjs, [
     keyControl.isDown('UP') || keyControl.isDown('W'),
     keyControl.isDown('RIGHT') || keyControl.isDown('D'),
@@ -61,25 +63,11 @@ game.newLoop('myGame', function() {
     keyControl.isDown('O'),
     keyControl.isDown('SPACE')
   ]);
-
-  //contra.player.spritesMesh.move(p(dXY[0], dXY[1]));
-  //
-
-  /*
-    if (keyControl.isDown('SPACE')) {
-      if (game.isStopped()) {
-        game.resume();
-      } else {
-        game.stop();
-      }
-    }*/
-
   contra.player.spritesMesh.draw()
-    //  contra.player.selectedState.sprite.drawStaticBox();
 })
 
-game.setLoop('myGame');
-game.start();
+game.setLoop('myGame');*/
+
 
 function resize() {
   let width = window.innerWidth;
@@ -97,6 +85,4 @@ function resize() {
   canvas.style.top = (window.innerHeight - height) / 2 + 'px';
 }
 
-setTimeout(() => {
-  resize();
-}, 500);
+startSession();
