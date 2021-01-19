@@ -1,9 +1,9 @@
 // collision - направление сталкивания : VERTICAL, LEFT, RIGHT
-//import { contra, game } from './index.js';
-import sprObject from './sprObject';
+import SprObject from './SprObject';
+import pjs from './index';
 
-export default class Platform extends sprObject {
-  constructor(width, height, x, y, collision, canJumpDown, pjs) {
+export default class Platform extends SprObject {
+  constructor(width, height, x, y, collision, canJumpDown) {
     super(x, y, width, height);
     this.collision = collision;
     if (collision === 'BOTTOM') {

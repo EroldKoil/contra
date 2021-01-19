@@ -1,12 +1,9 @@
-//import game from './index.js';
-import Weapon from './weapon';
-
-class Person {
-  constructor(name, xCenter, yBottom, health, sprites, path, pjs) {
+import pjs from './index';
+export default class Person {
+  constructor(name, xCenter, yBottom, health, sprites, path) {
     this.name = name;
     this.xCenter = xCenter;
     this.yBottom = yBottom;
-    this.weapon = new Weapon(name, 0);
 
     this.needCalc = true; // обновление координат и обработка кнопок;
     this.pose = 'AIR'; // air , platform , water, death
@@ -16,17 +13,15 @@ class Person {
     this.states = {};
     this.dontShoot = true; // flag to understand? am I shoot now
 
-    this.pjs = pjs;
-
     let spritesArr = [];
     sprites.forEach(element => {
       spritesArr.push(element.sprite);
-      let sp = this.createSprite(...(element.data), path, xCenter, yBottom, this.pjs.game);
+      let sp = this.createSprite(...(element.data), path, xCenter, yBottom);
       this.states[element.name] = { name: element.name, sprite: sp };
       spritesArr.push(sp);
     });
 
-    this.spritesMesh = this.pjs.game.newMesh({
+    this.spritesMesh = pjs.game.newMesh({
       x: 35,
       y: 35,
       add: spritesArr
@@ -36,12 +31,12 @@ class Person {
     this.canShoot = true;
 
     this.health = health;
-    this.moveSpeed = 3;
+    this.moveSpeed = 1;
     this.fallSpeed = 1.8;
   }
 
   selectState(stateName) {
-    if (this.dontShoot) {
+    if (this.dontShoot || stateName === 'jump' || stateName === 'fall' || stateName === 'swim_top_forward' || stateName === 'swim_top' || stateName === 'dip') {
       for (let key in this.states) {
         if (key === stateName) {
           this.states[key].sprite.visible = true;
@@ -84,10 +79,11 @@ class Person {
 
   // buttons = [UP, Right, Bottom, Left,   Jump, Shot, SPACE]
 
-  calculateMoves(contra, pjs, buttons) {
+  calculateMoves(contra, buttons) {
     let dx = 0;
     let dy = 0;
     let moveX = +buttons[1] - +buttons[3];
+    let p = pjs.vector.point;
 
     if (this.vectorMove === -1 && moveX > 0) {
       for (let key in this.states) {
@@ -190,10 +186,10 @@ class Person {
         break;
       case 'WATER':
         if (collisionDArray.filter(platform => platform.collision === 'WATERLEFT').length === 1) {
-          this.endSwim(pjs, 5);
+          this.endSwim(5);
           return [0, 0];
         } else if (collisionAArray.filter(platform => platform.collision === 'WATERRIGHT').length === 1) {
-          this.endSwim(pjs, -5);
+          this.endSwim(-5);
           return [0, 0];
         } else {
           if (buttons[2]) {
@@ -210,7 +206,7 @@ class Person {
         break;
     }
 
-    if (buttons[5]) {
+    if (buttons[5] && this.selectedState.name !== 'dive' && this.selectedState.name !== 'dip') {
       this.shoot(buttons);
     }
 
@@ -222,19 +218,20 @@ class Person {
     if (dx < 0 && level.leftBorder.sprite.isStaticIntersect(this.states['run'].sprite.getStaticBoxA(-this.moveSpeed))) {
       dx = 0;
     }
-    this.spritesMesh.move(pjs.vector.point(dx, dy));
+
+    this.spritesMesh.move(p(dx, dy));
     if (dx > 0 && this.spritesMesh.x > pjs.camera.getPosition().x + 32 * 2) {
-      pjs.camera.move(pjs.vector.point(dx, 0));
-      level.deathPlatform.sprite.move(pjs.vector.point(dx, 0));
-      level.leftBorder.sprite.move(pjs.vector.point(dx, 0));
-      level.levelBorder.sprite.move(pjs.vector.point(dx, 0));
+      pjs.camera.move(p(dx, 0));
+      level.deathPlatform.sprite.move(p(dx, 0));
+      level.leftBorder.sprite.move(p(dx, 0));
+      level.levelBorder.sprite.move(p(dx, 0));
       contra.selectedLevel.tryRefreshActualElements();
     }
   }
 
-  createSprite(xS, yS, w, h, frames, delay, xCoef, yCoef, path, xCenter, yBottom, game) {
-    return game.newAnimationObject({
-      animation: this.pjs.tiles.newImage(path).getAnimation(xS, yS, w, h, frames),
+  createSprite(xS, yS, w, h, frames, delay, xCoef, yCoef, path, xCenter, yBottom) {
+    return pjs.game.newAnimationObject({
+      animation: pjs.tiles.newImage(path).getAnimation(xS, yS, w, h, frames),
       x: xCenter - w / 2 + xCoef,
       y: yBottom - h + yCoef,
       w: w,

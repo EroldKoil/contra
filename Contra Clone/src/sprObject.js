@@ -1,4 +1,5 @@
-export default class sprObject {
+import pjs from './index';
+export default class SprObject {
   constructor(x, y, width, height) {
     this.width = width;
     this.height = height;
@@ -6,13 +7,15 @@ export default class sprObject {
     this.y = y;
   }
 
-  createSprite(spriteInfo, level, game, x, y) {
-    return game.newAnimationObject({
-      animation: level.levelSprites.getAnimation(spriteInfo.x, spriteInfo.y, this.width, this.height, spriteInfo.w / this.height),
+  createSprite(spriteInfo, levelSprites, x, y) {
+    /*console.log('3');
+    console.log('spriteInfo', spriteInfo);*/
+    return pjs.game.newAnimationObject({
+      animation: levelSprites.getAnimation(spriteInfo.x, spriteInfo.y, spriteInfo.w / spriteInfo.frames, spriteInfo.h, spriteInfo.frames),
       x: x,
       y: y,
-      w: 32,
-      h: 32,
+      w: spriteInfo.w / spriteInfo.frames,
+      h: spriteInfo.h,
       delay: spriteInfo.delay ? spriteInfo.delay : 100,
     });
   }
