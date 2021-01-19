@@ -45,17 +45,7 @@ canvas {
   z-index:101;
 }
 
-.a_button_image {
-  width: 55px;
-  height: 55px;
-}
-
-.b_button_image {
-  width: 55px;
-  height: 55px;
-}
-
-.start_button_image {
+.button_image {
   width: 55px;
   height: 55px;
 }

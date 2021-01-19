@@ -489,7 +489,7 @@ class Level {
       });
 
     let j = contra.joystick.buttons;
-    
+
       contra.player.calculateMoves(contra, pjs, [
         keyControl.isDown('UP') || keyControl.isDown('W') || (contra.joystick && j.up),
         keyControl.isDown('RIGHT') || keyControl.isDown('D') || (contra.joystick && j.right),
