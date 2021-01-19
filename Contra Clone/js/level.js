@@ -486,45 +486,9 @@ class Level {
         el.sprites.forEach(sp => {
           sp.draw();
         });
-
-        
-
       });
 
-let a;
-let b;
-let start;
-let j
-	
-      if (contra.joystick) { 
-
-        for( let key in contra.joystick.buttonSprites ){
-          contra.joystick.buttonSprites[key].draw();
-        };
-
-
-
-        a = contra.joystick.buttonSprites.a;
-        b = contra.joystick.buttonSprites.b;
-        start = contra.joystick.buttonSprites.start;
-        j = contra.joystick.buttons;
-
-
-       if (pjs.mouseControl.isPeekObject( "A", contra.joystick.buttonSprites.a)) {
-        console.log('a is touched')
-       }
-
-       if (pjs.mouseControl.isPeekObject( "B", contra.joystick.buttonSprites.b)) {
-        console.log('b is touched')
-       }
-
-       if (pjs.mouseControl.isPeekObject( "START", contra.joystick.buttonSprites.start)) {
-        console.log('start is touched')
-       }
-       
-
-    }
-
+    let j = contra.joystick.buttons;
     
       contra.player.calculateMoves(contra, pjs, [
         keyControl.isDown('UP') || keyControl.isDown('W') || (contra.joystick && j.up),

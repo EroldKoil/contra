@@ -11,7 +11,7 @@
         }
         let options = {
             zone: document.getElementById('zone_joystick'),                  // active zone
-            color: 'white',
+            color: 'darkgrey',
             size: 150,
             threshold: 0.1,               // before triggering a directional event
             fadeTime: 500,              // transition time
@@ -80,30 +80,29 @@
             }
         );
 
-        this.buttonSprites = {
-            a: pjs.game.newImageObject(   { 
-                file : '../src/sprites/buttons/a_button.png', 
-                x : 100, 
-                y : 100, 
-                w : 50, 
-                h : 50, 
-            }),
 
-            b: pjs.game.newImageObject(   { 
-                file : '../src/sprites/buttons/b_button.png', 
-                x : 150, 
-                y : 150, 
-                w : 50, 
-                h : 50, 
-            }),
+        let a_button = document.createElement('div');
+        a_button.innerHTML = "<img class='a_button_image' src='./src/sprites/buttons/a_button.png' alt='a_button'>";
+        let b_button = document.createElement('div');
+        b_button.innerHTML = "<img class='b_button_image' src='./src/sprites/buttons/b_button.png' alt='b_button'>";
+        let start_button = document.createElement('div');
+        start_button.innerHTML = "<img class='start_button_image' src='./src/sprites/buttons/start_button.png' alt='start_button'>";
+        
+        a_button.className = 'a_display_button';
+        b_button.className = 'b_display_button';
+        start_button.className = 'start_display_button';
 
-            start: pjs.game.newImageObject(   { 
-                file : '../src/sprites/buttons/start_button.png', 
-                x : 50, 
-                y : 50, 
-                w : 50, 
-                h : 50, 
-            }),
-        }
+        document.body.append(a_button);
+        document.body.append(b_button);
+        document.body.append(start_button);
+
+       let joystick_a_button = document.getElementsByClassName('a_display_button');
+       console.log(joystick_a_button);
+       joystick_a_button.addEventListener('click', ()=>{console.log(this.a);});
+        document.getElementsByClassName('a_display_button').addEventListener("mouseup", ()=>{this.a = false; console.log(this.a);});
+        document.getElementsByClassName('b_display_button').addEventListener("mousedown", ()=>{this.b = true; console.log(this.b);});
+        document.getElementsByClassName('b_display_button').addEventListener("mouseup", ()=>{this.b = false; console.log(this.b);});
+        document.getElementsByClassName('start_display_button').addEventListener("mousedown", ()=>{this.pause = true; console.log(this.pause);});
+        document.getElementsByClassName('a_display_button').addEventListener("mouseup", ()=>{this.pause = false; console.log(this.pause);});
     }
 }
