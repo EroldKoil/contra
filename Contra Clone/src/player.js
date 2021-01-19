@@ -37,7 +37,7 @@ export default class Player extends Person {
     this.lifes = 2;
     this.assailable = false; // Уязвим ли
     this.level = level;
-    this.weapon = new Weapon('S', this);
+    this.weapon = new Weapon('L', this);
     this.selectState('jump');
 
   }

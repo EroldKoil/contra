@@ -16,10 +16,11 @@ export default class Bullet extends SprObject {
     if (!this.sprite.isStaticIntersect(level.levelBorder.sprite.getStaticBox())) {
       bulletsArray.splice(bulletsArray.indexOf(this), 1);
     } else {
+      this.sprite.draw();
       // проверка на попадание в противника или игрока. зависит от хозяина пули
     }
 
-    this.sprite.draw();
+
 
   }
 

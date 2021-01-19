@@ -1,6 +1,7 @@
 import Player from './../player';
 import BulletM from './bulletM';
 import BulletF from './bulletF';
+import BulletL from './bulletL';
 
 export default class Weapon {
   constructor(type, sniper) {
@@ -18,28 +19,25 @@ export default class Weapon {
 
   shoot(vectorShoot, x, y) {
     let getDxy = (vector) => {
-      return [this.speed * Math.cos(vector), -this.speed * Math.sin(vector)]
+      return [+(this.speed * Math.cos(vector)).toFixed(2), +(-this.speed * Math.sin(vector)).toFixed(2)];
     }
     switch (this.type) {
       case 'D':
-        this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot), this.level, false));
+        this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot), this.level, 'D'));
         break;
       case 'M':
-        this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot), this.level, true));
+        this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot), this.level, 'M'));
         break;
       case 'F':
-        this.bulletArray.push(new BulletF(x, y, ...getDxy(vectorShoot), this.level, true));
+        this.bulletArray.push(new BulletF(x, y, ...getDxy(vectorShoot), this.level));
         break;
       case 'S':
         for (let i = 0; i < 5; i++) {
-          /* let dx = this.speed * Math.cos(vectorShoot - 30 + 15 * i);
-           let dy = -this.speed * Math.sin(vectorShoot - 30 + 15 * i);*/
-          this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot - Math.PI / 6 + (Math.PI / 12 * i)), this.level, true));
+          this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot - Math.PI / 6 + (Math.PI / 12 * i)), this.level, 'S'));
         }
-        //this.bulletArray.push(new BulletM(x, y, dx, dy, this.level, true));
         break;
       case 'L':
-
+        this.bulletArray.push(new BulletL(x, y, ...getDxy(vectorShoot), this.level));
         break;
       default:
         break;
@@ -63,16 +61,17 @@ export default class Weapon {
 
         break;
       case 'M':
-
+        this.reloading = 200;
         break;
       case 'F':
-
+        this.speed = 2;
+        this.reloading = 1200;
         break;
       case 'S':
 
         break;
       case 'L':
-
+        this.reloading = 1000;
         break;
       default:
         break;

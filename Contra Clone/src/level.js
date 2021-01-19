@@ -572,7 +572,7 @@ const map = {
       h: 6,
       frames: 1
     },
-    shootM: {
+    shootS: {
       x: 131,
       y: 23,
       w: 90,
@@ -594,7 +594,7 @@ const map = {
       h: 6,
       frames: 1
     },
-    shootM3: {
+    shootM: {
       x: 573,
       y: 1,
       w: 5,

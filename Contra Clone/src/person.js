@@ -176,6 +176,7 @@ export default class Person {
                 this.selectState('stay_top');
               } else if (buttons[2]) {
                 this.selectState('lie');
+                this.vectorJumpX = 0;
               } else {
                 this.selectState('stay');
               }

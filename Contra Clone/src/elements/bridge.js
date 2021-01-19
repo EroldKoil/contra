@@ -25,7 +25,6 @@ export default class Bridge extends sprObject {
     if (pjs.camera.getPosition().x > this.x - 260) {
       level.elementsActual.push(this);
       level.elementsArray.splice(level.elementsArray.indexOf(this), 1);
-      console.log(level.elementsActual);
     }
   }
 

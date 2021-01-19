@@ -3,35 +3,41 @@ import pjs from '../index';
 
 export default class BulletF extends Bullet {
   constructor(x, y, dx, dy, level) {
-      super(1, x, y, dx, dy);
-      this.deg = 0;
-      this.sprites = [];
-      this.d = 4;
+    super(1, x, y, dx, dy);
+    this.deg = 0;
+    this.sprites = [];
+    this.d = 14;
 
-      for (let i = 0; i < 4; i++) {
-        let xy = this.getDxy(this.deg + Math.PI / 4 * i, this.d)
-        this.sprites.push(this.createSprite(level.elementsInfo['shootF'], level.elementSprites, x + xy.x, y + xy.y));
+    for (let i = 0; i < 4; i++) {
+      let xy = this.getDxy(this.deg + Math.PI / 3 * i, this.d)
+      this.sprites.push(this.createSprite(level.elementsInfo['shootF'], level.elementSprites, x + xy[0], y + xy[1]));
+    }
+  }
+
+  draw(level, bulletsArray) {
+    this.deg = (this.deg + Math.PI / 10) % (2 * Math.PI);
+    let flag = false;
+    let p = pjs.vector.point;
+    this.x += this.dx;
+    this.y += this.dy;
+
+    for (let i = 0; i < this.sprites.length; i++) {
+      let spr = this.sprites[i];
+      if (spr) {
+        if (spr.isStaticIntersect(level.levelBorder.sprite.getStaticBox())) {
+          flag = true;
+          let xy = this.getDxy(this.deg + Math.PI / 3 * i, this.d)
+          spr.setPosition(p(this.x + xy[0], this.y + xy[1]));
+          spr.draw();
+        } else {
+          spr = null;
+        }
       }
     }
-    /*
-      draw(level, bulletsArray) {
-    		for (let i = 0; i < 4; i++) {
-          let xy = this.getDxy(this.deg + Math.PI / 4 * i, this.d)
-          this.sprites.push(this.createSprite(level.elementsInfo['shootF'], level.elementSprites, x + xy.x, y + xy.y));
-        }
-
-
-    		obj.setPosition( .point(100, 100) );
-        this.sprite.move(pjs.vector.point(this.dx, this.dy));
-        if (!this.sprite.isStaticIntersect(level.levelBorder.sprite.getStaticBox())) {
-          bulletsArray.splice(bulletsArray.indexOf(this), 1);
-        } else {
-          // проверка на попадание в противника или игрока. зависит от хозяина пули
-        }
-
-        this.sprite.draw();
-
-      }*/
+    if (!flag) {
+      bulletsArray.splice(bulletsArray.indexOf(this), 1);
+    }
+  }
 
   getDxy(vector, d) {
     return [d * Math.cos(vector), -d * Math.sin(vector)]
