@@ -474,8 +474,6 @@ class Level {
     }
   }
 
-  
-
   startLevel(game, contra, keyControl, pjs, level) {
     game.newLoop('myGame', function() {
       //game.clear();
@@ -498,7 +496,6 @@ class Level {
         keyControl.isDown('P') || (contra.joystick && j.a),
         keyControl.isDown('O') || (contra.joystick && j.b),
         keyControl.isDown('SPACE') || (contra.joystick && j.pause)
-        
       ]);
 
       contra.player.spritesMesh.draw();

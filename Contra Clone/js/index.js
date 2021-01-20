@@ -36,8 +36,7 @@ function startSession() {
   // Здесь можно сделать проверку локалстореж и в зависимости от этого создавать опции. А после этого создавать меню
   // когда в меню нажмем START , вызовем через 5 секунд метод contra.startGame(). А в это время будет заставка экрана перед уровнем
 
- // pjs.touchControl.initTouchControl();
-  pjs.mouseControl.initMouseControl();
+
   contra.player = new Player('default', game);
   contra.startGame();
   game.start();
@@ -46,8 +45,6 @@ function startSession() {
     resize();
   }, 500);
 }
-
-
 
 /*
 game.newLoop('myGame', function() {
