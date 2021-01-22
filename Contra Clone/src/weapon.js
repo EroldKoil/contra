@@ -6,11 +6,8 @@ export default class Weapon {
     this.speed = 1;
     this.isApgreid = false;
   }
+
   shoot(sniper, vectorMove, vectorShoot, x, y) {
-
-
-
-
     sniper.canShoot = false;
     setTimeout(() => {
       sniper.canShoot = true;

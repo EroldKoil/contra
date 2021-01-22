@@ -1,4 +1,4 @@
-import Bg from './bg.js';
+import Bg from './bg';
 import Platform from './platform';
 import ElementCreator from './elements/elementCreator';
 import EnemyCreator from './enemy/enemyCreator';
@@ -112,34 +112,36 @@ const map = {
       ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
       ['g10', 'g5', 'g7', 'g7', 'g6', 'p1', 'p1-n'],
       [0, 'g10', 'g7', 'g7', 'g7', 'g7', 'p1-n'],
-      [0, 0, 0, 0, 0, 0, 'p1']
+      [0, 0, 0, 0, 0, 0, 'p1'],
     ],
     elements: [
-      { name: 'bridge', x: 768, y: 96, blockCount: 4 },
+      {
+        name: 'bridge', x: 768, y: 96, blockCount: 4,
+      },
       // { name: 'bridge', x: 31 * this.blockSize, y: 4 * this.blockSize, width: 4 },
     ],
     enemy: [],
 
-    //playerStartPos: { x: 2, y: 2 }
+    // playerStartPos: { x: 2, y: 2 }
   }],
   spritesInfo: {
     b1: {
       x: 35,
       y: 1,
       w: 96,
-      delay: 20
+      delay: 20,
     },
     b2: {
       x: 133,
       y: 1,
       w: 96,
-      delay: 20
+      delay: 20,
     },
     b3: {
       x: 1,
       y: 35,
       w: 96,
-      delay: 20
+      delay: 20,
     },
     b4: {
       x: 268,
@@ -260,13 +262,13 @@ const map = {
       x: 1,
       y: 137,
       w: 64,
-      delay: 20
+      delay: 20,
     },
     pw2: {
       x: 67,
       y: 137,
       w: 64,
-      delay: 20
+      delay: 20,
     },
     r1: {
       x: 133,
@@ -277,31 +279,31 @@ const map = {
       x: 167,
       y: 137,
       w: 64,
-      delay: 20
+      delay: 20,
     },
     rw11: {
       x: 233,
       y: 137,
       w: 32,
-      delay: 20
+      delay: 20,
     },
     rw2: {
       x: 1,
       y: 171,
       w: 64,
-      delay: 20
+      delay: 20,
     },
     rw3: {
       x: 67,
       y: 171,
       w: 64,
-      delay: 20
+      delay: 20,
     },
     rw4: {
       x: 133,
       y: 171,
       w: 64,
-      delay: 20
+      delay: 20,
     },
     s1: {
       x: 199,
@@ -327,52 +329,52 @@ const map = {
       x: 69,
       y: 205,
       w: 64,
-      delay: 20
+      delay: 20,
     },
     w2: {
       x: 135,
       y: 205,
       w: 64,
-      delay: 20
+      delay: 20,
     },
     w3: {
       x: 201,
       y: 205,
       w: 64,
-      delay: 20
+      delay: 20,
     },
     w4: {
       x: 268,
       y: 1,
       w: 64,
-      delay: 20
+      delay: 20,
     },
     w5: {
       x: 269,
       y: 35,
       w: 64,
-      delay: 20
+      delay: 20,
     },
     w6: {
       x: 239,
       y: 69,
       w: 64,
-      delay: 20
+      delay: 20,
     },
     w7: {
       x: 239,
       y: 103,
       w: 64,
-      delay: 20
+      delay: 20,
     },
     w8: {
       x: 267,
       y: 137,
       w: 64,
-      delay: 20
-    }
-  }
-}
+      delay: 20,
+    },
+  },
+};
 
 export default class Level {
   constructor(number, pjs, contra) {
@@ -394,7 +396,7 @@ export default class Level {
     this.bulletsArray = [];
     this.playerBulletsArray = [];
 
-    ////// ЗДЕСЬ true на спрыгивании стоит от балды!!!
+    /// /// ЗДЕСЬ true на спрыгивании стоит от балды!!!
     this.deathPlatform = new Platform(map.blockSize * 9, 2, -map.blockSize * 0.5, map.blockSize * 7 - 2, 'DEATH', true, pjs);
     this.leftBorder = new Platform(2, map.blockSize * 8, -4, -map.blockSize * 0.5, 'LEFTBORDER', true, pjs);
     this.levelBorder = new Platform(map.blockSize * 12, map.blockSize * 11, -map.blockSize * 2, -map.blockSize * 2, 'LEVELBORDER', true, pjs);
@@ -403,23 +405,23 @@ export default class Level {
     this.platformActual.push(this.leftBorder);
 
     // Create All elements
-    let createElement = (from, type) => {
-      let bs = map.blockSize;
-      let createBG = (bgColumn, i) => {
-        for (let j = 0; j < bgColumn.length; j++) {
+    const createElement = (from, type) => {
+      const bs = map.blockSize;
+      const createBG = (bgColumn, i) => {
+        for (let j = 0; j < bgColumn.length; j += 1) {
           if (bgColumn[j] !== 0) {
-            let name = bgColumn[j].split('-');
+            const name = bgColumn[j].split('-');
             let canJumpDown = true;
             if (name.length > 1 && name[1] === 'n') {
               canJumpDown = false;
             }
-            name[0];
+            // name[0];
             new Bg(name[0], map.spritesInfo[name[0]], bs, bs, i * bs, j * bs, this, canJumpDown, pjs);
           }
         }
-      }
+      };
 
-      for (let i = 0; i < from.length; i++) {
+      for (let i = 0; i < from.length; i += 1) {
         switch (type) {
           case 'BG':
             createBG(from[i], i);
@@ -434,9 +436,9 @@ export default class Level {
             break;
         }
       }
-    }
+    };
 
-    this.levelSprites = pjs.tiles.newImage(`./assets/sprites/levels/${number + 1}/spritesheet.png`)
+    this.levelSprites = pjs.tiles.newImage(`./assets/sprites/levels/${number + 1}/spritesheet.png`);
     this.spritesInfo = map.spritesInfo;
     createElement(map.levels[this.levelNumber].bg, 'BG');
     createElement(map.levels[this.levelNumber].enemy, 'ENEMY');
@@ -449,22 +451,22 @@ export default class Level {
   tryRefreshActualElements() {
     if (this.lastCameraX > 32) {
       this.addActualElements();
-      this.lastCameraX = this.lastCameraX - 32;
+      this.lastCameraX -= 32;
     }
   }
 
   // Добавление элементов из обычного массива в актуальный. Если его час настал
   addActualElements() {
-    let addElements = (from) => {
-      for (let i = 0; i < from.length; i++) {
+    const addElements = (from) => {
+      for (let i = 0; i < from.length; i += 1) {
         if (!from[i].tryToActual(this, true)) {
           break;
         }
       }
-    }
+    };
 
-    //addElements(this.bgArray, 'BG');
-    //addElements(this.enemyArray, 'ENEMY');
+    // addElements(this.bgArray, 'BG');
+    // addElements(this.enemyArray, 'ENEMY');
     addElements(this.elementsArray, 'ELEMENT');
   }
 
@@ -479,13 +481,13 @@ export default class Level {
   }
 
   startLevel(game, contra, keyControl, pjs, level) {
-    game.newLoop('myGame', function() {
-      //game.clear();
-      level.bgArray.forEach(el => {
+    game.newLoop('myGame', () => {
+      // game.clear();
+      level.bgArray.forEach((el) => {
         el.sprite.draw();
       });
-      level.elementsArray.forEach(el => {
-        el.sprites.forEach(sp => {
+      level.elementsArray.forEach((el) => {
+        el.sprites.forEach((sp) => {
           sp.draw();
         });
       });
@@ -497,12 +499,11 @@ export default class Level {
         keyControl.isDown('LEFT') || keyControl.isDown('A'),
         keyControl.isDown('P'),
         keyControl.isDown('O'),
-        keyControl.isDown('SPACE')
+        keyControl.isDown('SPACE'),
       ]);
-      contra.player.spritesMesh.draw()
-    })
+      contra.player.spritesMesh.draw();
+    });
 
     game.setLoop('myGame');
   }
-
 }

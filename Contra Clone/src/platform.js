@@ -1,5 +1,5 @@
 // collision - направление сталкивания : VERTICAL, LEFT, RIGHT
-//import { contra, game } from './index.js';
+// import { contra, game } from './index.js';
 import sprObject from './sprObject';
 
 export default class Platform extends sprObject {
@@ -11,8 +11,8 @@ export default class Platform extends sprObject {
     }
     this.sprite = pjs.game.newImageObject({
       file: './assets/sprites/platform.png',
-      x: x,
-      y: y,
+      x,
+      y,
       w: width,
       h: height,
     });

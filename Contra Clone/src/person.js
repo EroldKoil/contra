@@ -1,4 +1,4 @@
-//import game from './index.js';
+// import game from './index.js';
 import Weapon from './weapon';
 
 class Person {
@@ -18,10 +18,10 @@ class Person {
 
     this.pjs = pjs;
 
-    let spritesArr = [];
-    sprites.forEach(element => {
+    const spritesArr = [];
+    sprites.forEach((element) => {
       spritesArr.push(element.sprite);
-      let sp = this.createSprite(...(element.data), path, xCenter, yBottom, this.pjs.game);
+      const sp = this.createSprite(...(element.data), path, xCenter, yBottom, this.pjs.game);
       this.states[element.name] = { name: element.name, sprite: sp };
       spritesArr.push(sp);
     });
@@ -29,7 +29,7 @@ class Person {
     this.spritesMesh = this.pjs.game.newMesh({
       x: 35,
       y: 35,
-      add: spritesArr
+      add: spritesArr,
     });
 
     this.vectorMove = 1;
@@ -42,7 +42,7 @@ class Person {
 
   selectState(stateName) {
     if (this.dontShoot) {
-      for (let key in this.states) {
+      for (const key in this.states) {
         if (key === stateName) {
           this.states[key].sprite.visible = true;
           this.selectedState = this.states[key];
@@ -71,14 +71,14 @@ class Person {
       }
     }, 450);
   }
+
   jumpDown(buttomColArray) {
     if (buttomColArray.every((platform) => platform.canJumpDown)) {
       this.pose = 'AIR';
       this.selectState('fall');
-      this.spritesMesh.move(pjs.vector.point(0, 8));
+      this.spritesMesh.move(this.pjs.vector.point(0, 8));
     }
   }
-
 
   shoot() {}
 
@@ -87,64 +87,71 @@ class Person {
   calculateMoves(contra, pjs, buttons) {
     let dx = 0;
     let dy = 0;
-    let moveX = +buttons[1] - +buttons[3];
+    const moveX = +buttons[1] - +buttons[3];
 
     if (this.vectorMove === -1 && moveX > 0) {
-      for (let key in this.states) {
+      for (const key in this.states) {
         this.states[key].sprite.setFlip(0, 0);
       }
       this.vectorMove = 1;
     } else if (this.vectorMove === 1 && moveX < 0) {
-      for (let key in this.states) {
+      for (const key in this.states) {
         this.states[key].sprite.setFlip(1, 0);
       }
       this.vectorMove = -1;
     }
 
-    //contra.selectedLevel.pause(buttons[6]); // пауза. скорее всего будет осуществляться через лисенеры
-    //this.needCalc = false;
+    // contra.selectedLevel.pause(buttons[6]);
+    // пауза. скорее всего будет осуществляться через лисенеры
+    // this.needCalc = false;
     if (!this.needCalc) {
       return;
     }
 
-    let collisionSArray = contra.selectedLevel.platformActual.filter(
-      platform => platform.sprite.isStaticIntersect(this.states['run'].sprite.getStaticBoxS(0, 28, 0, this.fallSpeed - 28)));
+    const collisionSArray = contra.selectedLevel.platformActual.filter(
+      (platform) => platform.sprite.isStaticIntersect(
+        this.states.run.sprite.getStaticBoxS(0, 28, 0, this.fallSpeed - 28),
+      ),
+    );
 
-    let collisionDArray = moveX > 0 ? contra.selectedLevel.platformActual.filter(
-      platform => platform.sprite.isStaticIntersect(this.states['run'].sprite.getStaticBoxD(this.moveSpeed))) : [];
+    const collisionDArray = moveX > 0 ? contra.selectedLevel.platformActual.filter(
+      (platform) => platform.sprite.isStaticIntersect(
+        this.states.run.sprite.getStaticBoxD(this.moveSpeed),
+      ),
+    ) : [];
 
-    let collisionAArray = moveX < 0 ? contra.selectedLevel.platformActual.filter(
-      platform => platform.sprite.isStaticIntersect(this.states['run'].sprite.getStaticBoxA(-this.moveSpeed))) : [];
+    const collisionAArray = moveX < 0 ? contra.selectedLevel.platformActual.filter(
+      (platform) => platform.sprite.isStaticIntersect(
+        this.states.run.sprite.getStaticBoxA(-this.moveSpeed),
+      ),
+    ) : [];
 
     // Разработка
     /*
-		contra.player.states['stay'].sprite.drawStaticBoxS(0, 28, 0, this.fallSpeed - 28);
+    contra.player.states['stay'].sprite.drawStaticBoxS(0, 28, 0, this.fallSpeed - 28);
     contra.player.states['stay'].sprite.drawStaticBoxA(-this.moveSpeed, 0, 0, 0);
-		contra.player.states['stay'].sprite.drawStaticBoxD(this.moveSpeed, 0, 0, 0);
-		*/
-    //
+    contra.player.states['stay'].sprite.drawStaticBoxD(this.moveSpeed, 0, 0, 0);
+    */
 
-    let buttomColArray = collisionSArray.filter(platform => platform.collision === 'BOTTOM');
-    let waterColArray = buttomColArray.length > 0 ? [] : collisionSArray.filter(platform => platform.collision === 'WATER');
+    const buttomColArray = collisionSArray.filter((platform) => platform.collision === 'BOTTOM');
+    const waterColArray = buttomColArray.length > 0 ? [] : collisionSArray.filter((platform) => platform.collision === 'WATER');
 
     switch (this.pose) {
       case 'AIR':
         if (this.vectorJumpY < 0) {
           dy = this.fallSpeed * this.vectorJumpY;
+        } else if (buttomColArray.length > 0) {
+          dy = buttomColArray[0].sprite.y - (this.states.run.sprite.y + this.states.run.sprite.h);
+          this.selectState('stay');
+          this.vectorJumpX = 0;
+          this.pose = 'PLATFORM';
+          // this.needCalc = false;
+        } else if (waterColArray.length > 0) {
+          dy = waterColArray[0].sprite.y - (this.states.run.sprite.y + this.states.run.sprite.h);
+          this.startSwim();
+          return [0, 0]; // Метод же не возвращает значение. Зачем return?
         } else {
-          if (buttomColArray.length > 0) {
-            dy = buttomColArray[0].sprite.y - (this.states['run'].sprite.y + this.states['run'].sprite.h);
-            this.selectState('stay');
-            this.vectorJumpX = 0;
-            this.pose = 'PLATFORM';
-            // this.needCalc = false;
-          } else if (waterColArray.length > 0) {
-            dy = waterColArray[0].sprite.y - (this.states['run'].sprite.y + this.states['run'].sprite.h);
-            this.startSwim();
-            return [0, 0];
-          } else {
-            dy = this.fallSpeed * this.vectorJumpY;
-          }
+          dy = this.fallSpeed * this.vectorJumpY;
         }
 
         if (moveX !== 0) {
@@ -158,53 +165,49 @@ class Person {
           dy -= this.fallSpeed;
           this.selectState('fall');
           this.pose = 'AIR';
-        } else {
-          if (buttons[4]) {
-            if (buttons[2]) {
-              this.jumpDown(buttomColArray);
-            } else {
-              this.jump();
-            }
+        } else if (buttons[4]) {
+          if (buttons[2]) {
+            this.jumpDown(buttomColArray);
           } else {
-            dx = moveX * this.moveSpeed;
-            if (dx !== 0) {
-              if (buttons[0]) {
-                this.selectState('run_Top');
-              } else if (buttons[2]) {
-                this.selectState('run_Bottom');
-              } else {
-                this.selectState('run');
-              }
+            this.jump();
+          }
+        } else {
+          dx = moveX * this.moveSpeed;
+          if (dx !== 0) {
+            if (buttons[0]) {
+              this.selectState('run_Top');
+            } else if (buttons[2]) {
+              this.selectState('run_Bottom');
             } else {
-              if (buttons[0]) {
-                this.selectState('stay_top');
-              } else if (buttons[2]) {
-                this.selectState('lie');
-              } else {
-                this.selectState('stay');
-              }
+              this.selectState('run');
             }
+          } else if (buttons[0]) {
+            this.selectState('stay_top');
+          } else if (buttons[2]) {
+            this.selectState('lie');
+          } else {
+            this.selectState('stay');
           }
         }
 
         break;
       case 'WATER':
-        if (collisionDArray.filter(platform => platform.collision === 'WATERLEFT').length === 1) {
+        if (collisionDArray.filter((platform) => platform.collision === 'WATERLEFT').length === 1) {
           this.endSwim(pjs, 5);
-          return [0, 0];
-        } else if (collisionAArray.filter(platform => platform.collision === 'WATERRIGHT').length === 1) {
+          return [0, 0]; // Метод же не возвращает значение. Зачем return?
+        } if (collisionAArray.filter((platform) => platform.collision === 'WATERRIGHT').length === 1) {
           this.endSwim(pjs, -5);
-          return [0, 0];
-        } else {
-          if (buttons[2]) {
-            this.selectState('dive');
-            this.assailable = false;
-          } else {
-            this.selectState('swim');
-            dx = moveX * this.moveSpeed;
-            this.assailable = true;
-          }
+          return [0, 0]; // Метод же не возвращает значение. Зачем return?
         }
+        if (buttons[2]) {
+          this.selectState('dive');
+          this.assailable = false;
+        } else {
+          this.selectState('swim');
+          dx = moveX * this.moveSpeed;
+          this.assailable = true;
+        }
+
         break;
       default:
         break;
@@ -218,8 +221,8 @@ class Person {
       this.die();
     }
 
-    let level = contra.selectedLevel;
-    if (dx < 0 && level.leftBorder.sprite.isStaticIntersect(this.states['run'].sprite.getStaticBoxA(-this.moveSpeed))) {
+    const level = contra.selectedLevel;
+    if (dx < 0 && level.leftBorder.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxA(-this.moveSpeed))) {
       dx = 0;
     }
     this.spritesMesh.move(pjs.vector.point(dx, dy));
@@ -237,11 +240,11 @@ class Person {
       animation: this.pjs.tiles.newImage(path).getAnimation(xS, yS, w, h, frames),
       x: xCenter - w / 2 + xCoef,
       y: yBottom - h + yCoef,
-      w: w,
-      h: h,
-      delay: delay
+      w,
+      h,
+      delay,
     });
   }
 }
 
-export { Person };
+export default Person;

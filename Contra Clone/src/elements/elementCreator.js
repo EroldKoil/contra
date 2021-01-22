@@ -1,4 +1,4 @@
-//{ name: 'bridge', x: 24 * blockSaize, y: 4 * blockSaize, width: 4 },
+// { name: 'bridge', x: 24 * blockSaize, y: 4 * blockSaize, width: 4 },
 
 import Bridge from './bridge';
 

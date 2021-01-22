@@ -1,4 +1,4 @@
-import { Person } from './person.js';
+import Person from './person';
 
 const playerSprites = [
   { name: 'stay', data: [1, 8, 22, 34, 1, 10, 0, 0] },
@@ -25,11 +25,10 @@ const playerSprites = [
   { name: 'fall', data: [89, 45, 20, 34, 1, 10, 0, 0] },
 ];
 
-let path = './assets/sprites/player/player.png';
-let xCenter = 40;
-let yBottom = 5;
-let health = 1;
-
+const path = './assets/sprites/player/player.png';
+const xCenter = 40;
+const yBottom = 5;
+const health = 1;
 
 export default class Player extends Person {
   constructor(name, pjs) {
@@ -55,7 +54,7 @@ export default class Player extends Person {
   endSwim(pjs, dx) {
     this.selectState('stay');
     this.pose = 'AIR';
-    this.spritesMesh.move(pjs.vector.point(dx, -11))
+    this.spritesMesh.move(pjs.vector.point(dx, -11));
     this.needCalc = false;
     setTimeout(() => {
       this.needCalc = true;
@@ -64,12 +63,9 @@ export default class Player extends Person {
 
   shoot(buttons) {
     if (this.canShoot) {
-
-
-
       let shotStart = { x: 0, y: 0 };
       let shotVector = 0;
-      let sprite = this.selectedState.sprite;
+      const { sprite } = this.selectedState;
 
       switch (this.selectedState.name) {
         case 'jump':
@@ -183,14 +179,11 @@ export default class Player extends Person {
           break;
       }
 
-
-
-      if (this.selectedState.name !== 'jump' &&
-        this.selectedState.name !== 'fall' &&
-        this.selectedState.name !== 'swim') {
+      if (this.selectedState.name !== 'jump'
+        && this.selectedState.name !== 'fall'
+        && this.selectedState.name !== 'swim') {
         this.selectState(`${this.selectedState.name}AndFire`);
       }
-
 
       if (shotStart) {
         this.weapon.shoot(this, shotStart, shotVector);
@@ -202,7 +195,6 @@ export default class Player extends Person {
       }
     }
   }
-
 
   die() {
     this.selectState('die');
