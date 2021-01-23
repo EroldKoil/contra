@@ -1,4 +1,4 @@
-export default class EnemyCreator {
+class EnemyCreator {
   constructor() {
 
   }

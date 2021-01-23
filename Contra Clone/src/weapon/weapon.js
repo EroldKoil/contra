@@ -1,4 +1,7 @@
-import Player from './../player';
+/* eslint-disable eol-last */
+/* eslint-disable max-len */
+/* eslint-disable import/no-cycle */
+import Player from '../player';
 import BulletM from './bulletM';
 import BulletF from './bulletF';
 import BulletL from './bulletL';
@@ -15,12 +18,8 @@ export default class Weapon {
     this.changeWeapon(type);
   }
 
-
-
   shoot(vectorShoot, x, y) {
-    let getDxy = (vector) => {
-      return [+(this.speed * Math.cos(vector)).toFixed(2), +(-this.speed * Math.sin(vector)).toFixed(2)];
-    }
+    const getDxy = (vector) => [+(this.speed * Math.cos(vector)).toFixed(2), +(-this.speed * Math.sin(vector)).toFixed(2)];
     switch (this.type) {
       case 'D':
         this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot), this.level, 'D'));
@@ -32,8 +31,8 @@ export default class Weapon {
         this.bulletArray.push(new BulletF(x, y, ...getDxy(vectorShoot), this.level));
         break;
       case 'S':
-        for (let i = 0; i < 5; i++) {
-          this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot - Math.PI / 6 + (Math.PI / 12 * i)), this.level, 'S'));
+        for (let i = 0; i < 5; i += 1) {
+          this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot - Math.PI / 6 + ((Math.PI / 12) * i)), this.level, 'S'));
         }
         break;
       case 'L':

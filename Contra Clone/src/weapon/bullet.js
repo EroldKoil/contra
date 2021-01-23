@@ -1,5 +1,7 @@
+/* eslint-disable eol-last */
+/* eslint-disable import/no-cycle */
 import SprObject from '../sprObject';
-import pjs from './../index';
+import contra from '../index';
 
 export default class Bullet extends SprObject {
   constructor(damage, x, y, dx, dy) {
@@ -12,16 +14,13 @@ export default class Bullet extends SprObject {
   }
 
   draw(level, bulletsArray) {
-    this.sprite.move(pjs.vector.point(this.dx, this.dy));
+    this.sprite.move(contra.pjs.vector.point(this.dx, this.dy));
     if (!this.sprite.isStaticIntersect(level.levelBorder.sprite.getStaticBox())) {
       bulletsArray.splice(bulletsArray.indexOf(this), 1);
     } else {
       this.sprite.draw();
+      this.sprite.drawStaticBox();
       // проверка на попадание в противника или игрока. зависит от хозяина пули
     }
-
-
-
   }
-
 }

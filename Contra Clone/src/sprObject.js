@@ -1,4 +1,8 @@
-import pjs from './index';
+/* eslint-disable eol-last */
+/* eslint-disable class-methods-use-this */
+/* eslint-disable import/no-cycle */
+import contra from './index';
+
 export default class SprObject {
   constructor(x, y, width, height) {
     this.width = width;
@@ -7,16 +11,29 @@ export default class SprObject {
     this.y = y;
   }
 
-  createSprite(spriteInfo, levelSprites, x, y) {
-    /*console.log('3');
-    console.log('spriteInfo', spriteInfo);*/
-    return pjs.game.newAnimationObject({
-      animation: levelSprites.getAnimation(spriteInfo.x, spriteInfo.y, spriteInfo.w / spriteInfo.frames, spriteInfo.h, spriteInfo.frames),
-      x: x,
-      y: y,
-      w: spriteInfo.w / spriteInfo.frames,
+  createSprite(spriteInfo, sprites, x, y) {
+    return contra.pjs.game.newAnimationObject({
+      animation: sprites.getAnimation(
+        spriteInfo.x,
+        spriteInfo.y,
+        spriteInfo.frames ? (spriteInfo.w / spriteInfo.frames) : spriteInfo.w,
+        spriteInfo.h,
+        spriteInfo.frames || 1,
+      ),
+      x,
+      y,
+      w: spriteInfo.frames ? spriteInfo.w / spriteInfo.frames : spriteInfo.w,
       h: spriteInfo.h,
       delay: spriteInfo.delay ? spriteInfo.delay : 100,
+    });
+  }
+
+  newRect(x, y, w, h) {
+    return contra.pjs.game.newRectObject({
+      x,
+      y,
+      w,
+      h,
     });
   }
 }

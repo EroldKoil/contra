@@ -1,53 +1,59 @@
-/*import { game, contra, tiles } from './index.js';*/
+/* eslint-disable eol-last */
+/* eslint-disable import/named */
+/* eslint-disable import/no-cycle */
+/* eslint-disable import/extensions */
+/* import { game, contra, tiles } from './index.js'; */
 import Platform from './platform.js';
-import SprObject from './SprObject';
+import SprObject from './sprObject';
+import contra from './index';
 
 export default class Bg extends SprObject {
   constructor(name, spriteInfo, width, height, x, y, level, canJumpDown) {
-      super(x, y, width, height);
+    super(x, y, width, height);
 
-      switch (name) {
-        case 'p1':
-        case 'pw1':
-        case 'pw2':
-          this.platforms = [new Platform(width - 4, 1, x + 2, y + 6, 'BOTTOM', canJumpDown)];
-          break;
-        case 'p2':
-          this.platforms = [new Platform(width - 4, 1, x + 2, y + height / 2 + 6, 'BOTTOM', canJumpDown)];
-          break;
-        case 'w':
-        case 'w2':
-        case 'w3':
-        case 'w6':
-        case 'w8':
-          if (y > 190) {
-            this.platforms = [new Platform(width, 3, x, y + height / 2, 'WATER', canJumpDown)];
-          }
-          break;
-        case 'w4':
-          this.platforms = [
-            new Platform(3, height, x + width + 3, y + 6, 'WATERLEFT', canJumpDown),
-            new Platform(width, 3, x, y + height / 2, 'WATER', canJumpDown)
-          ];
-          break;
-        case 'w5':
-          this.platforms = [
-            new Platform(3, height, x - 6, y + 6, 'WATERRIGHT', canJumpDown),
-            new Platform(width, 3, x, y + height / 2, 'WATER', canJumpDown)
-          ];
-          break;
-        default:
-          break;
-      }
-
-      this.sprite = this.createSprite(spriteInfo, level.levelSprites, this.x, this.y);
-
-      level.bgArray.push(this);
-      if (this.platforms) {
-        this.platforms.forEach((el) => { el.addToActual(level) });
-      }
+    switch (name) {
+      case 'p1':
+      case 'pw1':
+      case 'pw2':
+        this.platforms = [new Platform(width - 4, 1, x + 2, y + 6, 'BOTTOM', canJumpDown)];
+        break;
+      case 'p2':
+        this.platforms = [new Platform(width - 4, 1, x + 2, y + height / 2 + 6, 'BOTTOM', canJumpDown)];
+        break;
+      case 'w':
+      case 'w2':
+      case 'w3':
+      case 'w6':
+      case 'w8':
+        if (y > 190) {
+          this.platforms = [new Platform(width, 3, x, y + height / 2, 'WATER', canJumpDown)];
+        }
+        break;
+      case 'w4':
+        this.platforms = [
+          new Platform(3, height, x + width + 3, y + 6, 'WATERLEFT', canJumpDown),
+          new Platform(width, 3, x, y + height / 2, 'WATER', canJumpDown),
+        ];
+        break;
+      case 'w5':
+        this.platforms = [
+          new Platform(3, height, x - 6, y + 6, 'WATERRIGHT', canJumpDown),
+          new Platform(width, 3, x, y + height / 2, 'WATER', canJumpDown),
+        ];
+        break;
+      default:
+        break;
     }
-    /*
+
+    this.sprite = this.createSprite(spriteInfo, contra.res.levelS, this.x, this.y);
+
+    level.bgArray.push(this);
+    if (this.platforms) {
+      this.platforms.forEach((el) => { el.addToActual(level); });
+    }
+  }
+
+  /*
       tryToActual(level, needRemove) {
         if (this.x < camera.getPosition().x + contra.options.screenWidth * 1.5) {
           this.addToActual(level, needRemove);
@@ -64,5 +70,5 @@ export default class Bg extends SprObject {
         if (this.platforms) {
           this.platforms.forEach((el) => { el.addToActual(level) });
         }
-      }*/
+      } */
 }

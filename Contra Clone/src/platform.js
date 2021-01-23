@@ -1,21 +1,19 @@
+/* eslint-disable eol-last */
+/* eslint-disable import/no-unresolved */
 // collision - направление сталкивания : VERTICAL, LEFT, RIGHT
-import SprObject from './SprObject';
-import pjs from './index';
+// eslint-disable-next-line import/no-cycle
+// eslint-disable-next-line import/no-unresolved
+// eslint-disable-next-line import/no-cycle
+import SprObject from './sprObject';
 
 export default class Platform extends SprObject {
-  constructor(width, height, x, y, collision, canJumpDown) {
-    super(x, y, width, height);
+  constructor(w, h, x, y, collision, canJumpDown) {
+    super(x, y, w, h);
     this.collision = collision;
     if (collision === 'BOTTOM') {
       this.canJumpDown = canJumpDown;
     }
-    this.sprite = pjs.game.newImageObject({
-      file: './assets/sprites/platform.png',
-      x: x,
-      y: y,
-      w: width,
-      h: height,
-    });
+    this.sprite = this.newRect(x, y, w, h);
   }
 
   moveX(dx) {
