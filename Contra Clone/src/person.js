@@ -94,7 +94,8 @@ export default class Person {
 
   tryRemove(camPos) {
     if (camPos > this.xCenter + 20) {
-      this.level.enemyArray.splice(this.level.elementsArray.indexOf(this), 1);
+      console.log(camPos, this.xCenter, this);
+      this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
     }
   }
 }

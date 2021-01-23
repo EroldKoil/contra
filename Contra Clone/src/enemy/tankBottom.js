@@ -13,9 +13,7 @@ const keys = [
 
 export default class TankBottom extends Person {
   constructor(xCenter, yBottom, level) {
-    console.log('TankBottom');
     super(xCenter, yBottom, 15, level.enemiesInfo, keys, contra.res.enemyS, level);
-    console.log('TankBottom after');
     this.health = 10;
     this.level = level;
     this.weapon = new Weapon('E', this, 1000, 1, 1.5);
@@ -26,7 +24,7 @@ export default class TankBottom extends Person {
   tryAction() {
     this.spritesMesh.draw();
     const camPos = contra.pjs.camera.getPosition().x;
-    if (!this.started && camPos > this.xCenter - 210) {
+    if (!this.started && camPos > this.xCenter - 230) {
       this.open();
     } else {
       this.tryRemove(camPos);

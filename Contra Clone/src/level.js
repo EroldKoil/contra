@@ -123,8 +123,9 @@ const map = {
       { name: 'tankInRock', x: 336, y: 160 },
       { name: 'tankBottom', x: 386, y: 96 },
 
-
-
+      { name: 'tankBottom', x: 2065, y: 160 },
+      { name: 'tankBottom', x: 2192, y: 64 },
+      { name: 'tankBottom', x: 2897, y: 128 },
       { name: 'tankInRock', x: 1264, y: 160 },
       { name: 'tankInRock', x: 1650, y: 128 },
       { name: 'tankInRock', x: 1841, y: 128 },
@@ -583,6 +584,13 @@ const map = {
       h: 5,
       frames: 1,
     },
+    medal: {
+      x: 512,
+      y: 10,
+      w: 8,
+      h: 16,
+      frames: 1,
+    },
   },
   enemiesInfo: {
     firstBossShoot: {
@@ -885,8 +893,8 @@ const map = {
       w: 34,
       h: 32,
       frames: 4,
-      delay: 10,
-      xCoef: 0,
+      delay: 8,
+      xCoef: -1,
       yCoef: 0,
     },
     vorJump: {

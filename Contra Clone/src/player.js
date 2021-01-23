@@ -277,6 +277,16 @@ export default class Player extends Person {
     this.moveSpeed = 2;
     this.fallSpeed = 1.8;
     this.selectState('jump');
+    this.medals = [];
+    //xS, yS, w, h, frames, delay, xCoef, yCoef, image
+
+    for (let i = 0; i < this.lifes; i += 1) {
+      const medal = this.createSprite(...Object.values(level.elementsInfo.medal), 0, 0, 0, contra.res.elementS);
+      this.medals.push(medal);
+      medal.x = 10 + 10 * i;
+      medal.y = 2;
+    }
+
     this.center = contra.pjs.game.newRectObject({
       x: 0,
       y: 0,
@@ -418,13 +428,15 @@ export default class Player extends Person {
     }
 
     this.spritesMesh.move(p(dx, dy));
-    if (dx > 0 && this.spritesMesh.x > contra.pjs.camera.getPosition().x + 32 * 2) {
+    if (dx > 0 && this.spritesMesh.x > contra.pjs.camera.getPosition().x + 32 * 4) {
+      this.medals.forEach((el) => { el.x += dx; });
       contra.pjs.camera.move(p(dx, 0));
       level.deathPlatform.sprite.move(p(dx, 0));
       level.leftBorder.sprite.move(p(dx, 0));
       level.levelBorder.sprite.move(p(dx, 0));
       contra.selectedLevel.tryRefreshActualElements();
     }
+    this.medals.forEach((el) => { el.draw(); });
   }
 
   startSwim() {
