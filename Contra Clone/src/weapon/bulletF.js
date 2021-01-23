@@ -1,7 +1,5 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable eol-last */
-/* eslint-disable class-methods-use-this */
-/* eslint-disable max-len */
+/* eslint-disable*/
+
 import Bullet from './bullet';
 import contra from '../index';
 

@@ -1,17 +1,8 @@
-/* eslint-disable eol-last */
-/* eslint-disable class-methods-use-this */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
-/* eslint-disable spaced-comment */
-/* eslint-disable no-tabs */
-/* eslint-disable no-new */
-/* eslint-disable indent */
-/* eslint-disable import/named */
-/* eslint-disable import/no-cycle */
+/* eslint-disable */
+
 import Bg from './bg';
 import Platform from './platform';
 import ElementCreator from './elements/elementCreator';
-import EnemyCreator from './enemy/enemyCreator';
 
 import contra from './index';
 
@@ -126,24 +117,19 @@ const map = {
       [0, 'g10', 'g7', 'g7', 'g7', 'g7', 'p1-n'],
       [0, 0, 0, 0, 0, 0, 'p1'],
     ],
-    elements: [{
-        name: 'bridge',
-        x: 768,
-        y: 96,
-        blockCount: 4,
-      },
-      {
-        name: 'bridge',
-        x: 1056,
-        y: 96,
-        blockCount: 4,
-      },
+    elements: [
+      { name: 'bridge', x: 768, y: 96, blockCount: 4, },
+      { name: 'bridge', x: 1056, y: 96, blockCount: 4, },
+      { name: 'tankInRock', x: 336, y: 160 },
+      { name: 'tankBottom', x: 386, y: 96 },
 
-      { name: 'tankInRock', x: 632, y: 80 },
-      { name: 'tankInRock', x: 825, y: 64 },
-      { name: 'tankInRock', x: 825, y: 64 },
-      { name: 'tankInRock', x: 1560, y: 96 },
-      { name: 'tankInRock', x: 1624, y: 96 },
+
+
+      { name: 'tankInRock', x: 1264, y: 160 },
+      { name: 'tankInRock', x: 1650, y: 128 },
+      { name: 'tankInRock', x: 1841, y: 128 },
+      { name: 'tankInRock', x: 3121, y: 192 },
+      { name: 'tankInRock', x: 3249, y: 192 },
     ],
   }],
   spritesInfo: {
@@ -723,89 +709,9 @@ const map = {
       w: 126,
       h: 32,
     },
-    tankR240: {
-      x: 180,
-      y: 91,
-      w: 34,
-      h: 32,
-      frames: 3,
-      delay: 10,
-      xCoef: 0,
-      yCoef: 0,
-    },
-    tankR190: {
-      x: 1,
-      y: 125,
-      w: 34,
-      h: 32,
-      frames: 3,
-      delay: 10,
-      xCoef: 0,
-      yCoef: 0,
-    },
-    tankR330: {
-      x: 103,
-      y: 125,
-      w: 34,
-      h: 32,
-      frames: 3,
-      delay: 10,
-      xCoef: 0,
-      yCoef: 0,
-    },
-    tankR300: {
-      x: 1,
-      y: 159,
-      w: 34,
-      h: 32,
-      frames: 3,
-      delay: 10,
-      xCoef: 0,
-      yCoef: 0,
-    },
-    tankR270: {
-      x: 103,
-      y: 159,
-      w: 34,
-      h: 32,
-      frames: 3,
-      delay: 10,
-      xCoef: 0,
-      yCoef: 0,
-    },
     tankR0: {
       x: 1,
       y: 193,
-      w: 34,
-      h: 32,
-      frames: 3,
-      delay: 10,
-      xCoef: 0,
-      yCoef: 0,
-    },
-    tankR120: {
-      x: 103,
-      y: 193,
-      w: 34,
-      h: 32,
-      frames: 3,
-      delay: 10,
-      xCoef: 0,
-      yCoef: 0,
-    },
-    tankR150: {
-      x: 1,
-      y: 227,
-      w: 34,
-      h: 32,
-      frames: 3,
-      delay: 10,
-      xCoef: 0,
-      yCoef: 0,
-    },
-    tankR180: {
-      x: 103,
-      y: 227,
       w: 34,
       h: 32,
       frames: 3,
@@ -843,9 +749,9 @@ const map = {
       xCoef: 0,
       yCoef: 0,
     },
-    tankRB: {
-      x: 301,
-      y: 35,
+    tankR120: {
+      x: 103,
+      y: 193,
       w: 34,
       h: 32,
       frames: 3,
@@ -853,9 +759,9 @@ const map = {
       xCoef: 0,
       yCoef: 0,
     },
-    tankRB30: {
-      x: 299,
-      y: 69,
+    tankR150: {
+      x: 1,
+      y: 227,
       w: 34,
       h: 32,
       frames: 3,
@@ -863,9 +769,59 @@ const map = {
       xCoef: 0,
       yCoef: 0,
     },
-    tankRB60: {
-      x: 282,
-      y: 103,
+    tankR180: {
+      x: 103,
+      y: 227,
+      w: 34,
+      h: 32,
+      frames: 3,
+      delay: 10,
+      xCoef: 0,
+      yCoef: 0,
+    },
+    tankR210: {
+      x: 1,
+      y: 125,
+      w: 34,
+      h: 32,
+      frames: 3,
+      delay: 10,
+      xCoef: 0,
+      yCoef: 0,
+    },
+    tankR240: {
+      x: 180,
+      y: 91,
+      w: 34,
+      h: 32,
+      frames: 3,
+      delay: 10,
+      xCoef: 0,
+      yCoef: 0,
+    },
+    tankR270: {
+      x: 103,
+      y: 159,
+      w: 34,
+      h: 32,
+      frames: 3,
+      delay: 10,
+      xCoef: 0,
+      yCoef: 0,
+    },
+    tankR300: {
+      x: 1,
+      y: 159,
+      w: 34,
+      h: 32,
+      frames: 3,
+      delay: 10,
+      xCoef: 0,
+      yCoef: 0,
+    },
+    tankR330: {
+      x: 103,
+      y: 125,
       w: 34,
       h: 32,
       frames: 3,
@@ -893,6 +849,36 @@ const map = {
       xCoef: 0,
       yCoef: 0,
     },
+    tankRB180: {
+      x: 301,
+      y: 35,
+      w: 34,
+      h: 32,
+      frames: 3,
+      delay: 10,
+      xCoef: 0,
+      yCoef: 0,
+    },
+    tankRB150: {
+      x: 299,
+      y: 69,
+      w: 34,
+      h: 32,
+      frames: 3,
+      delay: 10,
+      xCoef: 0,
+      yCoef: 0,
+    },
+    tankRB120: {
+      x: 282,
+      y: 103,
+      w: 34,
+      h: 32,
+      frames: 3,
+      delay: 10,
+      xCoef: 0,
+      yCoef: 0,
+    },
     tankRBOpen: {
       x: 204,
       y: 243,
@@ -900,6 +886,8 @@ const map = {
       h: 32,
       frames: 4,
       delay: 10,
+      xCoef: 0,
+      yCoef: 0,
     },
     vorJump: {
       x: 384,
@@ -939,8 +927,8 @@ export default class Level {
     this.pausePress = false;
     this.bgArray = [];
     this.elementsArray = [];
-    this.enemyArray = [];
 
+    this.enemyArray = [];
     this.platformActual = [];
     this.elementsActual = [];
 
@@ -1033,9 +1021,9 @@ export default class Level {
     const { isDown } = pjs.keyControl;
 
     pjs.game.newLoop('myGame', () => {
-      // game.clear();
+      pjs.game.clear();
 
-      // draw Sprites
+      // draw BG
       level.bgArray.forEach((el) => {
         el.sprite.draw();
       });
@@ -1059,12 +1047,12 @@ export default class Level {
 
       //draw enemy
       level.enemyArray.forEach((el) => {
-        el.spritesMesh.draw();
+        el.tryAction();
         //  el.selectedState.sprite.drawStaticBox()
       });
 
       level.bulletsArray.forEach((el) => {
-        el.draw();
+        el.draw(level, level.bulletsArray);
       });
 
       level.playerBulletsArray.forEach((el) => {
@@ -1086,8 +1074,15 @@ export default class Level {
         isDown('SPACE'),
       ]);
       contra.player.spritesMesh.draw();
-      // contra.player.states['swim_top'].sprite.visible = true;
-      //  contra.player.states['swim_top'].sprite.draw();
+
+      let center = contra.player.center;
+      let pl = contra.player.selectedState.sprite;
+      center.x = pl.x + pl.w / 2;
+      center.y = pl.y + pl.h / 2;
+      center.drawStaticBox();
+
+      //contra.player.states['swim_top'].sprite.visible = true;
+      //contra.player.states['swim_top'].sprite.draw();
     });
 
     pjs.game.setLoop('myGame');

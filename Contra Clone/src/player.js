@@ -221,7 +221,7 @@ const playerSprites = {
   swimAndFire: {
     x: 91,
     y: 235,
-    w: 27,
+    w: 26,
     h: 16,
     frames: 2,
     delay: 15,
@@ -239,9 +239,9 @@ const playerSprites = {
     yCoef: 0,
   },
   swim_top_forward: {
-    x: 149,
+    x: 148,
     y: 234,
-    w: 21,
+    w: 20,
     h: 18,
     frames: 2,
     delay: 15,
@@ -260,8 +260,8 @@ const playerSprites = {
   },
 };
 
-const xCenter = 40;
-const yBottom = 25;
+const xCenter = 80;
+const yBottom = 60;
 const health = 1;
 
 export default class Player extends Person {
@@ -274,7 +274,15 @@ export default class Player extends Person {
     this.pose = 'AIR'; // air , platform , water, death
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
     this.vectorJumpX = 0; // -1 left, 1 right
+    this.moveSpeed = 2;
+    this.fallSpeed = 1.8;
     this.selectState('jump');
+    this.center = contra.pjs.game.newRectObject({
+      x: 0,
+      y: 0,
+      w: 5,
+      h: 5,
+    });
   }
 
   // buttons = [UP, Right, Bottom, Left,   Jump, Shot, SPACE]
@@ -614,6 +622,19 @@ export default class Player extends Person {
     }
   }
 
+  selectState(stateName) {
+    if (this.dontShoot || stateName === 'jump' || stateName === 'fall' || stateName === 'swim_top_forward' || stateName === 'swim_top' || stateName === 'dip') {
+      for (const key in this.states) {
+        if (key === stateName) {
+          this.states[key].sprite.visible = true;
+          this.selectedState = this.states[key];
+        } else {
+          this.states[key].sprite.visible = false;
+        }
+      }
+    }
+  }
+
   die() {
     this.selectState('die');
     this.pose = 'DEATH';
@@ -628,5 +649,12 @@ export default class Player extends Person {
         this.needCalc = true;
       }, 3000);
     }, 500);
+  }
+
+  setAssailable(time) {
+    this.assailable = false;
+    setTimeout(() => {
+      this.assailable = true;
+    }, time);
   }
 }

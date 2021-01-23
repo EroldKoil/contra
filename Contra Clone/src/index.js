@@ -61,13 +61,15 @@ contra.lang = getLanguageObject(contra.options.get('language'));
 
 const { pjs } = contra;
 
-document.querySelector('dialog').showModal(); // Показать модальное окно
+//document.querySelector('dialog').showModal(); // Показать модальное окно
 
 // Обработчик кнопки модального окна
-document.getElementById('start-button').addEventListener('click', () => {
+/*document.getElementById('start-button').addEventListener('click', () => {
   document.querySelector('dialog').close();
   mainMenu(); // Все стартует отсюда!
-});
+});*/
+
+mainMenu();
 
 window.onresize = resize;
 

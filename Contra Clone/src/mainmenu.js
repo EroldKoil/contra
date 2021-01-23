@@ -4,7 +4,7 @@
 
 import TextLayer from './text';
 import getLanguageObject from './multilang';
-//import titleSound from '../assets/audio/title.mp3';
+import titleSound from '../assets/audio/title.mp3';
 import contra from './index';
 
 function createMenuText(textLayer, lang) {
@@ -54,7 +54,7 @@ export default function mainMenu() {
       pjs.camera.setPosition(pjs.vector.point(cameraPosition, 0));
     } else {
       pjs.OOP.once('PlayTitleSound', () => {
-        // new Audio(titleSound).play();
+        new Audio(titleSound).play();
         menuState = 0;
       });
     }
@@ -87,7 +87,6 @@ export default function mainMenu() {
           case 1:
             // Смена языка приложения
             contra.options.set('language', (contra.options.get('language') + 1) % 3);
-            // eslint-disable-next-line no-param-reassign
             contra.lang = getLanguageObject(contra.options.get('language'));
             createMenuText(textLayer, contra.lang);
             break;
@@ -126,9 +125,8 @@ export default function mainMenu() {
       } else {
         delay -= 1;
       }
-
-      textLayer.draw();
     }
+    textLayer.draw();
   });
 
   pjs.game.setLoop('main_menu');

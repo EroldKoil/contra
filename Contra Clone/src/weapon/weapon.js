@@ -7,12 +7,12 @@ import BulletF from './bulletF';
 import BulletL from './bulletL';
 
 export default class Weapon {
-  constructor(type, sniper) {
+  constructor(type, sniper, reloading = 500, damage = 1, speed = 3) {
     this.level = sniper.level;
     this.sniper = sniper;
-    this.reloading = 300;
-    this.damage = 1;
-    this.speed = 3;
+    this.reloading = reloading;
+    this.damage = damage;
+    this.speed = speed;
     this.canShoot = true;
     this.bulletArray = this.sniper instanceof Player ? this.level.playerBulletsArray : this.level.bulletsArray;
     this.changeWeapon(type);
@@ -22,6 +22,7 @@ export default class Weapon {
     const getDxy = (vector) => [+(this.speed * Math.cos(vector)).toFixed(2), +(-this.speed * Math.sin(vector)).toFixed(2)];
     switch (this.type) {
       case 'D':
+      case 'E':
         this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot), this.level, 'D'));
         break;
       case 'M':
@@ -56,8 +57,11 @@ export default class Weapon {
     this.type = type;
     this.isApgreid = false;
     switch (type) {
-      case 'D':
+      case 'E':
 
+        break;
+      case 'D':
+        this.reloading = 300;
         break;
       case 'M':
         this.reloading = 200;
@@ -67,7 +71,7 @@ export default class Weapon {
         this.reloading = 1200;
         break;
       case 'S':
-
+        this.reloading = 500;
         break;
       case 'L':
         this.reloading = 1000;

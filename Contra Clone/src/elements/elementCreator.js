@@ -1,8 +1,7 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable no-new */
+/* eslint-disable */
 import Bridge from './bridge';
 import TankInRock from '../enemy/tankInRock';
-
+import TankBottom from '../enemy/tankBottom';
 export default class ElementCreator {
   constructor(el, level) {
     switch (el.name) {
@@ -11,6 +10,9 @@ export default class ElementCreator {
         break;
       case 'tankInRock':
         new TankInRock(el.x, el.y, level);
+        break;
+      case 'tankBottom':
+        new TankBottom(el.x, el.y, level);
         break;
       default:
         break;
