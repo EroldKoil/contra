@@ -1,10 +1,11 @@
 /* eslint-disable */
 
 import contra from './index';
-// import TankBottom from './enemy/tankBottom';
+import Player from './player';
+import BulletL from './weapon/bulletL'
 
 export default class Person {
-  constructor(xCenter, yBottom, health, sprites, keys, image, level) {
+  constructor(xCenter, yBottom, health, sprites, keys, image, level, typeOfDeath) {
     // if (this instanceof TankBottom) {
     //console.log(xCenter, yBottom, health, sprites, keys, image, level);
     //  }
@@ -16,10 +17,16 @@ export default class Person {
     this.dontShoot = true; // flag to understand? am I shoot now
     const spritesArr = [];
     keys.forEach((key) => {
-      const sp = this.createSprite(...Object.values(sprites[key]), image);
+      const sp = this.createSprite(image, ...Object.values(sprites[key]));
       this.states[key] = { name: key, sprite: sp };
       spritesArr.push(sp);
     });
+
+    if (!(this instanceof Player)) {
+      const sp = this.createSprite(contra.res.elementS, ...Object.values(level.elementsInfo[typeOfDeath]));
+      this.states['death'] = { name: 'death', sprite: sp };
+      spritesArr.push(sp);
+    }
 
     this.spritesMesh = contra.pjs.game.newMesh({
       x: xCenter,
@@ -35,7 +42,7 @@ export default class Person {
     this.fallSpeed = 1.8;
   }
 
-  createSprite(xS, yS, w, h, frames, delay, xCoef, yCoef, image) {
+  createSprite(image, xS, yS, w, h, frames = 1, delay = 100, xCoef = 0, yCoef = 0) {
     return contra.pjs.game.newAnimationObject({
       animation: image.getAnimation(xS, yS, w, h, frames),
       x: -(w / 2) + xCoef,
@@ -92,10 +99,26 @@ export default class Person {
     return deg === 360 ? 0 : deg;
   }
 
-  tryRemove(camPos) {
-    if (camPos > this.xCenter + 20) {
-      console.log(camPos, this.xCenter, this);
+  // Проверка объекта на столкновение с пулей
+  checkColission(aim) {
+    this.level.playerBulletsArray.forEach(bullet => {
+      if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
+          aim.isStaticIntersect(bullet.getBox()))) {
+        this.health -= bullet.damage;
+        bullet.crash(this.level.playerBulletsArray, this.health);
+        if (this.health < 1) {
+          this.die();
+        }
+      }
+    });
+  }
+
+  tryRemove(die, camPos) {
+    if (die || camPos > this.xCenter + 20) {
+      console.log('rem');
       this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
     }
   }
+
+
 }

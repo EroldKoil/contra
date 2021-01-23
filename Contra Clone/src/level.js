@@ -118,8 +118,8 @@ const map = {
       [0, 0, 0, 0, 0, 0, 'p1'],
     ],
     elements: [
-      { name: 'bridge', x: 768, y: 96, blockCount: 4, },
-      { name: 'bridge', x: 1056, y: 96, blockCount: 4, },
+      { name: 'bridge', x: 768, y: 96, blockCount: 4 },
+      { name: 'bridge', x: 1056, y: 96, blockCount: 4 },
       { name: 'tankInRock', x: 336, y: 160 },
       { name: 'tankBottom', x: 386, y: 96 },
 
@@ -515,7 +515,7 @@ const map = {
     mediumBoom: {
       x: 411,
       y: 1,
-      w: 96,
+      w: 32,
       h: 32,
       frames: 3,
       delay: 10,
@@ -893,7 +893,7 @@ const map = {
       w: 34,
       h: 32,
       frames: 4,
-      delay: 8,
+      delay: 6,
       xCoef: -1,
       yCoef: 0,
     },
@@ -935,6 +935,8 @@ export default class Level {
     this.pausePress = false;
     this.bgArray = [];
     this.elementsArray = [];
+
+    this.debag = true;
 
     this.enemyArray = [];
     this.platformActual = [];
@@ -985,7 +987,6 @@ export default class Level {
     this.enemiesInfo = map.enemiesInfo;
 
     createElement(map.levels[this.levelNumber].bg, 'BG');
-    // createElement(map.levels[this.levelNumber].enemy, 'ENEMY');
     createElement(map.levels[this.levelNumber].elements, 'ELEMENT');
 
     this.startLevel(this);
@@ -1072,6 +1073,17 @@ export default class Level {
 				el.sprite.drawStaticBox();
 			}); */
       const getKey = contra.options.options;
+
+      if (level.debag) {
+        if (isDown('B')) {
+          console.log('debag', contra.selectedLevel);
+        }
+        this.debag = false;
+        setTimeout(() => {
+          this.debag = true;
+        }, 500);
+      }
+
       contra.player.calculateMoves([
         isDown(getKey.keyUp),
         isDown(getKey.keyRight),

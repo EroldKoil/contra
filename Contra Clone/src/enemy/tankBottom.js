@@ -13,9 +13,7 @@ const keys = [
 
 export default class TankBottom extends Person {
   constructor(xCenter, yBottom, level) {
-    super(xCenter, yBottom, 15, level.enemiesInfo, keys, contra.res.enemyS, level);
-    this.health = 10;
-    this.level = level;
+    super(xCenter, yBottom, 10, level.enemiesInfo, keys, contra.res.enemyS, level, 'mediumBoom');
     this.weapon = new Weapon('E', this, 1000, 1, 1.5);
     this.selectState('none');
     level.elementsArray.push(this);
@@ -27,19 +25,22 @@ export default class TankBottom extends Person {
     if (!this.started && camPos > this.xCenter - 230) {
       this.open();
     } else {
-      this.tryRemove(camPos);
+      this.tryRemove(false, camPos);
     }
 
     if (this.started) {
+      this.checkColission(this.selectedState.sprite);
 
-      let deg = this.getDegree(30);
-      deg = deg > 180 ? 180 : deg < 120 ? 120 : deg;
-      if (`tankRB${deg}` !== this.selectedState.name) {
-        this.selectState(`tankRB${deg}`);
-      }
-      deg = Math.PI / 180 * deg;
-      if (this.weapon.canShoot) {
-        this.weapon.shoot(deg, this.xCenter + Math.cos(deg) * 16, this.yBottom - 16 - Math.sin(deg) * 16);
+      if (this.health > 0) {
+        let deg = this.getDegree(30);
+        deg = deg > 180 ? 180 : deg < 120 ? 120 : deg;
+        if (`tankRB${deg}` !== this.selectedState.name) {
+          this.selectState(`tankRB${deg}`);
+        }
+        deg = Math.PI / 180 * deg;
+        if (this.weapon.canShoot) {
+          this.weapon.shoot(deg, this.xCenter + Math.cos(deg) * 16, this.yBottom - 16 - Math.sin(deg) * 16);
+        }
       }
     }
   }
@@ -52,7 +53,14 @@ export default class TankBottom extends Person {
     setTimeout(() => {
       this.selectState('tankRB180');
       this.started = true;
-    }, 640);
+    }, 480);
   }
 
+  die() {
+    contra.score += 100;
+    this.selectState('death');
+    setTimeout(() => {
+      this.tryRemove(true);
+    }, 500);
+  }
 }

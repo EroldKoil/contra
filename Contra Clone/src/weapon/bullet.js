@@ -23,4 +23,11 @@ export default class Bullet extends SprObject {
       // проверка на попадание в противника или игрока. зависит от хозяина пули
     }
   }
+
+  getBox() {
+    return this.sprite.getStaticBox();
+  }
+  crash(bulletsArray, health) {
+    bulletsArray.splice(bulletsArray.indexOf(this), 1);
+  }
 }

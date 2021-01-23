@@ -1,13 +1,12 @@
-/* eslint-disable eol-last */
-/* eslint-disable max-len */
-/* eslint-disable import/no-cycle */
+/* eslint-disable*/
+
 import Player from '../player';
 import BulletM from './bulletM';
 import BulletF from './bulletF';
 import BulletL from './bulletL';
 
 export default class Weapon {
-  constructor(type, sniper, reloading = 500, damage = 1, speed = 3) {
+  constructor(type, sniper, reloading = 500, damage = 5, speed = 2) {
     this.level = sniper.level;
     this.sniper = sniper;
     this.reloading = reloading;
@@ -29,7 +28,14 @@ export default class Weapon {
         this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot), this.level, 'M'));
         break;
       case 'F':
-        this.bulletArray.push(new BulletF(x, y, ...getDxy(vectorShoot), this.level));
+        let i = 0;
+        const interval = setInterval(() => {
+          this.bulletArray.push(new BulletF(x, y, ...getDxy(vectorShoot), this.level));
+          i += 1;
+          if (i === 3) {
+            clearInterval(interval);
+          }
+        }, 100);
         break;
       case 'S':
         for (let i = 0; i < 5; i += 1) {

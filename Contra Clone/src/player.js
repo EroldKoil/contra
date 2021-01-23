@@ -278,10 +278,9 @@ export default class Player extends Person {
     this.fallSpeed = 1.8;
     this.selectState('jump');
     this.medals = [];
-    //xS, yS, w, h, frames, delay, xCoef, yCoef, image
 
     for (let i = 0; i < this.lifes; i += 1) {
-      const medal = this.createSprite(...Object.values(level.elementsInfo.medal), 0, 0, 0, contra.res.elementS);
+      const medal = this.createSprite(contra.res.elementS, ...Object.values(level.elementsInfo.medal));
       this.medals.push(medal);
       medal.x = 10 + 10 * i;
       medal.y = 2;

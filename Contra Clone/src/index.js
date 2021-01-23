@@ -25,6 +25,7 @@ function resize() {
 }
 
 const contra = {
+  score: 0,
   pjs: new PointJS(256, 224, { backgroundColor: 'black' }),
   options: new Options(),
   selectedLevel: null,

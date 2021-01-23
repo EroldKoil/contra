@@ -43,5 +43,10 @@ export default class BulletL extends Bullet {
     }
     this.sprite = this.createSprite(level.elementsInfo.shootL, contra.res.elementS, x + xCor, y + yCor);
     this.sprite.setAngle(dDeg);
+    console.log(this.sprite.getDynamicBox());
+  }
+
+  getBox() {
+    return this.sprite.getDynamicBox();
   }
 }
