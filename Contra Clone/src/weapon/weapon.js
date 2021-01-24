@@ -6,11 +6,10 @@ import BulletF from './bulletF';
 import BulletL from './bulletL';
 
 export default class Weapon {
-  constructor(type, sniper, reloading = 500, damage = 5, speed = 2) {
+  constructor(type, sniper, reloading = 500, speed = 2) {
     this.level = sniper.level;
     this.sniper = sniper;
     this.reloading = reloading;
-    this.damage = damage;
     this.speed = speed;
     this.canShoot = true;
     this.bulletArray = this.sniper instanceof Player ? this.level.playerBulletsArray : this.level.bulletsArray;

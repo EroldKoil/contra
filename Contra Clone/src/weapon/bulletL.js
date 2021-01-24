@@ -7,7 +7,7 @@ import contra from '../index';
 
 export default class BulletL extends Bullet {
   constructor(x, y, dx, dy, level) {
-    super(3, x, y, dx, dy);
+    super(4, x, y, dx, dy);
     let dDeg;
     let xCor = 0;
     let yCor = 0;
@@ -43,10 +43,14 @@ export default class BulletL extends Bullet {
     }
     this.sprite = this.createSprite(level.elementsInfo.shootL, contra.res.elementS, x + xCor, y + yCor);
     this.sprite.setAngle(dDeg);
-    console.log(this.sprite.getDynamicBox());
   }
 
   getBox() {
     return this.sprite.getDynamicBox();
+  }
+
+  crash(bulletsArray, health) {
+    this.sprite.w = this.sprite.w * 0.75;
+    //bulletsArray.splice(bulletsArray.indexOf(this), 1);
   }
 }

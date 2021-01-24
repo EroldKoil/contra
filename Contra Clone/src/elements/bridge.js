@@ -39,10 +39,13 @@ export default class Bridge extends Element {
         }
       }, 1000);
     }
-  }
-
-  getSprites() {
-    return [...this.sprites, ...this.boomSprites];
+    [...this.sprites, ...this.boomSprites].forEach((sp) => {
+      try {
+        sp.draw();
+      } catch (error) {
+        console.log('error');
+      }
+    });
   }
 
   boom(i) {

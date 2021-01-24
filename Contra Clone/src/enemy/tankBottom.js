@@ -13,7 +13,7 @@ const keys = [
 
 export default class TankBottom extends Person {
   constructor(xCenter, yBottom, level) {
-    super(xCenter, yBottom, 10, level.enemiesInfo, keys, contra.res.enemyS, level, 'mediumBoom');
+    super(xCenter, yBottom, 8, level.enemiesInfo, keys, contra.res.enemyS, level, 'mediumBoom');
     this.weapon = new Weapon('E', this, 1000, 1, 1.5);
     this.selectState('none');
     level.elementsArray.push(this);

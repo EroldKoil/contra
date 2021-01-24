@@ -3,6 +3,7 @@
 import Bg from './bg';
 import Platform from './platform';
 import ElementCreator from './elements/elementCreator';
+import Сurtain from './elements/curtain';
 
 import contra from './index';
 
@@ -989,6 +990,7 @@ export default class Level {
     createElement(map.levels[this.levelNumber].bg, 'BG');
     createElement(map.levels[this.levelNumber].elements, 'ELEMENT');
 
+    this.elementsActual.push(new Сurtain(this.elementsActual));
     this.startLevel(this);
   }
 
@@ -1045,13 +1047,6 @@ export default class Level {
       // draw elements
       level.elementsActual.forEach((el) => {
         el.tryAction();
-        el.getSprites().forEach((sp) => {
-          try {
-            sp.draw();
-          } catch (error) {
-            console.log('error');
-          }
-        });
       });
 
       //draw enemy
@@ -1060,10 +1055,12 @@ export default class Level {
         //  el.selectedState.sprite.drawStaticBox()
       });
 
+      // draw player bullets
       level.bulletsArray.forEach((el) => {
         el.draw(level, level.bulletsArray);
       });
 
+      // draw enemy bullets
       level.playerBulletsArray.forEach((el) => {
         el.draw(level, level.playerBulletsArray);
       });

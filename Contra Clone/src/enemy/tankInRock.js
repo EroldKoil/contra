@@ -23,7 +23,7 @@ const keys = [
 
 export default class TankInRock extends Person {
   constructor(xCenter, yBottom, level) {
-    super(xCenter, yBottom, 15, level.enemiesInfo, keys, contra.res.enemyS, level, 'mediumBoom');
+    super(xCenter, yBottom, 8, level.enemiesInfo, keys, contra.res.enemyS, level, 'mediumBoom');
     this.weapon = new Weapon('E', this, 1000, 1, 1);
     this.selectState('tankRClose');
     this.aim = contra.pjs.game.newRectObject({
