@@ -17,7 +17,7 @@ export default class Weapon {
   }
 
   shoot(vectorShoot, x, y) {
-    const getDxy = (vector) => [+(this.speed * Math.cos(vector)).toFixed(2), +(-this.speed * Math.sin(vector)).toFixed(2)];
+    const getDxy = (vector, speed = this.speed) => [+(speed * Math.cos(vector)).toFixed(2), +(-speed * Math.sin(vector)).toFixed(2)];
     switch (this.type) {
       case 'D':
       case 'E':
@@ -42,7 +42,11 @@ export default class Weapon {
         }
         break;
       case 'L':
-        this.bulletArray.push(new BulletL(x, y, ...getDxy(vectorShoot), this.level));
+        const dXY = getDxy(vectorShoot);
+        const xyCoef = getDxy(vectorShoot, 12);
+        for (let i = 0; i < 4; i++) {
+          this.bulletArray.push(new BulletL(x + xyCoef[0] * i, y + xyCoef[1] * i, ...dXY, this.level));
+        }
         break;
       default:
         break;
@@ -77,9 +81,11 @@ export default class Weapon {
         break;
       case 'S':
         this.reloading = 500;
+        this.speed = 3;
         break;
       case 'L':
         this.reloading = 1000;
+        this.speed = 4;
         break;
       default:
         break;

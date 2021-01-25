@@ -1,7 +1,5 @@
 /* eslint-disable */
 
-import Element from './element';
-import Platform from '../platform';
 import contra from '../index';
 
 export default class Сurtain {

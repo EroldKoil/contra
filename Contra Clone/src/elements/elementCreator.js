@@ -2,6 +2,7 @@
 import Bridge from './bridge';
 import TankInRock from '../enemy/tankInRock';
 import TankBottom from '../enemy/tankBottom';
+import Sniper from '../enemy/sniper';
 export default class ElementCreator {
   constructor(el, level) {
     switch (el.name) {
@@ -13,6 +14,9 @@ export default class ElementCreator {
         break;
       case 'tankBottom':
         new TankBottom(el.x, el.y, level);
+        break;
+      case 'sniper':
+        new Sniper(el.x, el.y, el.type, level);
         break;
       default:
         break;

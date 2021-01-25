@@ -1,12 +1,5 @@
-/* eslint-disable no-console */
-/* eslint-disable eol-last */
-/* eslint-disable operator-linebreak */
-/* eslint-disable max-len */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable guard-for-in */
-/* eslint-disable import/named */
-/* eslint-disable import/no-cycle */
-/* eslint-disable import/extensions */
+/* eslint-disable*/
+
 import Person from './person.js';
 import Weapon from './weapon/weapon';
 import contra from './index';
@@ -269,7 +262,7 @@ export default class Player extends Person {
     super(xCenter, yBottom, health, playerSprites, Object.keys(playerSprites), contra.res.playerS, level);
     this.lifes = 2;
     this.assailable = false; // Уязвим ли
-    this.weapon = new Weapon('S', this);
+    this.weapon = new Weapon('M', this);
     this.needCalc = true; // обновление координат и обработка кнопок;
     this.pose = 'AIR'; // air , platform , water, death
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
@@ -302,14 +295,10 @@ export default class Player extends Person {
     const p = contra.pjs.vector.point;
 
     if (this.vectorMove === -1 && moveX > 0) {
-      for (const key in this.states) {
-        this.states[key].sprite.setFlip(0, 0);
-      }
+      this.flip(0, 0);
       this.vectorMove = 1;
     } else if (this.vectorMove === 1 && moveX < 0) {
-      for (const key in this.states) {
-        this.states[key].sprite.setFlip(1, 0);
-      }
+      this.flip(1, 0);
       this.vectorMove = -1;
     }
 

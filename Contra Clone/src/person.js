@@ -69,23 +69,25 @@ export default class Person {
     }
   }
 
-  selectState(stateName) {
-    for (const key in this.states) {
-      if (key === stateName) {
-        this.states[key].sprite.visible = true;
-        this.selectedState = this.states[key];
-      } else {
-        this.states[key].sprite.visible = false;
+  selectState(stateName, selectByTime) {
+    if (!selectByTime || this.health > 0) {
+      for (const key in this.states) {
+        if (key === stateName) {
+          this.states[key].sprite.visible = true;
+          this.selectedState = this.states[key];
+        } else {
+          this.states[key].sprite.visible = false;
+        }
       }
     }
   }
 
-  getDegree(round) {
+  getDegree(round, dy = 0, dx = 0) {
     const player = contra.player.selectedState.sprite;
     const plX = player.x + player.w / 2;
     const plY = player.y + (player.h / 2)
-    const aimX = this.xCenter;
-    const aimY = this.yBottom - 16;
+    const aimX = this.xCenter + dx;
+    const aimY = this.yBottom - 16 + dy;
     let deg = Math.atan(-(aimY - plY) / (aimX - plX));
 
     if (plX > aimX) {
@@ -105,7 +107,7 @@ export default class Person {
       if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
           aim.isStaticIntersect(bullet.getBox()))) {
         this.health -= bullet.damage;
-        bullet.crash(this.level.playerBulletsArray, this.health);
+        bullet.crash(this.level.playerBulletsArray);
         if (this.health < 1) {
           this.die();
         }
@@ -113,9 +115,14 @@ export default class Person {
     });
   }
 
+  flip(x, y) {
+    for (const key in this.states) {
+      this.states[key].sprite.setFlip(x, y);
+    }
+  }
+
   tryRemove(die, camPos) {
     if (die || camPos > this.xCenter + 20) {
-      console.log('rem');
       this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
     }
   }

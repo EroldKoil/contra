@@ -24,7 +24,7 @@ const keys = [
 export default class TankInRock extends Person {
   constructor(xCenter, yBottom, level) {
     super(xCenter, yBottom, 8, level.enemiesInfo, keys, contra.res.enemyS, level, 'mediumBoom');
-    this.weapon = new Weapon('E', this, 1000, 1, 1);
+    this.weapon = new Weapon('E', this, 1000);
     this.selectState('tankRClose');
     this.aim = contra.pjs.game.newRectObject({
       x: xCenter - 10,
@@ -53,15 +53,12 @@ export default class TankInRock extends Person {
           this.selectState(`tankR${deg}`);
         }
         deg = Math.PI / 180 * deg;
-        this.aim.drawStaticBox();
+        // this.aim.drawStaticBox();
         if (this.weapon.canShoot) {
           this.weapon.shoot(deg, this.xCenter + Math.cos(deg) * 16, this.yBottom - 16 - Math.sin(deg) * 16);
         }
       }
     }
-  }
-  getSprites() {
-    //  return [...this.sprites, ...this.boomSprites];
   }
 
   open() {

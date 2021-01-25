@@ -7,10 +7,11 @@ import contra from '../index';
 
 export default class BulletM extends Bullet {
   constructor(x, y, dx, dy, level, type) {
-    super(1, x, y, dx, dy);
+    super(x, y, dx, dy);
     const { elementS } = contra.res;
     switch (type) {
       case 'M':
+
         this.sprite = this.createSprite(level.elementsInfo.shootM, elementS, x, y);
         break;
       case 'D':

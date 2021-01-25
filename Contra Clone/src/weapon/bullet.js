@@ -4,9 +4,9 @@ import SprObject from '../sprObject';
 import contra from '../index';
 
 export default class Bullet extends SprObject {
-  constructor(damage, x, y, dx, dy) {
+  constructor(x, y, dx, dy) {
     super(x, y, 0, 0);
-    this.damage = damage;
+    this.damage = 1;
     this.x = x;
     this.y = y;
     this.dx = dx;
@@ -27,7 +27,8 @@ export default class Bullet extends SprObject {
   getBox() {
     return this.sprite.getStaticBox();
   }
-  crash(bulletsArray, health) {
+
+  crash(bulletsArray) {
     bulletsArray.splice(bulletsArray.indexOf(this), 1);
   }
 }

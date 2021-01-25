@@ -84,10 +84,6 @@ const map = {
       ['g5', 'g7', 'g6', 'p1', 'p1', 'r1', 'r1'],
       ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
       ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
-      ['g5', 'g7', 'g7', 'g6', 'p1', 'r1', 'r1'],
-      ['g5', 'g7', 'g7', 'p1', 'p1', 'r1', 'r1'],
-      ['g5', 'g7', 'g7', 'p1', 'r1', 'r1', 'r1'],
-      ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
       ['g5', 'g7', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
       ['g5', 'g7', 'g7', 'g6', 'p1', 'p1', 'r1'],
       ['g5', 'g7', 'g7', 'g7', 'g6', 'p1', 'r1'],
@@ -119,19 +115,28 @@ const map = {
       [0, 0, 0, 0, 0, 0, 'p1'],
     ],
     elements: [
-      { name: 'bridge', x: 768, y: 96, blockCount: 4 },
-      { name: 'bridge', x: 1056, y: 96, blockCount: 4 },
       { name: 'tankInRock', x: 336, y: 160 },
       { name: 'tankBottom', x: 386, y: 96 },
+      { name: 'sniper', x: 320, y: 90, type: 'HALF' },
+      { name: 'sniper', x: 400, y: 90, type: 'STAYH' },
+
+      { name: 'sniper', x: 317, y: 193, type: 'STAY' },
+      { name: 'sniper', x: 639, y: 193, type: 'STAY' },
+      { name: 'sniper', x: 1279, y: 96, type: 'STAY' },
+      { name: 'sniper', x: 1347, y: 89, type: 'HALF' },
+      { name: 'sniper', x: 1554, y: 56, type: 'HALF' },
+
 
       { name: 'tankBottom', x: 2065, y: 160 },
       { name: 'tankBottom', x: 2192, y: 64 },
-      { name: 'tankBottom', x: 2897, y: 128 },
+      { name: 'tankBottom', x: 2769, y: 128 },
       { name: 'tankInRock', x: 1264, y: 160 },
       { name: 'tankInRock', x: 1650, y: 128 },
       { name: 'tankInRock', x: 1841, y: 128 },
+      { name: 'tankInRock', x: 2993, y: 192 },
       { name: 'tankInRock', x: 3121, y: 192 },
-      { name: 'tankInRock', x: 3249, y: 192 },
+      { name: 'bridge', x: 768, y: 96, blockCount: 4 },
+      { name: 'bridge', x: 1056, y: 96, blockCount: 4 },
     ],
   }],
   spritesInfo: {
@@ -166,7 +171,7 @@ const map = {
       h: 32,
     },
     b5: {
-      x: 268,
+      x: 302,
       y: 171,
       w: 32,
       h: 32,
@@ -232,10 +237,12 @@ const map = {
       h: 32,
     },
     m1: {
-      x: 137,
-      y: 69,
-      w: 32,
+      x: 66,
+      y: 238,
+      w: 64,
       h: 32,
+      frames: 2,
+      delay: 40,
     },
     m2: {
       x: 171,
@@ -244,10 +251,12 @@ const map = {
       h: 32,
     },
     m3: {
-      x: 205,
-      y: 69,
-      w: 32,
+      x: 132,
+      y: 238,
+      w: 64,
       h: 32,
+      frames: 2,
+      delay: 40,
     },
     m4: {
       x: 1,
@@ -256,10 +265,12 @@ const map = {
       h: 32,
     },
     m5: {
-      x: 35,
-      y: 103,
-      w: 32,
+      x: 1,
+      y: 238,
+      w: 64,
       h: 32,
+      frames: 2,
+      delay: 40,
     },
     m6: {
       x: 69,
@@ -268,10 +279,12 @@ const map = {
       h: 32,
     },
     m7: {
-      x: 103,
-      y: 103,
-      w: 32,
+      x: 198,
+      y: 238,
+      w: 64,
       h: 32,
+      frames: 2,
+      delay: 40,
     },
     m8: {
       x: 137,
@@ -362,20 +375,26 @@ const map = {
     s1: {
       x: 199,
       y: 171,
-      w: 32,
+      w: 64,
       h: 32,
+      frames: 2,
+      delay: 40,
     },
     s2: {
-      x: 233,
+      x: 265,
       y: 171,
-      w: 32,
+      w: 64,
       h: 32,
+      frames: 2,
+      delay: 40,
     },
     s3: {
-      x: 1,
-      y: 205,
-      w: 32,
+      x: 264,
+      y: 238,
+      w: 64,
       h: 32,
+      frames: 2,
+      delay: 40,
     },
     w: {
       x: 35,
@@ -502,9 +521,10 @@ const map = {
     enemyDeath: {
       x: 287,
       y: 1,
-      w: 96,
+      w: 32,
       h: 32,
       frames: 3,
+      delay: 10,
     },
     flyBonus: {
       x: 385,
@@ -552,7 +572,7 @@ const map = {
     shootL: {
       x: 519,
       y: 27,
-      w: 45,
+      w: 16,
       h: 6,
       frames: 1,
     },
@@ -660,57 +680,53 @@ const map = {
       frames: 2,
       delay: 10,
     },
-    sniper315: {
-      x: 275,
-      y: 17,
-      w: 24,
-      h: 31,
-    },
-    sniper0: {
+    sniper180: {
       x: 207,
       y: 50,
       w: 24,
       h: 32,
     },
-    sniper0Shot: {
+    sniper180Shot: {
       x: 233,
       y: 50,
       w: 24,
       h: 32,
     },
-    sniper45: {
+    sniper135: {
       x: 259,
       y: 50,
       w: 18,
       h: 39,
     },
-    sniper45Shot: {
+    sniper135Shot: {
       x: 279,
       y: 50,
       w: 18,
       h: 39,
     },
-    sniperHead: {
-      x: 289,
-      y: 1,
-      w: 8,
-      h: 7,
+    sniper225: {
+      x: 275,
+      y: 17,
+      w: 24,
+      h: 31,
     },
-    sniperUp: {
+    sniperBetwen: {
+      x: 234,
+      y: 277,
+      w: 26,
+      h: 16,
+    },
+    sniperHead: {
       x: 208,
       y: 277,
-      w: 78,
+      w: 26,
       h: 16,
-      frames: 3,
-      delay: 10,
     },
-    sniperDown: {
-      x: 287,
+    sniperHalf: {
+      x: 260,
       y: 277,
-      w: 78,
+      w: 26,
       h: 16,
-      frames: 3,
-      delay: 10,
     },
     spider: {
       x: 52,

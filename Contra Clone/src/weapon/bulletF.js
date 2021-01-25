@@ -5,7 +5,7 @@ import contra from '../index';
 
 export default class BulletF extends Bullet {
   constructor(x, y, dx, dy, level) {
-    super(1, x, y, dx, dy);
+    super(x, y, dx, dy);
     this.deg = 0;
     this.sprite = this.createSprite(level.elementsInfo.shootF, contra.res.elementS, x /*+ xy[0]*/ , y /*+ xy[1]*/ );
     this.d = 12;
