@@ -122,6 +122,10 @@ const map = {
       { name: 'bonusRock', x: 1584, y: 160, type: 'F' },
       { name: 'bonusRock', x: 2288, y: 190, type: 'S' },
 
+      { name: 'bonusFly', x: 220, y: 75, type: 'R' },
+      { name: 'bonusFly', x: 1120, y: 75, type: 'S' },
+      { name: 'bonusFly', x: 2324, y: 60, type: 'R' },
+      { name: 'bonusFly', x: 2324, y: 180, type: 'L' },
 
       { name: 'sniper', x: 317, y: 193, type: 'STAY' },
       { name: 'sniper', x: 639, y: 193, type: 'STAY' },
@@ -140,6 +144,15 @@ const map = {
       { name: 'tankInRock', x: 3121, y: 192 },
       { name: 'bridge', x: 768, y: 96, blockCount: 4 },
       { name: 'bridge', x: 1056, y: 96, blockCount: 4 },
+
+      {
+        name: 'enemyCreator',
+        type: 'thief',
+        coords: [
+          { xS: 0, xE: 300, y: 90, vector: -1, reloading: 2000 },
+        ]
+
+      }
     ],
   }],
   spritesInfo: {
@@ -935,7 +948,7 @@ const map = {
     vorRun: {
       x: 205,
       y: 205,
-      w: 106,
+      w: 18,
       h: 32,
       frames: 6,
       delay: 10,
@@ -943,7 +956,7 @@ const map = {
     vorShot: {
       x: 341,
       y: 137,
-      w: 50,
+      w: 25,
       h: 32,
       frames: 2,
       delay: 10,
@@ -964,6 +977,7 @@ export default class Level {
     this.enemyArray = [];
     this.platformActual = [];
     this.elementsActual = [];
+    this.bonuses = [];
 
     this.bulletsArray = [];
     this.playerBulletsArray = [];
@@ -1061,21 +1075,22 @@ export default class Level {
         el.sprite.draw();
       });
 
+      const camPos = contra.pjs.camera.getPosition().x;
       // check elements to draw
       level.elementsArray.forEach((el) => {
-        el.isTimeToShow();
+        el.isTimeToShow(camPos);
       });
 
       // draw elements
-      level.elementsActual.forEach((el) => {
+      [...level.elementsActual, ...level.enemyArray, ...level.bonuses].forEach((el) => {
         el.tryAction();
       });
 
-      //draw enemy
+      /*//draw enemy
       level.enemyArray.forEach((el) => {
         el.tryAction();
         //  el.selectedState.sprite.drawStaticBox()
-      });
+      });*/
 
       // draw player bullets
       level.bulletsArray.forEach((el) => {

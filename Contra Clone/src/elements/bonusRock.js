@@ -11,7 +11,6 @@ const keys = [
 
 export default class BonusRock {
   constructor(xCenter, yBottom, type, level) {
-    // super(xCenter, yBottom, 1, level.enemiesInfo, keys, contra.res.enemyS, level, 'mediumBoom');
     this.type = type;
     this.level = level;
     this.xCenter = xCenter;
@@ -58,8 +57,8 @@ export default class BonusRock {
     });
   }
 
-  isTimeToShow() {
-    if (contra.pjs.camera.getPosition().x > this.xCenter - 300) {
+  isTimeToShow(camPos) {
+    if (camPos > this.xCenter - 300) {
       this.level.enemyArray.push(this);
       this.level.elementsArray.splice(this.level.elementsArray.indexOf(this), 1);
     }
@@ -99,7 +98,6 @@ export default class BonusRock {
 
   tryAction() {
     this.spritesMesh.draw();
-    this.aim.drawStaticBox();
     const camPos = contra.pjs.camera.getPosition().x;
 
     this.tryRemove(false, camPos);
@@ -142,7 +140,7 @@ export default class BonusRock {
 
   die() {
     this.selectState('death');
-    this.level.elementsActual.push(new Bonus(this.xCenter - 12, this.yBottom - 31, this.type, this.level));
+    this.level.bonuses.push(new Bonus(this.xCenter - 12, this.yBottom - 31, this.type, this.level));
     setTimeout(() => {
       contra.score += 100;
       this.tryRemove(true);

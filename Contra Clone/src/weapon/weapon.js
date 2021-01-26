@@ -11,13 +11,14 @@ export default class Weapon {
     this.sniper = sniper;
     this.reloading = reloading;
     this.speed = speed;
+    this.apgreid = 1;
     this.canShoot = true;
     this.bulletArray = this.sniper instanceof Player ? this.level.playerBulletsArray : this.level.bulletsArray;
     this.changeWeapon(type);
   }
 
   shoot(vectorShoot, x, y) {
-    const getDxy = (vector, speed = this.speed) => [+(speed * Math.cos(vector)).toFixed(2), +(-speed * Math.sin(vector)).toFixed(2)];
+    const getDxy = (vector, speed = this.speed * this.apgreid) => [+(speed * Math.cos(vector)).toFixed(2), +(-speed * Math.sin(vector)).toFixed(2)];
     switch (this.type) {
       case 'D':
       case 'E':
@@ -55,16 +56,16 @@ export default class Weapon {
     this.canShoot = false;
     setTimeout(() => {
       this.canShoot = true;
-    }, this.reloading);
+    }, this.reloading / this.apgreid);
   }
 
   upgrate() {
-    this.isApgreid = true;
+    this.apgreid = 1.2;
   }
 
   changeWeapon(type) {
     this.type = type;
-    this.isApgreid = false;
+    this.apgreid = 1;
     switch (type) {
       case 'E':
 

@@ -53,8 +53,8 @@ export default class Person {
     });
   }
 
-  isTimeToShow() {
-    if (contra.pjs.camera.getPosition().x > this.xCenter - 300) {
+  isTimeToShow(camPos) {
+    if (camPos > this.xCenter - 300) {
       this.level.enemyArray.push(this);
       this.level.elementsArray.splice(this.level.elementsArray.indexOf(this), 1);
     }

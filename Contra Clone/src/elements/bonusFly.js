@@ -1,75 +1,89 @@
 /* eslint-disable */
 
 import contra from '../index';
+import SprObject from '../sprObject';
+import Bonus from './bonus';
+import BulletL from '../weapon/bulletL'
 
-const keys = [
-  'tankR0',
-  'tankR30',
-  'tankR60',
-  'tankR90',
-  'tankR120',
-  'tankR150',
-  'tankR180',
-  'tankR210',
-  'tankR240',
-  'tankR270',
-  'tankR300',
-  'tankR330',
-  'tankRClose',
-  'tankROpen',
-];
 
-export default class TankInRock {
-  constructor(xCenter, yBottom, level) {
-    /*  this.selectState('tankRClose');
-      this.aim = contra.pjs.game.newRectObject({
-        x: xCenter - 10,
-        y: yBottom - 25,
-        w: 18,
-        h: 18,
-      });
-      level.elementsArray.push(this);*/
+
+export default class BonusFly extends SprObject {
+  constructor(x, y, type, level) {
+    super(x, y, 0, 0);
+    this.type = type;
+    this.level = level;
+    this.vectorX = 2;
+    this.vectorY = 2;
+    this.health = 1;
+    this.sprite = this.createSprite(contra.res.elementS, ...Object.values(level.elementsInfo['flyBonus']), 100, x, y);
+
+    level.elementsArray.push(this);
   }
 
-  /* tryAction() {
-     this.spritesMesh.draw();
-     const camPos = contra.pjs.camera.getPosition().x;
-     if (!this.started && camPos > this.xCenter - 240) {
-       this.open();
-     } else {
-       this.tryRemove(false, camPos);
-     }
+  isTimeToShow(camPos) {
+    if (camPos > this.x) {
+      this.level.enemyArray.push(this);
+      this.level.elementsArray.splice(this.level.elementsArray.indexOf(this), 1);
+    }
+  }
 
-     if (this.started && this.health > 0) {
-       this.checkColission(this.aim);
+  createSprite(image, xS, yS, w, h, frames = 1, delay = 100, x, y) {
+    return contra.pjs.game.newAnimationObject({
+      animation: image.getAnimation(xS, yS, w, h, frames),
+      x,
+      y,
+      w,
+      h,
+      delay,
+    });
+  }
 
-       if (this.health > 0) {
-         let deg = this.getDegree(30);
-         if (`tankR${deg}` !== this.selectedState.name) {
-           this.selectState(`tankR${deg}`);
-         }
-         deg = Math.PI / 180 * deg;
-         // this.aim.drawStaticBox();
-         if (this.weapon.canShoot) {
-           this.weapon.shoot(deg, this.xCenter + Math.cos(deg) * 16, this.yBottom - 16 - Math.sin(deg) * 16);
-         }
-       }
-     }
-   }
+  checkColission(aim) {
+    this.level.playerBulletsArray.forEach(bullet => {
+      if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
+          aim.isStaticIntersect(bullet.getBox()))) {
+        this.health -= bullet.damage;
+        bullet.crash(this.level.playerBulletsArray);
+        if (this.health < 1) {
+          this.die();
+        }
+      }
+    });
+  }
 
-   open() {
-     this.selectState('tankROpen');
-     setTimeout(() => {
-       this.selectState('tankR180');
-       this.started = true;
-     }, 200);
-   }
+  tryRemove(die, camPos) {
+    if (die || camPos < this.sprite.x - 300) {
+      this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
+    }
+  }
 
-   die() {
-     contra.score += 100;
-     this.selectState('death');
-     setTimeout(() => {
-       this.tryRemove(true);
-     }, 500);
-   }*/
+  tryAction() {
+    this.sprite.draw();
+    const camPos = contra.pjs.camera.getPosition().x;
+    this.tryRemove(false, camPos);
+
+    if (this.health > 0) {
+      const spr = this.sprite;
+
+      if ((spr.y > this.y && this.vectorY > 0) || (spr.y < this.y - 50 && this.vectorY < 0)) {
+        this.vectorY *= -1;
+      }
+      let dy = this.vectorY;
+      if (spr.y < this.y - 45 || spr.y > this.y - 5) {
+        dy *= 0.5;
+      }
+      spr.move(contra.pjs.vector.point(this.vectorX, dy));
+      this.checkColission(spr);
+    }
+  }
+
+  die() {
+    let spr = this.sprite;
+    this.sprite = this.createSprite(contra.res.elementS, ...Object.values(this.level.elementsInfo['mediumBoom']), spr.x, spr.y);
+    this.level.bonuses.push(new Bonus(spr.x, spr.y, this.type, this.level));
+    setTimeout(() => {
+      contra.score += 100;
+      this.tryRemove(true);
+    }, 500);
+  }
 }

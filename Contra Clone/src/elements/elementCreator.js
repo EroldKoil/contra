@@ -2,7 +2,7 @@
 
 import Bridge from './bridge';
 import BonusRock from './bonusRock';
-import BonusFly from './bonusFly';
+import EnemyCreator from '../enemy/enemyCreator';
 import TankInRock from '../enemy/tankInRock';
 import TankBottom from '../enemy/tankBottom';
 import Sniper from '../enemy/sniper';
@@ -24,8 +24,8 @@ export default class ElementCreator {
       case 'bonusRock':
         new BonusRock(el.x, el.y, el.type, level);
         break;
-      case 'bonusFly':
-        new BonusFly(el.x, el.y, el.xFly, el.type, level);
+      case 'enemyCreator':
+        new EnemyCreator(el.type, el.coords, level);
         break;
       default:
         break;

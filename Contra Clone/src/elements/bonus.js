@@ -11,8 +11,14 @@ export default class Bonus extends SprObject {
     this.vectorX = 1;
     this.vectorY = -2;
     setTimeout(() => {
-      this.vectorY = 2;
-    }, 375);
+      this.vectorY = -1;
+      setTimeout(() => {
+        this.vectorY = 1;
+        setTimeout(() => {
+          this.vectorY = 2;
+        }, 100);
+      }, 100);
+    }, 300);
 
     this.sprite = this.createSprite(level.elementsInfo[`bonus${type}`], contra.res.elementS, xCenter, yBottom);
   }
@@ -31,7 +37,7 @@ export default class Bonus extends SprObject {
           this.vectorY = 0;
         }
       }
-      spr.move(contra.pjs.vector.point(this.vectorX, dy))
+      spr.move(contra.pjs.vector.point(this.vectorX, dy));
     }
 
     spr.draw();
@@ -39,15 +45,19 @@ export default class Bonus extends SprObject {
     this.tryRemove(false, camPos);
     const { player } = contra;
     if (spr.isStaticIntersect(player.selectedState.sprite.getStaticBox())) {
-      player.weapon.changeWeapon(this.type);
+      if (this.type === 'R') {
+        player.weapon.upgrate();
+      } else {
+        player.weapon.changeWeapon(this.type);
+      }
+
       this.tryRemove(true);
     }
-
   }
 
   tryRemove(die, camPos) {
     if (die || camPos > this.xCenter + 20) {
-      this.level.elementsActual.splice(this.level.elementsActual.indexOf(this), 1);
+      this.level.bonuses.splice(this.level.elementsActual.indexOf(this), 1);
     }
   }
 }

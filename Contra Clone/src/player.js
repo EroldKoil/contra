@@ -269,6 +269,10 @@ export default class Player extends Person {
     this.vectorJumpX = 0; // -1 left, 1 right
     this.moveSpeed = 2;
     this.fallSpeed = 1.8;
+
+    this.vectorMove = 1;
+    this.canShoot = true;
+
     this.selectState('jump');
     this.medals = [];
 
@@ -279,12 +283,12 @@ export default class Player extends Person {
       medal.y = 2;
     }
 
-    this.center = contra.pjs.game.newRectObject({
-      x: 0,
-      y: 0,
-      w: 5,
-      h: 5,
-    });
+    /* this.center = contra.pjs.game.newRectObject({
+       x: 0,
+       y: 0,
+       w: 5,
+       h: 5,
+     });*/
   }
 
   // buttons = [UP, Right, Bottom, Left,   Jump, Shot, SPACE]
