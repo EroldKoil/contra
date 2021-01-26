@@ -1,6 +1,6 @@
 /* eslint-disable*/
 
-import Person from './person.js';
+import Person from './person';
 import Weapon from './weapon/weapon';
 import contra from './index';
 

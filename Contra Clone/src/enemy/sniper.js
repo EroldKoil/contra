@@ -185,7 +185,7 @@ export default class Sniper extends Person {
 
   die() {
     this.selectState('sniper180');
-    this.spritesMesh.move(contra.pjs.vector.point(this.isFlip ? -0.5 : 0.5, -0.6));
+    this.spritesMesh.move(contra.pjs.vector.point(this.isFlip ? -0.5 : 0.5, -0.9));
     setTimeout(() => {
       this.selectState('death');
       setTimeout(() => {

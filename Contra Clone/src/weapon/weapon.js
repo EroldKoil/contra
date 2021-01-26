@@ -38,7 +38,7 @@ export default class Weapon {
         break;
       case 'S':
         for (let i = 0; i < 5; i += 1) {
-          this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot - Math.PI / 6 + ((Math.PI / 12) * i)), this.level, 'S'));
+          this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot - Math.PI / 9 + ((Math.PI / 18) * i)), this.level, 'S'));
         }
         break;
       case 'L':
@@ -71,9 +71,11 @@ export default class Weapon {
         break;
       case 'D':
         this.reloading = 300;
+        this.speed = 3;
         break;
       case 'M':
         this.reloading = 200;
+        this.speed = 3;
         break;
       case 'F':
         this.speed = 2;

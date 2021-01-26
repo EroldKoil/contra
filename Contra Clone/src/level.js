@@ -115,10 +115,13 @@ const map = {
       [0, 0, 0, 0, 0, 0, 'p1'],
     ],
     elements: [
-      { name: 'tankInRock', x: 336, y: 160 },
-      { name: 'tankBottom', x: 386, y: 96 },
-      { name: 'sniper', x: 320, y: 90, type: 'HALF' },
-      { name: 'sniper', x: 400, y: 90, type: 'STAYH' },
+      //  { name: 'tankBottom', x: 386, y: 96 },
+      //  { name: 'sniper', x: 320, y: 90, type: 'HALF' },
+      //  { name: 'sniper', x: 400, y: 90, type: 'STAYH' },
+      { name: 'bonusRock', x: 336, y: 160, type: 'M' },
+      { name: 'bonusRock', x: 1584, y: 160, type: 'F' },
+      { name: 'bonusRock', x: 2288, y: 190, type: 'S' },
+
 
       { name: 'sniper', x: 317, y: 193, type: 'STAY' },
       { name: 'sniper', x: 639, y: 193, type: 'STAY' },
@@ -625,21 +628,24 @@ const map = {
     bonusR: {
       x: 53,
       y: 1,
-      w: 134,
+      w: 34,
       h: 32,
       frames: 4,
       delay: 10,
     },
     bonusRClose: {
-      x: 189,
+      x: 188,
       y: 1,
-      w: 32,
+      w: 34,
       h: 32,
+      frames: 1,
+      delay: 100,
+      xCoef: -1
     },
     bonusROpen: {
       x: 1,
       y: 35,
-      w: 100,
+      w: 34,
       h: 32,
       frames: 3,
       delay: 10,
@@ -1107,12 +1113,12 @@ export default class Level {
         isDown('SPACE'),
       ]);
       contra.player.spritesMesh.draw();
-
-      let center = contra.player.center;
-      let pl = contra.player.selectedState.sprite;
-      center.x = pl.x + pl.w / 2;
-      center.y = pl.y + pl.h / 2;
-      center.drawStaticBox();
+      /*
+            let center = contra.player.center;
+            let pl = contra.player.selectedState.sprite;
+            center.x = pl.x + pl.w / 2;
+            center.y = pl.y + pl.h / 2;
+            center.drawStaticBox();*/
 
       //contra.player.states['swim_top'].sprite.visible = true;
       //contra.player.states['swim_top'].sprite.draw();

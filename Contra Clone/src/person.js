@@ -51,15 +51,6 @@ export default class Person {
       h,
       delay,
     });
-    /*
-    return contra.pjs.game.newAnimationObject({
-      animation: image.getAnimation(xS, yS, w, h, frames),
-      x: this.xCenter - (w / 2) + xCoef,
-      y: this.yBottom - h + yCoef,
-      w,
-      h,
-      delay,
-    });*/
   }
 
   isTimeToShow() {

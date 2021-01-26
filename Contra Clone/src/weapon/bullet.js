@@ -19,7 +19,6 @@ export default class Bullet extends SprObject {
       bulletsArray.splice(bulletsArray.indexOf(this), 1);
     } else {
       this.sprite.draw();
-      //this.sprite.drawDynamicBox();
       // проверка на попадание в противника или игрока. зависит от хозяина пули
     }
   }
