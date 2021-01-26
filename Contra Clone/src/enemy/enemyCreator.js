@@ -39,7 +39,7 @@ export default class EnemyCreator {
     console.log('add thief');
     switch (this.type) {
       case 'thief':
-        let x = vector > 0 ? camPos - 20 : camPos + 280;
+        let x = vector > 0 ? camPos - 20 : camPos + 240;
         new Thief(x, y, vector, this.level);
         break;
       default:

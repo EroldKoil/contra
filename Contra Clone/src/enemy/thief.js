@@ -5,10 +5,11 @@ import Person from '../person';
 import contra from '../index';
 
 const keys = [
-  'vorJump',
-  'vorLie',
-  'vorRun',
-  'vorShot',
+  'thiefJump',
+  'thiefLie',
+  'thiefRun',
+  'thiefShot',
+  'dip'
 ];
 
 export default class Thief extends Person {
@@ -22,120 +23,106 @@ export default class Thief extends Person {
     this.shotCount = 0;
     this.canShoot = true;
 
+    this.count = 0; ////////////////////////////////////
+
     this.isFlip = vector > 0;
     if (this.isFlip) {
       this.flip(1, 0);
     }
     this.pose = 'AIR'; // air , platform , water, death
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
-    this.vectorJumpX = 0; // -1 left, 1 right
-    this.moveSpeed = 1.5;
+    this.moveSpeed = 1.2;
     this.fallSpeed = 1.8;
-    this.selectState('jump');
     this.weapon = new Weapon('E', this, 200);
-    this.selectState('vorRun');
+    this.selectState('thiefJump');
 
     level.elementsArray.push(this);
-    console.log('add thief2');
   }
 
   tryAction() {
 
-
-
     const camPos = contra.pjs.camera.getPosition().x;
-    this.tryRemove(false, camPos);
-
-
 
     if (this.health > 0) {
+      let dx = this.vectorMove * this.moveSpeed;
+      let dy = 0;
 
+      this.tryRemove(false, camPos);
+
+      const collisionSArray = contra.selectedLevel.platformActual.filter(
+        (platform) => platform.sprite.isStaticIntersect(this.states.thiefRun.sprite.getStaticBoxS(0, 28, 0, this.fallSpeed - 28)),
+      );
+
+      this.states.thiefRun.sprite.drawStaticBoxS(0, 28, 0, this.fallSpeed - 28);
+
+      const buttomColArray = collisionSArray.filter((platform) => platform.collision === 'BOTTOM');
+      const waterColArray = buttomColArray.length > 0 ? [] : collisionSArray.filter((platform) => platform.collision === 'WATER');
+
+
+      /*  if (this.count > 10) {
+          return;
+        }*/
+      this.count++;
+
+
+      switch (this.pose) {
+        case 'AIR':
+
+          if (this.vectorJumpY < 0) {
+
+            dy = this.fallSpeed * this.vectorJumpY;
+          } else if (buttomColArray.length > 0) {
+
+            dy = buttomColArray[0].sprite.y - (this.states.thiefRun.sprite.y + this.states.thiefRun.sprite.h);
+            this.selectState('thiefRun');
+            this.pose = 'PLATFORM';
+
+          } else if (waterColArray.length > 0) {
+            dy = waterColArray[0].sprite.y - (this.states.thiefRun.sprite.y + this.states.thiefRun.sprite.h);
+            this.health = 0;
+            this.selectState('dip');
+            setTimeout(() => {
+              this.tryRemove(true);
+            }, 300);
+
+            ////         this.startSwim();
+            return;
+          } else {
+            dy = this.fallSpeed * this.vectorJumpY;
+          }
+          dx = this.vectorMove * this.moveSpeed;
+
+          break;
+        case 'PLATFORM':
+
+          if (buttomColArray.length === 0) {
+            dy -= this.fallSpeed;
+            this.selectState('thiefJump');
+            this.pose = 'AIR';
+          }
+          /*else if (buttons[4]) {
+            this.vectorJumpX = 0;
+            if (buttons[2]) {
+              this.jumpDown(buttomColArray);
+            } else {
+              this.jump();
+            }
+          }*/
+          else {
+            dx = this.vectorMove * this.moveSpeed;
+          }
+
+          break;
+
+        default:
+          break;
+      }
+      this.spritesMesh.move(contra.pjs.vector.point(dx, dy));
       const spr = this.selectedState.sprite;
 
-      if (!this.isHidden) {
-        this.checkColission(this.selectedState.sprite);
-        if (this.health > 0) {
-          if (this.type === 'HALF') {
-            if (this.weapon.canShoot && this.canShot) {
-              this.weapon.shoot(this.isFlip ? 0 : Math.PI, this.xCenter + (this.isFlip ? 13 : -13), this.yBottom - 12);
-              this.canShot = false;
-              this.hide(false);
-            }
-          } else {
-            let degReal = this.getDegree(15, -11);
-            let deg = degReal;
-            if (deg % 45 !== 0) {
-              if ((deg + 15) % 45 === 0) {
-                deg += 15;
-              } else {
-                deg -= 15;
-              }
-            }
-            deg = deg === 360 ? 0 : deg;
-            deg = deg === 90 ? 135 : deg === 270 ? 225 : deg;
 
-            if (this.isFlip) {
-              switch (deg) {
-                case 45:
-                  deg = 135;
-                  break;
-                case 0:
-                  deg = 180;
-                  break;
-                case 315:
-                  deg = 225;
-                  break;
-                default:
-                  break;
-              }
-            }
-            if (`sniper${deg}` !== this.selectedState.name) {
-              this.selectState(`sniper${deg}`);
-            }
 
-            degReal = Math.PI / 180 * degReal;
-            if (this.weapon.canShoot && this.canShot) {
-              let yCoef = 0;
-              switch (deg) {
-                case 45:
-                case 135:
-                  yCoef = -40;
-                  break;
-                case 0:
-                case 180:
-                  yCoef = -29;
-                  break;
-                case 315:
-                case 225:
-                  yCoef = -13;
-                  break;
-                default:
-                  break;
-              }
-              this.weapon.shoot(degReal, this.xCenter + (this.isFlip ? spr.w / 2 : -10), this.yBottom + yCoef);
-              this.selectState(`${this.selectedState.name}Shot`)
-              this.shotCount += 1;
-              if (this.shotCount > 2) {
-                if (this.type === 'STAYH') {
-                  this.canShot = false;
-                  this.shotCount = 0;
-                  this.hide(true);
-                } else {
-                  this.canShot = false;
-                  this.shotCount = 0;
-                  setTimeout(() => {
-                    this.canShot = true;
-                  }, this.reloading);
-                }
-              }
-            }
-          }
-        }
-      }
-    } else if (this.health < 1 && this.selectedState.name !== 'death') {
-      this.spritesMesh.move(contra.pjs.vector.point(this.isFlip ? -0.2 : 0.2, -0.3));
     }
-
 
     this.spritesMesh.draw();
   }
@@ -152,4 +139,12 @@ export default class Thief extends Person {
       }, 500);
     }, 300);
   }
+
+  tryRemove(die, camPos) {
+    if (die || camPos > this.spritesMesh.x + 20) {
+      console.log('remove')
+      this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
+    }
+  }
+
 }

@@ -34,12 +34,7 @@ export default class Person {
       add: spritesArr,
     });
 
-    this.vectorMove = 1;
-    this.canShoot = true;
-
     this.health = health;
-    this.moveSpeed = 2;
-    this.fallSpeed = 1.8;
   }
 
   createSprite(image, xS, yS, w, h, frames = 1, delay = 100, xCoef = 0, yCoef = 0) {
@@ -117,6 +112,4 @@ export default class Person {
       this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
     }
   }
-
-
 }

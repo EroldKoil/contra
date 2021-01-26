@@ -149,7 +149,7 @@ const map = {
         name: 'enemyCreator',
         type: 'thief',
         coords: [
-          { xS: 0, xE: 300, y: 90, vector: -1, reloading: 2000 },
+          { xS: 0, xE: 2000, y: 90, vector: -1, reloading: 3000 },
         ]
 
       }
@@ -187,8 +187,8 @@ const map = {
       h: 32,
     },
     b5: {
-      x: 302,
-      y: 171,
+      x: 301,
+      y: 205,
       w: 32,
       h: 32,
     },
@@ -729,6 +729,12 @@ const map = {
       w: 24,
       h: 31,
     },
+    sniper225Shot: {
+      x: 173,
+      y: 55,
+      w: 24,
+      h: 30,
+    },
     sniperBetwen: {
       x: 234,
       y: 277,
@@ -933,33 +939,43 @@ const map = {
       xCoef: -1,
       yCoef: 0,
     },
-    vorJump: {
+    thiefJump: {
       x: 384,
       y: 103,
       w: 16,
       h: 28,
     },
-    vorLie: {
+    thiefLie: {
       x: 1,
       y: 69,
       w: 32,
       h: 14,
     },
-    vorRun: {
-      x: 205,
+    thiefRun: {
+      x: 206,
       y: 205,
-      w: 18,
+      w: 19,
       h: 32,
       frames: 6,
       delay: 10,
     },
-    vorShot: {
+    thiefShot: {
       x: 341,
       y: 137,
       w: 25,
       h: 32,
       frames: 2,
       delay: 10,
+    },
+    dip: {
+      x: 225,
+      y: 33,
+      w: 16,
+      h: 15,
+      frames: 1,
+      delay: 8,
+      xCoef: -2,
+      yCoef: 0,
     },
   },
 };

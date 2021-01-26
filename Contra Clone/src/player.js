@@ -102,9 +102,9 @@ const playerSprites = {
     yCoef: 0,
   },
   runAndFire: {
-    x: 1,
+    x: 2,
     y: 110,
-    w: 27,
+    w: 26,
     h: 34,
     frames: 3,
     delay: 8,
@@ -267,9 +267,10 @@ export default class Player extends Person {
     this.pose = 'AIR'; // air , platform , water, death
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
     this.vectorJumpX = 0; // -1 left, 1 right
-    this.moveSpeed = 2;
+    this.moveSpeed = 3;
     this.fallSpeed = 1.8;
-
+    this.timeAfterShoot = 0;
+    this.timeForAnimationShot = 15;
     this.vectorMove = 1;
     this.canShoot = true;
 
@@ -282,17 +283,11 @@ export default class Player extends Person {
       medal.x = 10 + 10 * i;
       medal.y = 2;
     }
-
-    /* this.center = contra.pjs.game.newRectObject({
-       x: 0,
-       y: 0,
-       w: 5,
-       h: 5,
-     });*/
   }
 
   // buttons = [UP, Right, Bottom, Left,   Jump, Shot, SPACE]
   calculateMoves(buttons) {
+    this.timeAfterShoot += 1;
     let dx = 0;
     let dy = 0;
     const moveX = +buttons[1] - +buttons[3];
@@ -305,6 +300,8 @@ export default class Player extends Person {
       this.flip(1, 0);
       this.vectorMove = -1;
     }
+
+    this.medals.forEach((el) => { el.draw(); });
 
     // contra.selectedLevel.pause(buttons[6]); // пауза. скорее всего будет осуществляться через лисенеры
     if (!this.needCalc) {
@@ -370,7 +367,9 @@ export default class Player extends Person {
             } else if (buttons[2]) {
               this.selectState('run_Bottom');
             } else {
-              this.selectState('run');
+              if (this.selectedState.name !== 'runAndFire' || this.timeAfterShoot > this.timeForAnimationShot) {
+                this.selectState('run');
+              }
             }
           } else if (buttons[0]) {
             this.vectorJumpX = 0;
@@ -396,7 +395,9 @@ export default class Player extends Person {
           this.selectState('dive');
           this.assailable = false;
         } else {
-          this.selectState('swim');
+          if (this.timeAfterShoot > this.timeForAnimationShot) {
+            this.selectState('swim');
+          }
           dx = moveX * this.moveSpeed;
           this.assailable = true;
         }
@@ -419,6 +420,8 @@ export default class Player extends Person {
       dx = 0;
     }
 
+    //this.selectState('runAndFire');
+
     this.spritesMesh.move(p(dx, dy));
     if (dx > 0 && this.spritesMesh.x > contra.pjs.camera.getPosition().x + 32 * 4) {
       this.medals.forEach((el) => { el.x += dx; });
@@ -428,7 +431,7 @@ export default class Player extends Person {
       level.levelBorder.sprite.move(p(dx, 0));
       contra.selectedLevel.tryRefreshActualElements();
     }
-    this.medals.forEach((el) => { el.draw(); });
+
   }
 
   startSwim() {
@@ -456,9 +459,9 @@ export default class Player extends Person {
     if (this.canShoot && this.weapon.canShoot) {
       let shootCoord = { x: 0, y: 0 };
       let shotVector = 0;
-      const { sprite } = this.selectedState;
+      const { sprite, name } = this.selectedState;
 
-      switch (this.selectedState.name) {
+      switch (name) {
         case 'jump':
         case 'fall':
           if (buttons[0]) {
@@ -583,18 +586,16 @@ export default class Player extends Person {
           break;
       }
 
-      if (this.selectedState.name !== 'jump' && this.selectedState.name !== 'fall' &&
-        !this.selectedState.name.includes('swim') && !this.selectedState.name.includes('AndFire')) {
-        this.selectState(`${this.selectedState.name}AndFire`);
+      if (name !== 'jump' && name !== 'fall' &&
+        !name.includes('swim') && !name.includes('AndFire')) {
+        this.selectState(`${name}AndFire`);
       }
 
       if (shootCoord) {
         this.weapon.shoot((Math.PI / 180) * shotVector, shootCoord.x, shootCoord.y);
-
-        this.dontShoot = false;
-        setTimeout(() => {
-          this.dontShoot = true;
-        }, 300);
+        if (this.pose !== 'AIR') {
+          this.timeAfterShoot = 0;
+        }
       }
     }
   }
@@ -627,14 +628,12 @@ export default class Player extends Person {
   }
 
   selectState(stateName) {
-    if (this.dontShoot || stateName === 'jump' || stateName === 'fall' || stateName === 'swim_top_forward' || stateName === 'swim_top' || stateName === 'dip') {
-      for (const key in this.states) {
-        if (key === stateName) {
-          this.states[key].sprite.visible = true;
-          this.selectedState = this.states[key];
-        } else {
-          this.states[key].sprite.visible = false;
-        }
+    for (const key in this.states) {
+      if (key === stateName) {
+        this.states[key].sprite.visible = true;
+        this.selectedState = this.states[key];
+      } else {
+        this.states[key].sprite.visible = false;
       }
     }
   }

@@ -10,6 +10,7 @@ const keys = [
   'sniper135',
   'sniper135Shot',
   'sniper225',
+  'sniper225Shot',
   'sniperBetwen',
   'sniperHead',
   'sniperHalf',
