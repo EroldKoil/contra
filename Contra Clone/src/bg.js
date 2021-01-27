@@ -1,8 +1,5 @@
-/* eslint-disable eol-last */
-/* eslint-disable import/named */
-/* eslint-disable import/no-cycle */
-/* eslint-disable import/extensions */
-/* import { game, contra, tiles } from './index.js'; */
+/* eslint-disable */
+
 import Platform from './platform.js';
 import SprObject from './sprObject';
 import contra from './index';

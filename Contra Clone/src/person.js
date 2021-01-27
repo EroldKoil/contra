@@ -108,7 +108,7 @@ export default class Person {
   }
 
   tryRemove(die, camPos) {
-    if (die || camPos > this.xCenter + 20) {
+    if (die || camPos > this.xCenter + 50) {
       this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
     }
   }

@@ -23,15 +23,13 @@ export default class Thief extends Person {
     this.shotCount = 0;
     this.canShoot = true;
 
-    this.count = 0; ////////////////////////////////////
-
     this.isFlip = vector > 0;
     if (this.isFlip) {
       this.flip(1, 0);
     }
     this.pose = 'AIR'; // air , platform , water, death
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
-    this.moveSpeed = 1.2;
+    this.moveSpeed = 0.9;
     this.fallSpeed = 1.8;
     this.weapon = new Weapon('E', this, 200);
     this.selectState('thiefJump');
@@ -40,30 +38,18 @@ export default class Thief extends Person {
   }
 
   tryAction() {
-
     const camPos = contra.pjs.camera.getPosition().x;
-
+    this.spritesMesh.draw();
+    this.checkColission(this.selectedState.sprite);
     if (this.health > 0) {
       let dx = this.vectorMove * this.moveSpeed;
       let dy = 0;
-
       this.tryRemove(false, camPos);
-
       const collisionSArray = contra.selectedLevel.platformActual.filter(
         (platform) => platform.sprite.isStaticIntersect(this.states.thiefRun.sprite.getStaticBoxS(0, 28, 0, this.fallSpeed - 28)),
       );
-
-      this.states.thiefRun.sprite.drawStaticBoxS(0, 28, 0, this.fallSpeed - 28);
-
       const buttomColArray = collisionSArray.filter((platform) => platform.collision === 'BOTTOM');
       const waterColArray = buttomColArray.length > 0 ? [] : collisionSArray.filter((platform) => platform.collision === 'WATER');
-
-
-      /*  if (this.count > 10) {
-          return;
-        }*/
-      this.count++;
-
 
       switch (this.pose) {
         case 'AIR':
@@ -84,8 +70,6 @@ export default class Thief extends Person {
             setTimeout(() => {
               this.tryRemove(true);
             }, 300);
-
-            ////         this.startSwim();
             return;
           } else {
             dy = this.fallSpeed * this.vectorJumpY;
@@ -94,22 +78,37 @@ export default class Thief extends Person {
 
           break;
         case 'PLATFORM':
-
           if (buttomColArray.length === 0) {
             dy -= this.fallSpeed;
             this.selectState('thiefJump');
             this.pose = 'AIR';
-          }
-          /*else if (buttons[4]) {
+          } else {
             this.vectorJumpX = 0;
-            if (buttons[2]) {
-              this.jumpDown(buttomColArray);
+            const collisionSForwardArray = contra.selectedLevel.platformActual.filter(
+              (platform) => platform.sprite.isStaticIntersect(this.states.thiefRun.sprite.getStaticBoxS(this.vectorMove > 0 ? 10 : 0, 28, 10 * this.vectorMove, this.fallSpeed - 28)),
+            );
+            if (collisionSForwardArray.length === 0) {
+              const collisionSTop = contra.selectedLevel.platformActual.filter(
+                (platform) => platform.sprite.isStaticIntersect(this.states.thiefRun.sprite.getStaticBoxS(40 * this.vectorMove, -15, 0, 20)),
+              );
+              const collisionSBottom = contra.selectedLevel.platformActual.filter(
+                (platform) => platform.sprite.isStaticIntersect(this.states.thiefRun.sprite.getStaticBoxS(35 * this.vectorMove, 20, 0, 20)),
+              );
+              if (collisionSTop.length > 0) {
+                this.jump(true);
+              } else if (collisionSBottom.length > 0) {
+                this.jump();
+              } else {
+                if (Math.random() > 0.5) {
+                  this.vectorMove *= -1;
+                  this.flip(this.vectorMove === 1 ? 1 : 0, 0);
+                } else {
+                  this.jump();
+                }
+              }
             } else {
-              this.jump();
+              dx = this.vectorMove * this.moveSpeed;
             }
-          }*/
-          else {
-            dx = this.vectorMove * this.moveSpeed;
           }
 
           break;
@@ -119,17 +118,14 @@ export default class Thief extends Person {
       }
       this.spritesMesh.move(contra.pjs.vector.point(dx, dy));
       const spr = this.selectedState.sprite;
-
-
-
+    } else if (this.health < 1 && this.selectedState.name !== 'death') {
+      this.spritesMesh.move(contra.pjs.vector.point(this.isFlip ? -0.2 : 0.2, -0.3));
     }
-
-    this.spritesMesh.draw();
   }
 
 
   die() {
-    this.selectState('sniper180');
+    this.selectState('thiefJump');
     this.spritesMesh.move(contra.pjs.vector.point(this.isFlip ? -0.5 : 0.5, -0.9));
     setTimeout(() => {
       this.selectState('death');
@@ -147,4 +143,22 @@ export default class Thief extends Person {
     }
   }
 
+  jump(isLong) {
+    this.pose = 'AIR';
+    this.vectorJumpY = -1;
+    this.selectState('thiefJump');
+    setTimeout(() => {
+      if (this.vectorJumpY !== 1) {
+        this.vectorJumpY = -0.1;
+        setTimeout(() => {
+          if (this.vectorJumpY !== 1) {
+            this.vectorJumpY = 0.1;
+            setTimeout(() => {
+              this.vectorJumpY = 1;
+            }, 50);
+          }
+        }, 50);
+      }
+    }, isLong ? 350 : 150);
+  }
 }

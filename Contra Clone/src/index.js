@@ -42,6 +42,7 @@ contra.res = {
   levelS: newImage('./assets/sprites/levels/1/spritesheet.png'),
   elementS: newImage('./assets/sprites/elements.png'),
   enemyS: newImage('./assets/sprites/enemy.png'),
+  boss: newImage('./assets/sprites/boss/boss.png'),
 };
 
 contra.startGame = () => {

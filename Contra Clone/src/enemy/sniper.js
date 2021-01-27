@@ -17,9 +17,10 @@ const keys = [
 ];
 
 export default class Sniper extends Person {
-  constructor(xCenter, yBottom, type, level) {
+  constructor(xCenter, yBottom, type, level, boss = false) {
     super(xCenter, yBottom, 1, level.enemiesInfo, keys, contra.res.enemyS, level, 'enemyDeath');
     this.type = type; // STAY, HALF, STAYH
+    this.boss = boss;
     this.timeToHidden = 3000;
     this.reloading = 2000;
     this.maxShot = 3;
@@ -37,7 +38,6 @@ export default class Sniper extends Person {
       this.selectState('sniperHalf');
       this.isHidden = false;
     }
-    level.elementsArray.push(this);
   }
 
   tryAction() {
@@ -197,5 +197,15 @@ export default class Sniper extends Person {
         this.tryRemove(true);
       }, 500);
     }, 300);
+  }
+
+  tryRemove(die, camPos) {
+    if (die || camPos > this.xCenter + 50) {
+      if (this.boss) {
+        this.boss.sniper = null;
+      } else {
+        this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
+      }
+    }
   }
 }

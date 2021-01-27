@@ -1,9 +1,5 @@
-/* eslint-disable eol-last */
-/* eslint-disable import/no-unresolved */
-// collision - направление сталкивания : VERTICAL, LEFT, RIGHT
-// eslint-disable-next-line import/no-cycle
-// eslint-disable-next-line import/no-unresolved
-// eslint-disable-next-line import/no-cycle
+/* eslint-disable */
+
 import SprObject from './sprObject';
 
 export default class Platform extends SprObject {

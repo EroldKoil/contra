@@ -4,32 +4,6 @@ import Person from './person';
 import Weapon from './weapon/weapon';
 import contra from './index';
 
-/*
-const playerSprites = [
-  { name: 'stay', data: [1, 8, 22, 34, 1, 10, 0, 0] },
-  { name: 'stayAndFire', data: [25, 9, 22, 33, 1, 10, 0, 0] },
-  { name: 'stay_top', data: [49, 0, 14, 42, 1, 10, -4, 0] },
-  { name: 'stay_topAndFire', data: [64, 0, 14, 42, 1, 10, -4, 0] },
-  { name: 'lie', data: [78, 26, 32, 16, 1, 10, 0, 0] },
-  { name: 'lieAndFire', data: [78, 26, 32, 16, 1, 10, 0, 1] },
-  { name: 'run', data: [0, 44, 22, 35, 6, 8, -2, 0] },
-  { name: 'runAndFire', data: [1, 110, 27, 34, 3, 8, 0, 0] },
-  { name: 'die', data: [0, 87, 34, 23, 10, 5, 0, 0] },
-  { name: 'died', data: [307, 87, 32, 20, 2, 2, 0, 0] },
-  { name: 'jump', data: [212, 1, 22, 22, 8, 2, -2, -9] },
-  { name: 'run_Top', data: [3, 149, 22, 35, 3, 8, -3, 0] },
-  { name: 'run_TopAndFire', data: [73, 149, 22, 35, 3, 8, -3, 0] },
-  { name: 'run_Bottom', data: [3, 185, 22, 35, 3, 8, -1, 0] },
-  { name: 'run_BottomAndFire', data: [71, 185, 22, 35, 3, 8, -1, 0] },
-  { name: 'dip', data: [1, 242, 16, 15, 1, 8, -2, 0] },
-  { name: 'dive', data: [17, 245, 18, 8, 2, 15, -2, 0] },
-  { name: 'swim', data: [54, 237, 18, 15, 2, 15, -2, 0] },
-  { name: 'swimAndFire', data: [91, 235, 27, 16, 2, 15, 1, 0] },
-  { name: 'swim_top', data: [192, 225, 20, 27, 2, 15, -3, 0] },
-  { name: 'swim_top_forward', data: [149, 234, 21, 18, 2, 15, -2, 0] },
-  { name: 'fall', data: [89, 45, 20, 34, 1, 10, 0, 0] },
-]; */
-
 const playerSprites = {
   stay: {
     x: 1,
@@ -262,7 +236,7 @@ export default class Player extends Person {
     super(xCenter, yBottom, health, playerSprites, Object.keys(playerSprites), contra.res.playerS, level);
     this.lifes = 2;
     this.assailable = false; // Уязвим ли
-    this.weapon = new Weapon('M', this);
+    this.weapon = new Weapon('S', this);
     this.needCalc = true; // обновление координат и обработка кнопок;
     this.pose = 'AIR'; // air , platform , water, death
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
@@ -312,13 +286,13 @@ export default class Player extends Person {
       (platform) => platform.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxS(0, 28, 0, this.fallSpeed - 28)),
     );
 
-    const collisionDArray = moveX > 0 ? contra.selectedLevel.platformActual.filter(
+    const collisionDArray = contra.selectedLevel.platformActual.filter(
       (platform) => platform.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxD(this.moveSpeed)),
-    ) : [];
+    );
 
-    const collisionAArray = moveX < 0 ? contra.selectedLevel.platformActual.filter(
+    const collisionAArray = contra.selectedLevel.platformActual.filter(
       (platform) => platform.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxA(-this.moveSpeed)),
-    ) : [];
+    );
 
     const buttomColArray = collisionSArray.filter((platform) => platform.collision === 'BOTTOM');
     const waterColArray = buttomColArray.length > 0 ? [] : collisionSArray.filter((platform) => platform.collision === 'WATER');
@@ -422,7 +396,17 @@ export default class Player extends Person {
 
     //this.selectState('runAndFire');
 
+    if (dx !== 0) {
+      const array = dx > 0 ? collisionDArray : collisionAArray;
+      const collV = array.filter((platform) => platform.collision === 'VERTICAL');
+      if (collV.length > 0) {
+        const spr = this.selectedState.sprite;
+        dx = dx > 0 ? (collV[0].x - (spr.x + spr.w)) : (spr.x - (collV[0].x + collV[0].w));
+      }
+    }
+
     this.spritesMesh.move(p(dx, dy));
+
     if (dx > 0 && this.spritesMesh.x > contra.pjs.camera.getPosition().x + 32 * 4) {
       this.medals.forEach((el) => { el.x += dx; });
       contra.pjs.camera.move(p(dx, 0));
