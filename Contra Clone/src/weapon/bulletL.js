@@ -1,13 +1,10 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable eol-last */
-/* eslint-disable class-methods-use-this */
-/* eslint-disable max-len */
+/* eslint-disable */
 import Bullet from './bullet';
 import contra from '../index';
 
 export default class BulletL extends Bullet {
-  constructor(x, y, dx, dy, level) {
-    super(x, y, dx, dy);
+  constructor(x, y, dx, dy, level, bulletArray) {
+    super(x, y, dx, dy, level, bulletArray);
     let dDeg;
     let xCor = 0;
     let yCor = 0;
@@ -43,5 +40,9 @@ export default class BulletL extends Bullet {
 
   getBox() {
     return this.sprite.getDynamicBox();
+  }
+  tryRemove() {
+    this.needCheckCpllision = false;
+    this.bulletArray.splice(this.bulletArray.indexOf(this), 1);
   }
 }

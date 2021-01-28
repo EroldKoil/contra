@@ -90,10 +90,10 @@ export default class Person {
   // Проверка объекта на столкновение с пулей
   checkColission(aim) {
     this.level.playerBulletsArray.forEach(bullet => {
-      if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
-          aim.isStaticIntersect(bullet.getBox()))) {
+      if (this.health > 0 && bullet.needCheckCpllision &&
+        ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) || aim.isStaticIntersect(bullet.getBox()))) {
         this.health -= bullet.damage;
-        bullet.crash(this.level.playerBulletsArray);
+        bullet.tryRemove();
         if (this.health < 1) {
           this.die();
         }

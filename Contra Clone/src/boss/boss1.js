@@ -20,13 +20,15 @@ export default class Boss1 {
   constructor(x, y, level) {
     this.x = x;
     this.y = y;
-    this.health = 32;
+    this.health = 4; //32
     this.level = level;
 
     const image = contra.res.boss;
+    const elementS = contra.res.elementS;
+    const mediumBoom = Object.values(level.elementsInfo['mediumBoom']);
 
-    this.leftGun = this.createGun(x + 4, y + 72, 'gunLeft', image, level);
-    this.rightGun = this.createGun(x + 25, y + 71, 'gunRight', image, level);
+    this.leftGun = this.createGun(x + 4, y + 72, 'gunLeft', image, elementS, mediumBoom);
+    this.rightGun = this.createGun(x + 25, y + 71, 'gunRight', image, elementS, mediumBoom);
     this.sniper = new Sniper(this.x + 16, y + 30, 'STAYH', level, this);
     this.aim = createSprite(image, ...Object.values(spritesInfo['aim']), x + 7, y + 103);
 
@@ -39,13 +41,21 @@ export default class Boss1 {
     this.sprites = {
       first: createSprite(image, ...Object.values(spritesInfo['firstPart']), x, y),
       second: createSprite(image, ...Object.values(spritesInfo['secondPart']), x + 13, y - 9),
-      tonnel: createSprite(image, ...Object.values(spritesInfo['tonnel']), x + 3, y + 101),
+      tonnel: createSprite(image, ...Object.values(spritesInfo['tonnel']), x + 2, y + 101),
+      booms: [createSprite(elementS, ...mediumBoom, x + 3, y + 101)],
+    }
+
+
+    for (let i = 0; i < 4; i += 1) {
+      for (let j = 0; j < 2; j += 1) {
+        this.sprites.booms.push(createSprite(elementS, ...mediumBoom, x + 3 + i * 26, y + 90 + j * 30))
+      }
     }
 
     this.platforms = [
-      new Platform(3, 166, x, y, 'VERTICAL', false),
-      new Platform(3, 20, x + 2, 174, 'FORAUTOJUMP', false),
-      new Platform(110, 3, x + 2, 174, 'BOTTOM', false),
+      new Platform(10, 166, x + 3, y, 'VERTICAL', false),
+      new Platform(13, 20, x, 174, 'FORAUTOJUMP', false),
+      new Platform(110, 3, x + 8, 180, 'BOTTOM', false),
     ]
 
     this.bulletsActual = [];
@@ -58,12 +68,12 @@ export default class Boss1 {
     level.elementsArray.push(this);
   }
 
-  createGun(x, y, name, image, level) {
+  createGun(x, y, name, image, elementS, mediumBoom) {
     return {
       health: 16,
       sprite: createSprite(image, ...Object.values(spritesInfo[name]), x, y),
       spriteShoot: createSprite(image, ...Object.values(spritesInfo[`${name}Shoot`]), x, y),
-      die: createSprite(contra.res.elementS, ...Object.values(level.elementsInfo['mediumBoom']), x - 5, y - 10),
+      die: createSprite(elementS, ...mediumBoom, x - 5, y - 10),
       needShow: true,
       canShoot: true,
       selectState(name) {
@@ -79,14 +89,21 @@ export default class Boss1 {
     }
   }
 
-  tryAction() {
+  tryAction(camPos) {
+    if (camPos < this.level.length && camPos > this.level.length - 60) {
+      this.level.canMoveCamera = false;
+      this.level.moveCamera(2)
+    }
+
     this.sprites.first.draw();
     if (this.sniper) {
       this.sniper.tryAction();
     }
     this.sprites.second.draw();
-    this.aim.draw();
 
+    this.platforms.forEach((p) => {
+      p.sprite.drawStaticBox();
+    });
     [this.leftGun, this.rightGun].forEach((gun) => {
       if (gun.needShow) {
         gun.selectedState.draw();
@@ -115,10 +132,32 @@ export default class Boss1 {
         }
       }
     });
+    if (this.health > 0) {
+      this.checkColission(this, this.aim);
+      if (this.health < 1) {
+        this.die();
+      }
+    }
 
-    this.checkColission(this, this.aim);
-    if (this.health < 1) {
-      console.log('die die');
+    if (this.aim) {
+      this.aim.draw();
+      if (this.health < 1) {
+        contra.player.calculateMoves([false, false, false, false, false, false]);
+        this.sprites.tonnel.draw();
+        this.sprites.booms.forEach((boom) => {
+          boom.draw();
+        });
+      }
+    } else {
+      this.sprites.tonnel.draw();
+      const needJump = this.platforms[1].sprite.isStaticIntersect(contra.player.selectedState.sprite.getStaticBoxD(4, 0, -7));
+      contra.player.calculateMoves([false, true, false, false, needJump, false]);
+      if (needJump) {
+        setTimeout(() => {
+          contra.player.spritesMesh.x = camPos.x + 10;
+          contra.player.spritesMesh.y = camPos.y + 10;
+        }, 2000);
+      }
     }
 
     this.bulletsActual.forEach((bullet) => {
@@ -132,7 +171,6 @@ export default class Boss1 {
     this.bulletsArray.splice(n, 1);
     this.bulletsActual.push(bullet);
     bullet.shoot(gun.x, gun.y);
-    console.log(this.bulletsArray.length, this.bulletsActual.length);
   }
 
   isTimeToShow(camPos) {
@@ -141,39 +179,41 @@ export default class Boss1 {
         this.rightGun.canShoot = true;
       }, this.shootReloading / 2);
 
-
       this.platforms.forEach((p) => {
         p.addToActual(this.level);
       });
-      this.level.enemyArray.push(this);
+      this.level.bosses.push(this);
       this.level.elementsArray.splice(this.level.elementsArray.indexOf(this), 1);
     }
   }
 
   checkColission(aim, sprite) {
     this.level.playerBulletsArray.forEach(bullet => {
-      if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
-          sprite.isStaticIntersect(bullet.getBox()))) {
+      if (this.health > 0 && bullet.needCheckCpllision &&
+        ((bullet instanceof BulletL && sprite.isDynamicIntersect(bullet.getBox())) || sprite.isStaticIntersect(bullet.getBox()))) {
         aim.health -= bullet.damage;
-        bullet.crash(this.level.playerBulletsArray);
-        /* if (this.health < 1) {
-           this.die();
-         }*/
+        bullet.tryRemove();
       }
     });
   }
 
   die() {
-    console.log('die');
-    /*this.selectState('sniper180');
-    this.spritesMesh.move(contra.pjs.vector.point(this.isFlip ? -0.5 : 0.5, -0.9));
+    [this.leftGun, this.rightGun].forEach((gun) => {
+      gun.health = 0;
+    });
+    if (this.sniper) {
+      this.sniper.die();
+    }
+    this.bulletsActual = [];
+
+    this.level.isComplite = true;
+    this.sprites.booms = [];
+
     setTimeout(() => {
-      this.selectState('death');
-      setTimeout(() => {
-        contra.score += 100;
-        this.tryRemove(true);
-      }, 500);
-    }, 300);*/
+      this.level.isComplite = true;
+      this.aim = null;
+      this.platforms[0].sprite.y = 163;
+    }, 1000);
   }
 }
 
@@ -265,17 +305,3 @@ function createSprite(image, xS, yS, w, h, frames = 1, delay = 100, xCoef = 0, y
     delay,
   });
 }
-
-/*
-function checkColission(aim) {
-  this.level.playerBulletsArray.forEach(bullet => {
-    if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
-        aim.isStaticIntersect(bullet.getBox()))) {
-      this.health -= bullet.damage;
-      bullet.crash(this.level.playerBulletsArray);
-      if (this.health < 1) {
-        this.die();
-      }
-    }
-  });
-}*/

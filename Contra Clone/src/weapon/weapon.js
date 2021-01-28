@@ -11,7 +11,6 @@ export default class Weapon {
     this.sniper = sniper;
     this.reloading = reloading;
     this.speed = speed;
-    this.apgreid = 1;
     this.canShoot = true;
     this.bulletArray = this.sniper instanceof Player ? this.level.playerBulletsArray : this.level.bulletsArray;
     this.changeWeapon(type);
@@ -22,15 +21,13 @@ export default class Weapon {
     switch (this.type) {
       case 'D':
       case 'E':
-        this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot), this.level, 'D'));
-        break;
       case 'M':
-        this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot), this.level, 'M'));
+        this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot), this.level, this.bulletArray, this.type));
         break;
       case 'F':
         let i = 0;
         const interval = setInterval(() => {
-          this.bulletArray.push(new BulletF(x, y, ...getDxy(vectorShoot), this.level));
+          this.bulletArray.push(new BulletF(x, y, ...getDxy(vectorShoot), this.level, this.bulletArray));
           i += 1;
           if (i === 3) {
             clearInterval(interval);
@@ -39,14 +36,14 @@ export default class Weapon {
         break;
       case 'S':
         for (let i = 0; i < 5; i += 1) {
-          this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot - Math.PI / 9 + ((Math.PI / 18) * i)), this.level, 'S'));
+          this.bulletArray.push(new BulletM(x, y, ...getDxy(vectorShoot - Math.PI / 9 + ((Math.PI / 18) * i)), this.level, this.bulletArray, 'S'));
         }
         break;
       case 'L':
         const dXY = getDxy(vectorShoot);
         const xyCoef = getDxy(vectorShoot, 12);
         for (let i = 0; i < 4; i++) {
-          this.bulletArray.push(new BulletL(x + xyCoef[0] * i, y + xyCoef[1] * i, ...dXY, this.level));
+          this.bulletArray.push(new BulletL(x + xyCoef[0] * i, y + xyCoef[1] * i, ...dXY, this.level, this.bulletArray));
         }
         break;
       default:

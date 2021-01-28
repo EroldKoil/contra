@@ -10,6 +10,7 @@ import contra from './index';
 const map = {
   blockSize: 32,
   levels: [{
+    length: 250, //3071,
     bg: [
       ['s1', 's2', 0, 0, 'w', 'w1', 'w'],
       ['s2', 0, 'g1', 'p1', 'r1', 'rw1', 'w'],
@@ -17,94 +18,94 @@ const map = {
       ['m1', 'm2', 'g2', 'p1', 'r1', 'rw1', 'w'],
       ['m3', 'm4', 'g2', 'p1', 'r1', 'rw4', 'w2'],
       ['m5', 'm6', 'g2', 'p1', 'p1', 'r1', 'w3'],
-      /* ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'],
-       ['m7', 'm8', 'g2', 'p1', 'p1', 'r1', 'w3'],
-       ['s1', 0, 'g2', 'p1', 'r1', 'p1', 'w4'],
-       ['s2', 0, 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
-       ['m1', 'm2', 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
-       ['m3', 'm4', 'g2', 'p1', 'r1', 'p1', 'w5'],
-       ['m5', 'm6', 'g2', 'p1', 'r1', 'rw2', 'w8'],
-       ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'],
-       ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'],
-       ['m5', 'm6', 'g2', 'p1', 'r1', 'rw3', 'w6'],
-       ['m3', 'm4', 'g2', 'p1', 'r1', 'rw1', 'w'],
-       ['m5', 'm6', 'g2', 'p1', 'r1', 'rw4', 'w2'],
-       ['m3', 'm4', 'g2', 'p1', 'r1', 'r1', 'w4'],
-       ['m5', 'm6', 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
-       ['m7', 'm8', 'g2', 'p1', 'p2', 'r1', 'pw1-n'],
-       [0, 's1', 'g2', 'p1', 'p2', 'r1', 'w5'],
-       ['s1', 's2', 'g2', 'p1', 'p2', 'r1', 'w3'],
-       [0, 0, 'g3', 'p1', 'r1', 'rw3', 'w6'],
-       ['s1', 0, 0, 'b4', 'w', 'w7', 'w'],
-       ['s2', 0, 's2', 0, 'w', 'w', 'w'],
-       [0, 's1', 0, 0, 'w', 'w', 'w'],
-       ['s3', 's2', 0, 'b5', 'w', 'w1', 'w'],
-       ['s2', 's1', 'g1', 'p1', 'r1', 'rw1', 'w'],
-       ['s2', 's1', 'g2', 'p1', 'r1', 'rw1', 'w'],
-       [0, 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
-       ['s1', 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
-       [0, 's2', 'g3', 'p1', 'r1', 'rw1', 'w'],
-       [0, 's2', 0, 'b4', 'w', 'w7', 'w'],
-       [0, 0, 0, 0, 'w', 'w', 'w'],
-       ['s2', 's1', 0, 0, 'w', 'w', 'w'],
-       ['s1', 0, 0, 'b5', 'w', 'w1', 'w'],
-       [0, 0, 'g1', 'p1', 'r1', 'rw1', 'w'],
-       ['s2', 0, 'g2', 'p1', 'r1', 'rw4', 'w2'],
-       ['m1', 'm2', 'g2', 'p1', 'r1', 'r1', 'w3'],
-       ['m3', 'm4', 'g2', 'p1', 'r1', 'r1', 'w3'],
-       ['m7', 'm8', 'g2', 'p1', 'r1', 'r1', 'w3'],
-       ['s2', 's1', 'g3', 'p1', 'r1', 'r1', 'w3'],
-       ['g4', 'g6', 'p1', 'p1', 'r1', 'r1', 'w4'],
-       ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'pw1-n'],
-       ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'pw1-n'],
-       ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'pw1-n'],
-       ['g5', 'g6', 'p1', 'p1', 'p2', 'r1', 'w5'],
-       ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'w3'],
-       ['g5', 'g6', 'p1', 'r1', 'r1', 'rw2', 'w8'],
-       ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
-       ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
-       ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
-       ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w4'],
-       ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'pw1-n'],
-       ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'pw2-n'],
-       ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'p1-n'],
-       ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'p1-n'],
-       ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'p1-n'],
-       ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'p1-n'],
-       ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
-       ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
-       ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
-       ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
-       ['g5', 'g6', 'p1', 'p1', 'r1', 'p1', 'r1'],
-       ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'r1'],
-       ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'r1'],
-       ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'r1'],
-       ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'r1'],
-       ['g5', 'g7', 'g7', 'g6', 'p1', 'r1', 'r1'],
-       ['g5', 'g7', 'g6', 'p1', 'p1', 'r1', 'r1'],
-       ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
-       ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
-       ['g5', 'g7', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
-       ['g5', 'g7', 'g7', 'g6', 'p1', 'p1', 'r1'],
-       ['g5', 'g7', 'g7', 'g7', 'g6', 'p1', 'r1'],
-       ['g5', 'g7', 'g7', 'g7', 'g6', 'p1', 'r1'],
-       ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
-       ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'p1-n'],
-       ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'r1'],
-       ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
-       ['g8', 'g9', 'g6', 'p1', 'r1', 'r1', 'r1'],
-       ['g8', 'g5', 'g6', 'p1', 'p1', 'r1', 'r1'],
-       ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
-       ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
-       ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
-       ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
-       ['g8', 'g5', 'g7', 'g7', 'g7', 'g6', 'p1-n'],
-       ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
-       ['g8', 'g5', 'g7', 'g7', 'g6', 'p1', 'r1'],
-       ['g8', 'g5', 'g7', 'g7', 'g6', 'p1', 'r1'],
-       ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
-       ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
-       ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],*/
+      /*['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'], //
+      ['m7', 'm8', 'g2', 'p1', 'p1', 'r1', 'w3'],
+      ['s1', 0, 'g2', 'p1', 'r1', 'p1', 'w4'],
+      ['s2', 0, 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
+      ['m1', 'm2', 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
+      ['m3', 'm4', 'g2', 'p1', 'r1', 'p1', 'w5'],
+      ['m5', 'm6', 'g2', 'p1', 'r1', 'rw2', 'w8'],
+      ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'],
+      ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'],
+      ['m5', 'm6', 'g2', 'p1', 'r1', 'rw3', 'w6'],
+      ['m3', 'm4', 'g2', 'p1', 'r1', 'rw1', 'w'],
+      ['m5', 'm6', 'g2', 'p1', 'r1', 'rw4', 'w2'],
+      ['m3', 'm4', 'g2', 'p1', 'r1', 'r1', 'w4'],
+      ['m5', 'm6', 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
+      ['m7', 'm8', 'g2', 'p1', 'p2', 'r1', 'pw1-n'],
+      [0, 's1', 'g2', 'p1', 'p2', 'r1', 'w5'],
+      ['s1', 's2', 'g2', 'p1', 'p2', 'r1', 'w3'],
+      [0, 0, 'g3', 'p1', 'r1', 'rw3', 'w6'],
+      ['s1', 0, 0, 'b4', 'w', 'w7', 'w'],
+      ['s2', 0, 's2', 0, 'w', 'w', 'w'],
+      [0, 's1', 0, 0, 'w', 'w', 'w'],
+      ['s3', 's2', 0, 'b5', 'w', 'w1', 'w'],
+      ['s2', 's1', 'g1', 'p1', 'r1', 'rw1', 'w'],
+      ['s2', 's1', 'g2', 'p1', 'r1', 'rw1', 'w'],
+      [0, 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
+      ['s1', 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
+      [0, 's2', 'g3', 'p1', 'r1', 'rw1', 'w'],
+      [0, 's2', 0, 'b4', 'w', 'w7', 'w'],
+      [0, 0, 0, 0, 'w', 'w', 'w'],
+      ['s2', 's1', 0, 0, 'w', 'w', 'w'],
+      ['s1', 0, 0, 'b5', 'w', 'w1', 'w'],
+      [0, 0, 'g1', 'p1', 'r1', 'rw1', 'w'],
+      ['s2', 0, 'g2', 'p1', 'r1', 'rw4', 'w2'],
+      ['m1', 'm2', 'g2', 'p1', 'r1', 'r1', 'w3'],
+      ['m3', 'm4', 'g2', 'p1', 'r1', 'r1', 'w3'],
+      ['m7', 'm8', 'g2', 'p1', 'r1', 'r1', 'w3'],
+      ['s2', 's1', 'g3', 'p1', 'r1', 'r1', 'w3'],
+      ['g4', 'g6', 'p1', 'p1', 'r1', 'r1', 'w4'],
+      ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'pw1-n'],
+      ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'pw1-n'],
+      ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'pw1-n'],
+      ['g5', 'g6', 'p1', 'p1', 'p2', 'r1', 'w5'],
+      ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'w3'],
+      ['g5', 'g6', 'p1', 'r1', 'r1', 'rw2', 'w8'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w4'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'pw1-n'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'pw2-n'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'p1-n'],
+      ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'p1-n'],
+      ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'p1-n'],
+      ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'p1-n'],
+      ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
+      ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
+      ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
+      ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
+      ['g5', 'g6', 'p1', 'p1', 'r1', 'p1', 'r1'],
+      ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'r1'],
+      ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'r1'],
+      ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'r1'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'r1'],
+      ['g5', 'g7', 'g7', 'g6', 'p1', 'r1', 'r1'],
+      ['g5', 'g7', 'g6', 'p1', 'p1', 'r1', 'r1'],
+      ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
+      ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
+      ['g5', 'g7', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
+      ['g5', 'g7', 'g7', 'g6', 'p1', 'p1', 'r1'],
+      ['g5', 'g7', 'g7', 'g7', 'g6', 'p1', 'r1'],
+      ['g5', 'g7', 'g7', 'g7', 'g6', 'p1', 'r1'],
+      ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
+      ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'p1-n'],
+      ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'r1'],
+      ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
+      ['g8', 'g9', 'g6', 'p1', 'r1', 'r1', 'r1'],
+      ['g8', 'g5', 'g6', 'p1', 'p1', 'r1', 'r1'],
+      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
+      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
+      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
+      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
+      ['g8', 'g5', 'g7', 'g7', 'g7', 'g6', 'p1-n'],
+      ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
+      ['g8', 'g5', 'g7', 'g7', 'g6', 'p1', 'r1'],
+      ['g8', 'g5', 'g7', 'g7', 'g6', 'p1', 'r1'],
+      ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
+      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
+      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],*/ //
       ['g8', 'g5', 'g6', 'p1', 'r1', 'r1', 'p1-n'],
       ['g8', 'g5', 'g6', 'p1', 'p2', 'r1', 'p1-n'],
       ['g8', 'g5', 'g6', 'p1', 'p2', 'r1', 'p1-n'],
@@ -116,44 +117,44 @@ const map = {
     ],
     elements: [
       /*
-      { name: 'bonusRock', x: 336, y: 160, type: 'M' },
-      { name: 'bonusRock', x: 1584, y: 160, type: 'F' },
-      { name: 'bonusRock', x: 2288, y: 190, type: 'S' },
+            { name: 'bonusRock', x: 336, y: 160, type: 'M' },
+            { name: 'bonusRock', x: 1584, y: 160, type: 'F' },
+            { name: 'bonusRock', x: 2288, y: 190, type: 'S' },
 
-      { name: 'bonusFly', x: 220, y: 75, type: 'R' },
-      { name: 'bonusFly', x: 1120, y: 75, type: 'S' },
-      { name: 'bonusFly', x: 2324, y: 60, type: 'R' },
-      { name: 'bonusFly', x: 2324, y: 180, type: 'L' },
+            { name: 'bonusFly', x: 220, y: 75, type: 'R' },
+            { name: 'bonusFly', x: 1120, y: 75, type: 'S' },
+            { name: 'bonusFly', x: 2324, y: 60, type: 'R' },
+            { name: 'bonusFly', x: 2324, y: 180, type: 'L' },
 
-      { name: 'sniper', x: 317, y: 193, type: 'STAY' },
-      { name: 'sniper', x: 639, y: 193, type: 'STAY' },
-      { name: 'sniper', x: 1279, y: 96, type: 'STAY' },
-      { name: 'sniper', x: 1347, y: 89, type: 'HALF' },
-      { name: 'sniper', x: 1554, y: 56, type: 'HALF' },
+            { name: 'sniper', x: 317, y: 193, type: 'STAY' },
+            { name: 'sniper', x: 639, y: 193, type: 'STAY' },
+            { name: 'sniper', x: 1279, y: 96, type: 'STAY' },
+            { name: 'sniper', x: 1347, y: 89, type: 'HALF' },
+            { name: 'sniper', x: 1554, y: 56, type: 'HALF' },
 
 
-      { name: 'tankBottom', x: 2065, y: 160 },
-      { name: 'tankBottom', x: 2192, y: 64 },
-      { name: 'tankBottom', x: 2769, y: 128 },
-      { name: 'tankInRock', x: 1264, y: 160 },
-      { name: 'tankInRock', x: 1650, y: 128 },
-      { name: 'tankInRock', x: 1841, y: 128 },
-      { name: 'tankInRock', x: 2993, y: 192 },
-      { name: 'tankInRock', x: 3121, y: 192 },
-      { name: 'bridge', x: 768, y: 96, blockCount: 4 },
-      { name: 'bridge', x: 1056, y: 96, blockCount: 4 },
-*/
-      //{ name: 'boss1', x: 3216, y: 32 },
+            { name: 'tankBottom', x: 2065, y: 160 },
+            { name: 'tankBottom', x: 2192, y: 64 },
+            { name: 'tankBottom', x: 2769, y: 128 },
+            { name: 'tankInRock', x: 1264, y: 160 },
+            { name: 'tankInRock', x: 1650, y: 128 },
+            { name: 'tankInRock', x: 1841, y: 128 },
+            { name: 'tankInRock', x: 2993, y: 192 },
+            { name: 'tankInRock', x: 3121, y: 192 },
+            { name: 'bridge', x: 768, y: 96, blockCount: 4 },
+            { name: 'bridge', x: 1056, y: 96, blockCount: 4 },*/
+
+      //{ name: 'boss1', x: 3216, y: 41 },
       { name: 'boss1', x: 400, y: 41 },
-      /*
-            {
-              name: 'enemyCreator',
-              type: 'thief',
-              coords: [
-                { xS: 0, xE: 4000, y: 90, vector: -1, reloading: 3000 },
-              ]
 
-            }*/
+      /* {
+         name: 'enemyCreator',
+         type: 'thief',
+         coords: [
+           { xS: 0, xE: 4000, y: 90, vector: -1, reloading: 3000 },
+         ]
+
+       }*/
     ],
   }],
   spritesInfo: {
@@ -565,9 +566,16 @@ const map = {
       h: 1,
       frames: 1,
     },
-    shoot: {
+    shootD: {
       x: 512,
       y: 1,
+      w: 3,
+      h: 3,
+      frames: 1,
+    },
+    shootE: {
+      x: 512,
+      y: 5,
       w: 3,
       h: 3,
       frames: 1,
@@ -983,11 +991,12 @@ const map = {
 export default class Level {
   constructor(number) {
     this.levelNumber = number;
-
+    this.length = map.levels[number].length;
     this.lastCameraX = 0;
     this.pausePress = false;
     this.bgArray = [];
     this.elementsArray = [];
+    this.canMoveCamera = true;
 
     this.debag = true;
 
@@ -995,12 +1004,13 @@ export default class Level {
     this.platformActual = [];
     this.elementsActual = [];
     this.bonuses = [];
+    this.bosses = []
 
     this.bulletsArray = [];
     this.playerBulletsArray = [];
 
     this.deathPlatform = new Platform(map.blockSize * 9, 2, -map.blockSize * 0.5, map.blockSize * 7 - 2, 'DEATH', false);
-    this.leftBorder = new Platform(2, map.blockSize * 8, -4, -map.blockSize * 0.5, 'LEFTBORDER', false);
+    this.leftBorder = new Platform(2, map.blockSize * 8, -4, -map.blockSize * 0.5, 'VERTICAL', false); //LEFTBORDER
     this.levelBorder = new Platform(map.blockSize * 12, map.blockSize * 11, -map.blockSize * 2, -map.blockSize * 2, 'LEVELBORDER', false);
 
     this.platformActual.push(this.deathPlatform);
@@ -1048,36 +1058,39 @@ export default class Level {
   }
 
   // Проверка сместился ли экран на 32 пикселя. Если да, то добавляем справа новые элементы
-  tryRefreshActualElements() {
+  /*tryRefreshActualElements() {
     if (this.lastCameraX > 32) {
       this.addActualElements();
       this.lastCameraX -= 32;
     }
-  }
+  }*/
 
   // Добавление элементов из обычного массива в актуальный. Если его час настал
-  addActualElements() {
-    const addElements = (from) => {
-      for (let i = 0; i < from.length; i += 1) {
-        if (!from[i].tryToActual(this, true)) {
-          break;
+  /*  addActualElements() {
+      const addElements = (from) => {
+        for (let i = 0; i < from.length; i += 1) {
+          if (!from[i].tryToActual(this, true)) {
+            break;
+          }
         }
-      }
-    };
+      };
 
-    // addElements(this.bgArray, 'BG');
-    // addElements(this.enemyArray, 'ENEMY');
-    addElements(this.elementsArray, 'ELEMENT');
-  }
+      // addElements(this.bgArray, 'BG');
+      // addElements(this.enemyArray, 'ENEMY');
+      addElements(this.elementsArray, 'ELEMENT');
+    }*/
 
-  pause(isPausePress) {
-    if (this.pausePress) {
-      if (!isPausePress) {
-        console.log('pause');
-      }
-    } else if (isPausePress) {
-      this.pausePress = true;
-    }
+  moveCamera(dx) {
+    const p = contra.pjs.vector.point;
+
+    [...contra.player.medals,
+      this.deathPlatform.sprite,
+      this.leftBorder.sprite,
+      this.levelBorder.sprite,
+      contra.pjs.camera,
+    ].forEach(element => {
+      element.move(p(dx, 0));
+    });
   }
 
   startLevel(level) {
@@ -1099,24 +1112,13 @@ export default class Level {
       });
 
       // draw elements
-      [...level.elementsActual, ...level.enemyArray, ...level.bonuses].forEach((el) => {
-        el.tryAction();
+      [...level.bosses, ...level.elementsActual, ...level.enemyArray, ...level.bonuses].forEach((el) => {
+        el.tryAction(camPos);
       });
 
-      /*//draw enemy
-      level.enemyArray.forEach((el) => {
-        el.tryAction();
-        //  el.selectedState.sprite.drawStaticBox()
-      });*/
-
-      // draw player bullets
-      level.bulletsArray.forEach((el) => {
-        el.draw(level, level.bulletsArray);
-      });
-
-      // draw enemy bullets
-      level.playerBulletsArray.forEach((el) => {
-        el.draw(level, level.playerBulletsArray);
+      // draw bullets
+      [...level.bulletsArray, ...level.playerBulletsArray].forEach((el) => {
+        el.draw();
       });
 
       /*
@@ -1135,27 +1137,25 @@ export default class Level {
         }, 500);
       }
 
-      contra.player.calculateMoves([
-        isDown(getKey.keyUp),
-        isDown(getKey.keyRight),
-        isDown(getKey.keyDown),
-        isDown(getKey.keyLeft),
-        isDown(getKey.keyJump),
-        isDown(getKey.keyFire),
-        isDown('SPACE'),
-      ]);
-      contra.player.spritesMesh.draw();
-      /*
-            let center = contra.player.center;
-            let pl = contra.player.selectedState.sprite;
-            center.x = pl.x + pl.w / 2;
-            center.y = pl.y + pl.h / 2;
-            center.drawStaticBox();*/
-
-      //contra.player.states['swim_top'].sprite.visible = true;
-      //contra.player.states['swim_top'].sprite.draw();
+      if (!this.isComplite) {
+        contra.player.calculateMoves([
+          isDown(getKey.keyUp),
+          isDown(getKey.keyRight),
+          isDown(getKey.keyDown),
+          isDown(getKey.keyLeft),
+          isDown(getKey.keyJump),
+          isDown(getKey.keyFire),
+        ]);
+      }
     });
 
     pjs.game.setLoop('myGame');
+  }
+
+  compliteLevel() {
+    this.isComplite = true;
+    [...level.elementsActual, ...level.enemyArray, ...level.bonuses].forEach((el) => {
+      el.tryRemove(true);
+    });
   }
 }

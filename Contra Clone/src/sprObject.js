@@ -28,12 +28,13 @@ export default class SprObject {
     });
   }
 
-  newRect(x, y, w, h) {
+  newRect(x, y, w, h, k) {
     return contra.pjs.game.newRectObject({
       x,
       y,
       w,
       h,
+      fillColor: k,
     });
   }
 }

@@ -236,12 +236,12 @@ export default class Player extends Person {
     super(xCenter, yBottom, health, playerSprites, Object.keys(playerSprites), contra.res.playerS, level);
     this.lifes = 2;
     this.assailable = false; // Уязвим ли
-    this.weapon = new Weapon('S', this);
+    this.weapon = new Weapon('L', this);
     this.needCalc = true; // обновление координат и обработка кнопок;
     this.pose = 'AIR'; // air , platform , water, death
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
     this.vectorJumpX = 0; // -1 left, 1 right
-    this.moveSpeed = 3;
+    this.moveSpeed = 1;
     this.fallSpeed = 1.8;
     this.timeAfterShoot = 0;
     this.timeForAnimationShot = 15;
@@ -277,22 +277,25 @@ export default class Player extends Person {
 
     this.medals.forEach((el) => { el.draw(); });
 
-    // contra.selectedLevel.pause(buttons[6]); // пауза. скорее всего будет осуществляться через лисенеры
     if (!this.needCalc) {
+      console.log('ret');
       return;
     }
 
     const collisionSArray = contra.selectedLevel.platformActual.filter(
-      (platform) => platform.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxS(0, 28, 0, this.fallSpeed - 28)),
+      (platform) => platform.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxS(2, 28, -4, this.fallSpeed - 28)),
     );
 
     const collisionDArray = contra.selectedLevel.platformActual.filter(
-      (platform) => platform.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxD(this.moveSpeed)),
+      (platform) => platform.sprite.isStaticIntersect(this.selectedState.sprite.getStaticBoxD(4, 0, -8 + this.moveSpeed)),
     );
 
     const collisionAArray = contra.selectedLevel.platformActual.filter(
-      (platform) => platform.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxA(-this.moveSpeed)),
+      (platform) => platform.sprite.isStaticIntersect(this.selectedState.sprite.getStaticBoxA(4 - this.moveSpeed, 0, -8)),
     );
+
+    //this.selectedState.sprite.drawStaticBoxA(4, 0, -8)
+    this.selectedState.sprite.drawStaticBoxA(4 - this.moveSpeed, 0, -8)
 
     const buttomColArray = collisionSArray.filter((platform) => platform.collision === 'BOTTOM');
     const waterColArray = buttomColArray.length > 0 ? [] : collisionSArray.filter((platform) => platform.collision === 'WATER');
@@ -388,11 +391,10 @@ export default class Player extends Person {
     if (this.pose !== 'DEATH' && collisionSArray[0] && collisionSArray[0].collision === 'DEATH') {
       this.die();
     }
-
-    const level = contra.selectedLevel;
-    if (dx < 0 && level.leftBorder.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxA(-this.moveSpeed))) {
-      dx = 0;
-    }
+    /*
+        if (dx < 0 && this.level.leftBorder.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxA(4 - this.moveSpeed, 0, -8))) {
+          dx = 0;
+        }*/
 
     //this.selectState('runAndFire');
 
@@ -400,22 +402,24 @@ export default class Player extends Person {
       const array = dx > 0 ? collisionDArray : collisionAArray;
       const collV = array.filter((platform) => platform.collision === 'VERTICAL');
       if (collV.length > 0) {
+        console.log('collision');
         const spr = this.selectedState.sprite;
-        dx = dx > 0 ? (collV[0].x - (spr.x + spr.w)) : (spr.x - (collV[0].x + collV[0].w));
+        dx = dx > 0 ? (collV[0].x - (spr.x + spr.w) + 4) : (spr.x - (collV[0].x + collV[0].w) + 2);
       }
     }
 
     this.spritesMesh.move(p(dx, dy));
-
-    if (dx > 0 && this.spritesMesh.x > contra.pjs.camera.getPosition().x + 32 * 4) {
-      this.medals.forEach((el) => { el.x += dx; });
-      contra.pjs.camera.move(p(dx, 0));
-      level.deathPlatform.sprite.move(p(dx, 0));
-      level.leftBorder.sprite.move(p(dx, 0));
-      level.levelBorder.sprite.move(p(dx, 0));
-      contra.selectedLevel.tryRefreshActualElements();
+    this.spritesMesh.draw();
+    const camPos = contra.pjs.camera.getPosition().x;
+    if (dx > 0 && this.spritesMesh.x > camPos + 32 * 4 && camPos <= contra.selectedLevel.length && this.level.canMoveCamera) {
+      contra.selectedLevel.moveCamera(dx);
+      /* this.medals.forEach((el) => { el.x += dx; });
+       contra.pjs.camera.move(p(dx, 0));
+       level.deathPlatform.sprite.move(p(dx, 0));
+       level.leftBorder.sprite.move(p(dx, 0));
+       level.levelBorder.sprite.move(p(dx, 0));*/
+      // contra.selectedLevel.tryRefreshActualElements();
     }
-
   }
 
   startSwim() {

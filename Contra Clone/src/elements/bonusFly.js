@@ -43,7 +43,7 @@ export default class BonusFly extends SprObject {
       if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
           aim.isStaticIntersect(bullet.getBox()))) {
         this.health -= bullet.damage;
-        bullet.crash(this.level.playerBulletsArray);
+        bullet.tryRemove();
         if (this.health < 1) {
           this.die();
         }

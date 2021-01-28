@@ -9,7 +9,7 @@ export default class Platform extends SprObject {
     if (collision === 'BOTTOM') {
       this.canJumpDown = canJumpDown;
     }
-    this.sprite = this.newRect(x, y, w, h);
+    this.sprite = this.newRect(x, y, w, h, '#000000');
   }
 
   moveX(dx) {
