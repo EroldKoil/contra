@@ -16,7 +16,7 @@ export default class Thief extends Person {
   constructor(xCenter, yBottom, vector, level) {
     super(xCenter, yBottom, 1, level.enemiesInfo, keys, contra.res.enemyS, level, 'enemyDeath');
     this.vectorMove = vector;
-
+    this.touchDemage = true;
     this.reloading = 2000;
     this.maxShot = 3;
     this.canShot = true;

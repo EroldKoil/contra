@@ -234,7 +234,7 @@ const health = 1;
 export default class Player extends Person {
   constructor(level) {
     super(xCenter, yBottom, health, playerSprites, Object.keys(playerSprites), contra.res.playerS, level);
-    this.lifes = 2;
+    this.lifes = 10;
     this.assailable = false; // Уязвим ли
     this.weapon = new Weapon('L', this);
     this.needCalc = true; // обновление координат и обработка кнопок;
@@ -249,18 +249,18 @@ export default class Player extends Person {
     this.canShoot = true;
 
     this.selectState('jump');
-    this.medals = [];
 
-    for (let i = 0; i < this.lifes; i += 1) {
-      const medal = this.createSprite(contra.res.elementS, ...Object.values(level.elementsInfo.medal));
-      this.medals.push(medal);
-      medal.x = 10 + 10 * i;
-      medal.y = 2;
-    }
+    this.medal = this.createSprite(contra.res.elementS, ...Object.values(level.elementsInfo.medal));
+    this.medal.y = 2;
+    this.reBurn();
   }
 
-  // buttons = [UP, Right, Bottom, Left,   Jump, Shot, SPACE]
+  // buttons = [UP, Right, Bottom, Left,   Jump, Shot]
   calculateMoves(buttons) {
+    if (this.health < 1) {
+      buttons = [false, false, false, false, false, false]
+    }
+    const camPos = contra.pjs.camera.getPosition().x;
     this.timeAfterShoot += 1;
     let dx = 0;
     let dy = 0;
@@ -275,7 +275,12 @@ export default class Player extends Person {
       this.vectorMove = -1;
     }
 
-    this.medals.forEach((el) => { el.draw(); });
+    // this.medals.forEach((el) => { el.draw(); });
+
+    for (let i = 0; i < this.lifes; i += 1) {
+      this.medal.x = camPos + 10 + 10 * i;
+      this.medal.draw();
+    }
 
     if (!this.needCalc) {
       console.log('ret');
@@ -295,7 +300,7 @@ export default class Player extends Person {
     );
 
     //this.selectedState.sprite.drawStaticBoxA(4, 0, -8)
-    this.selectedState.sprite.drawStaticBoxA(4 - this.moveSpeed, 0, -8)
+    //this.selectedState.sprite.drawStaticBoxA(4 - this.moveSpeed, 0, -8)
 
     const buttomColArray = collisionSArray.filter((platform) => platform.collision === 'BOTTOM');
     const waterColArray = buttomColArray.length > 0 ? [] : collisionSArray.filter((platform) => platform.collision === 'WATER');
@@ -388,37 +393,41 @@ export default class Player extends Person {
       this.shoot(buttons);
     }
 
-    if (this.pose !== 'DEATH' && collisionSArray[0] && collisionSArray[0].collision === 'DEATH') {
-      this.die();
+    if (this.health > 0) {
+      if (collisionSArray[0] && collisionSArray[0].collision === 'DEATH') {
+        this.die();
+      } else if (this.assailable) {
+        this.checkColission();
+      }
     }
-    /*
-        if (dx < 0 && this.level.leftBorder.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxA(4 - this.moveSpeed, 0, -8))) {
-          dx = 0;
-        }*/
 
-    //this.selectState('runAndFire');
+
+
+    /*
+			if (dx < 0 && this.level.leftBorder.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxA(4 - this.moveSpeed, 0, -8))) {
+				dx = 0;
+			}*/
+
+
 
     if (dx !== 0) {
       const array = dx > 0 ? collisionDArray : collisionAArray;
       const collV = array.filter((platform) => platform.collision === 'VERTICAL');
       if (collV.length > 0) {
-        console.log('collision');
         const spr = this.selectedState.sprite;
-        dx = dx > 0 ? (collV[0].x - (spr.x + spr.w) + 4) : (spr.x - (collV[0].x + collV[0].w) + 2);
+        dx = dx > 0 ? (collV[0].x - (spr.x + spr.w) + 4) : (collV[0].x + collV[0].w - spr.x + 4);
       }
+    }
+
+    if (this.health < 1 && this.selectedState.sprite.y + this.selectedState.sprite.h > 222) {
+      dy = 0;
     }
 
     this.spritesMesh.move(p(dx, dy));
     this.spritesMesh.draw();
-    const camPos = contra.pjs.camera.getPosition().x;
+
     if (dx > 0 && this.spritesMesh.x > camPos + 32 * 4 && camPos <= contra.selectedLevel.length && this.level.canMoveCamera) {
       contra.selectedLevel.moveCamera(dx);
-      /* this.medals.forEach((el) => { el.x += dx; });
-       contra.pjs.camera.move(p(dx, 0));
-       level.deathPlatform.sprite.move(p(dx, 0));
-       level.leftBorder.sprite.move(p(dx, 0));
-       level.levelBorder.sprite.move(p(dx, 0));*/
-      // contra.selectedLevel.tryRefreshActualElements();
     }
   }
 
@@ -615,37 +624,74 @@ export default class Player extends Person {
     }
   }
 
-  selectState(stateName) {
-    for (const key in this.states) {
-      if (key === stateName) {
-        this.states[key].sprite.visible = true;
-        this.selectedState = this.states[key];
-      } else {
-        this.states[key].sprite.visible = false;
+  checkColission() {
+    const dengerousEnemy = contra.selectedLevel.enemyArray.filter((enemy) => enemy.touchDemage && enemy.health > 0);
+    [...dengerousEnemy, ...this.level.bulletsArray].forEach(el => {
+      if (this.health > 0 && this.selectedState.sprite.isStaticIntersect(el.getBox())) {
+        this.die();
+      }
+    });
+  }
+
+  selectState(stateName, forDeath) {
+    if (this.health > 0 || forDeath) {
+      for (const key in this.states) {
+        if (key === stateName) {
+          this.states[key].sprite.visible = true;
+          this.selectedState = this.states[key];
+        } else {
+          this.states[key].sprite.visible = false;
+        }
       }
     }
   }
 
   die() {
-    this.selectState('die');
-    this.pose = 'DEATH';
-    this.needCalc = false;
+    console.log('die');
+    this.selectState('die', true);
+    this.health = 0;
+    this.lifes -= 1;
+    this.weapon.changeWeapon('D');
+    //this.level.onKeyboard();
     setTimeout(() => {
-      this.selectState('died');
-      setTimeout(() => {
-        console.log('live');
-        this.selectState('jump');
-        this.spritesMesh.y = 40;
-        this.pose = 'AIR';
-        this.needCalc = true;
-      }, 3000);
+      this.selectState('died', true);
+      if (this.lifes > 0) {
+        setTimeout(() => {
+          this.reBurn();
+        }, 1000);
+      } else {
+        console.log('game Over');
+      }
     }, 500);
+  }
+
+  reBurn() {
+    console.log('reBurn');
+    this.selectState('jump');
+    this.pose = 'AIR';
+    this.spritesMesh.y = 10;
+    this.spritesMesh.x = contra.pjs.camera.getPosition().x + 40;
+    // this.level.onKeyboard();
+    this.setAssailable(4000);
+    setTimeout(() => {
+      this.health = 1;
+    }, 100);
   }
 
   setAssailable(time) {
     this.assailable = false;
+    let visibility = true;
+    const interval = setInterval(() => {
+      this.selectedState.sprite.setAlpha(visibility ? 0.5 : 1);
+      visibility = !visibility;
+    }, 150);
+
     setTimeout(() => {
+      clearInterval(interval);
       this.assailable = true;
+      for (const key in this.states) {
+        this.states[key].sprite.setAlpha(1);
+      }
     }, time);
   }
 }

@@ -112,4 +112,8 @@ export default class Person {
       this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
     }
   }
+
+  getBox() {
+    return this.selectedState.sprite.getStaticBox();
+  }
 }

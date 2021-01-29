@@ -65,7 +65,8 @@ export default class Weapon {
     this.apgreid = 1;
     switch (type) {
       case 'E':
-
+        this.reloading = 1200;
+        this.speed = 1.5;
         break;
       case 'D':
         this.reloading = 300;

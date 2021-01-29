@@ -27,7 +27,6 @@ export default class EnemyCreator {
           this.create(creator.y, creator.vector, creator.reloading, camPos);
         }
       }
-
     }
   }
 

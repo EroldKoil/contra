@@ -1,8 +1,5 @@
-/* eslint-disable indent */
-/* eslint-disable max-len */
-/* eslint-disable no-nested-ternary */
-// eslint-disable-next-line eol-last
-/* eslint-disable import/no-cycle */
+/* eslint-disable */
+
 import Element from './element';
 import Platform from '../platform';
 import contra from '../index';
@@ -18,7 +15,7 @@ export default class Bridge extends Element {
     this.started = false;
     for (let i = 0; i < blockCount; i += 1) {
       const bridgeNumber = i === 0 ? 1 : i === blockCount - 1 ? 3 : 2;
-      this.sprites.push(this.createSprite(level.spritesInfo[`b${bridgeNumber}`], contra.res.levelS, this.x + 32 * i, this.y));
+      this.sprites.push(this.createSprite(level.spritesInfo[`b${bridgeNumber}`], contra.res.levelS[0], this.x + 32 * i, this.y));
       const p = new Platform(this.width - 4, 1, x + 32 * i, y + 6, 'BOTTOM', true);
       this.platforms.push(p);
       level.platformActual.push(p);

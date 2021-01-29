@@ -90,7 +90,7 @@ export default class Boss1 {
   }
 
   tryAction(camPos) {
-    if (camPos < this.level.length && camPos > this.level.length - 60) {
+    if (camPos < this.level.length && camPos > this.level.length - 70) {
       this.level.canMoveCamera = false;
       this.level.moveCamera(2)
     }
@@ -101,9 +101,9 @@ export default class Boss1 {
     }
     this.sprites.second.draw();
 
-    this.platforms.forEach((p) => {
-      p.sprite.drawStaticBox();
-    });
+    /* this.platforms.forEach((p) => {
+       p.sprite.drawStaticBox();
+     });*/
     [this.leftGun, this.rightGun].forEach((gun) => {
       if (gun.needShow) {
         gun.selectedState.draw();
@@ -132,6 +132,7 @@ export default class Boss1 {
         }
       }
     });
+
     if (this.health > 0) {
       this.checkColission(this, this.aim);
       if (this.health < 1) {
@@ -140,13 +141,15 @@ export default class Boss1 {
     }
 
     if (this.aim) {
-      this.aim.draw();
       if (this.health < 1) {
+        console.log('aim true . health no')
         contra.player.calculateMoves([false, false, false, false, false, false]);
         this.sprites.tonnel.draw();
         this.sprites.booms.forEach((boom) => {
           boom.draw();
         });
+      } else {
+        this.aim.draw();
       }
     } else {
       this.sprites.tonnel.draw();
@@ -154,8 +157,8 @@ export default class Boss1 {
       contra.player.calculateMoves([false, true, false, false, needJump, false]);
       if (needJump) {
         setTimeout(() => {
-          contra.player.spritesMesh.x = camPos.x + 10;
-          contra.player.spritesMesh.y = camPos.y + 10;
+          /*   contra.player.spritesMesh.x = camPos.x + 10;
+             contra.player.spritesMesh.y = camPos.y + 10;*/
         }, 2000);
       }
     }
@@ -163,6 +166,26 @@ export default class Boss1 {
     this.bulletsActual.forEach((bullet) => {
       bullet.draw();
     });
+  }
+
+  die() {
+    [this.leftGun, this.rightGun].forEach((gun) => {
+      gun.health = 0;
+    });
+    if (this.sniper) {
+      this.sniper.die();
+    }
+    this.bulletsActual = [];
+
+    this.level.isComplite = true;
+
+
+    setTimeout(() => {
+      this.level.isComplite = true;
+      this.aim = null;
+      this.platforms[0].sprite.y = 163;
+      this.sprites.booms = [];
+    }, 1300);
   }
 
   shoot(gun) {
@@ -195,25 +218,6 @@ export default class Boss1 {
         bullet.tryRemove();
       }
     });
-  }
-
-  die() {
-    [this.leftGun, this.rightGun].forEach((gun) => {
-      gun.health = 0;
-    });
-    if (this.sniper) {
-      this.sniper.die();
-    }
-    this.bulletsActual = [];
-
-    this.level.isComplite = true;
-    this.sprites.booms = [];
-
-    setTimeout(() => {
-      this.level.isComplite = true;
-      this.aim = null;
-      this.platforms[0].sprite.y = 163;
-    }, 1000);
   }
 }
 

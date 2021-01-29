@@ -39,7 +39,10 @@ export default contra;
 const { newImage } = contra.pjs.tiles;
 contra.res = {
   playerS: newImage('./assets/sprites/player/player.png'),
-  levelS: newImage('./assets/sprites/levels/1/spritesheet.png'),
+  levelS: [
+    newImage('./assets/sprites/levels/1/spritesheet.png'),
+    newImage('./assets/sprites/levels/2/spritesheet.png'),
+  ],
   elementS: newImage('./assets/sprites/elements.png'),
   enemyS: newImage('./assets/sprites/enemy.png'),
   boss: newImage('./assets/sprites/boss/boss.png'),

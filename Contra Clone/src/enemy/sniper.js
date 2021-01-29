@@ -19,6 +19,7 @@ const keys = [
 export default class Sniper extends Person {
   constructor(xCenter, yBottom, type, level, boss = false) {
     super(xCenter, yBottom, 1, level.enemiesInfo, keys, contra.res.enemyS, level, 'enemyDeath');
+    this.touchDemage = true;
     this.type = type; // STAY, HALF, STAYH
     this.boss = boss;
     this.timeToHidden = 3000;
@@ -151,17 +152,15 @@ export default class Sniper extends Person {
       this.selectState('sniperBetwen', true);
       setTimeout(() => {
         this.selectState('sniperHalf', true);
-
+        this.isHidden = false;
         if (needFrame) {
           setTimeout(() => {
             this.selectState('sniper180', true);
             setTimeout(() => {
-              this.isHidden = false;
               this.canShot = true;
             }, 600);
           }, 200);
         } else {
-          this.isHidden = false;
           setTimeout(() => {
             this.canShot = true;
           }, 600);

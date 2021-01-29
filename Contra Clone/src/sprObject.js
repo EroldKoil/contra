@@ -17,13 +17,13 @@ export default class SprObject {
         spriteInfo.x,
         spriteInfo.y,
         spriteInfo.frames ? (spriteInfo.w / spriteInfo.frames) : spriteInfo.w,
-        spriteInfo.h,
+        spriteInfo.h || 32,
         spriteInfo.frames || 1,
       ),
       x,
       y,
       w: spriteInfo.frames ? spriteInfo.w / spriteInfo.frames : spriteInfo.w,
-      h: spriteInfo.h,
+      h: spriteInfo.h || 32,
       delay: spriteInfo.delay ? spriteInfo.delay : 100,
     });
   }
