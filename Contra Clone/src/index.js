@@ -1,4 +1,3 @@
-/* eslint-disable eol-last */
 /* eslint-disable import/no-cycle */
 // import exports from 'webpack';
 import Level from './level';
@@ -7,6 +6,7 @@ import PointJS from './pointjs_0.2.0.9';
 import mainMenu from './mainmenu';
 import getLanguageObject from './multilang';
 import Options from './options';
+import Sound from './sound';
 
 function resize() {
   let width = window.innerWidth;
@@ -24,6 +24,8 @@ function resize() {
   canvas.style.top = `${(window.innerHeight - height) / 2}px`;
 }
 
+Sound.init();
+
 const contra = {
   score: 0,
   pjs: new PointJS(256, 224, { backgroundColor: 'black' }),
@@ -32,6 +34,8 @@ const contra = {
   player: null,
   startGame: null,
   lang: null,
+  lives: 3,
+  score: 0,
 };
 export default contra;
 
@@ -47,6 +51,8 @@ contra.res = {
   enemyS: newImage('./assets/sprites/enemy.png'),
   boss: newImage('./assets/sprites/boss/boss.png'),
 };
+
+// метод сохранения хайскора
 
 contra.startGame = () => {
   const interval = setInterval(() => {
@@ -66,19 +72,21 @@ contra.lang = getLanguageObject(contra.options.get('language'));
 
 const { pjs } = contra;
 
-//document.querySelector('dialog').showModal(); // Показать модальное окно
+document.querySelector('dialog').showModal(); // Показать модальное окно
+
+function buttonPress() {
+  document.querySelector('dialog').close();
+  mainMenu(contra); // Все стартует отсюда!
+}
 
 // Обработчик кнопки модального окна
-/*document.getElementById('start-button').addEventListener('click', () => {
-  document.querySelector('dialog').close();
-  mainMenu(); // Все стартует отсюда!
-});*/
-
-mainMenu();
+document.getElementById('start-button').addEventListener('click', buttonPress);
+document.getElementById('start-button').addEventListener('touchend', buttonPress);
 
 window.onresize = resize;
 
 pjs.keyControl.initControl();
+pjs.touchControl.initControl();
 
 function resizeInit() {
   if (document.querySelector('canvas') === null) {

@@ -3,6 +3,8 @@
 import Bg from './bg';
 import Platform from './platform';
 import ElementCreator from './elements/elementCreator';
+// import EnemyCreator from './enemy/enemyCreator';
+import Sound from './sound';
 import Сurtain from './elements/curtain';
 
 import contra from './index';
@@ -927,6 +929,8 @@ export default class Level {
 
     this.platformActual.push(this.deathPlatform);
     this.platformActual.push(this.leftBorder);
+
+    Sound.playMusic(1);
 
     // Create All elements
     const createElement = (from, type) => {
