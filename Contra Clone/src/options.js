@@ -13,6 +13,7 @@ export default class Options {
         keyRight: 'D',
         keyFire: 'O',
         keyJump: 'P',
+        highScore: 20000,
       };
 
       Storage.save('options', this.options);

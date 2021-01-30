@@ -1,23 +1,33 @@
-/* eslint-disable spaced-comment */
-/* eslint-disable import/no-cycle */
-/* eslint-disable eol-last */
-
 import TextLayer from './text';
 import getLanguageObject from './multilang';
-//import titleSound from '../assets/audio/title.mp3';
-import contra from './index';
+import startScreen from './startscreen';
+import Sound from './sound';
 
-function createMenuText(textLayer, lang) {
+function createMenuText(textLayer, lang, touchSupported) {
   textLayer.clear();
   textLayer.addText(5, 17, lang.menu);
   textLayer.addText(7, 19, lang.startGame);
   textLayer.addText(7, 21, lang.language);
-  textLayer.addText(7, 23, lang.controls);
+  if (!touchSupported) {
+    textLayer.addText(7, 23, lang.controls);
+  }
 }
 
-export default function mainMenu() {
+function changeLanguage(contra, textLayer, touchSupported) {
+  contra.options.set('language', (contra.options.get('language') + 1) % 3);
+  // eslint-disable-next-line no-param-reassign
+  contra.lang = getLanguageObject(contra.options.get('language'));
+  createMenuText(textLayer, contra.lang, touchSupported);
+}
+
+function startGame(contra) {
+  setTimeout(startScreen, 0, contra, 1, contra.startGame);
+}
+
+export default function mainMenu(contra) {
   const KEYS = ['keyUp', 'keyDown', 'keyLeft', 'keyRight', 'keyFire', 'keyJump'];
   const { pjs, lang } = contra;
+  const touchSupported = contra.pjs.touchControl.isTouchSupported();
 
   const titleScreen = pjs.game.newImageObject({
     file: '../assets/main_menu/menu_bg.png',
@@ -37,7 +47,7 @@ export default function mainMenu() {
 
   // Создаем и заполняем слой текста в меню
   const textLayer = new TextLayer(pjs);
-  createMenuText(textLayer, lang);
+  createMenuText(textLayer, lang, touchSupported);
 
   let cameraPosition = -256;
   let menuState; // 0, 1, 2 - пункты меню. 3+ - переназначение клавиш. 9 - сохранение клавиш.
@@ -49,12 +59,13 @@ export default function mainMenu() {
 
   pjs.game.newLoop('main_menu', () => {
     if (cameraPosition !== 0) {
-      cameraPosition = (pjs.keyControl.getCountKeysDown() > 0) ? 0 : cameraPosition + 1;
+      cameraPosition = (pjs.keyControl.getCountKeysDown() > 0 || pjs.touchControl.isPress())
+        ? 0 : cameraPosition + 1;
 
       pjs.camera.setPosition(pjs.vector.point(cameraPosition, 0));
     } else {
       pjs.OOP.once('PlayTitleSound', () => {
-        // new Audio(titleSound).play();
+        Sound.play('menuTitle');
         menuState = 0;
       });
     }
@@ -81,15 +92,11 @@ export default function mainMenu() {
       if (pjs.keyControl.isPress(keyFire)) {
         switch (menuState) {
           case 0:
-            // Тут вызываем черный экран перед уровнем // Пока что вызов уровня
-            contra.startGame();
+            // О мигании пункта при выборе: каждые 8 кадров. 16 скрытий, 15 показов, 248 кадров
+            startGame(contra);
             break;
           case 1:
-            // Смена языка приложения
-            contra.options.set('language', (contra.options.get('language') + 1) % 3);
-            // eslint-disable-next-line no-param-reassign
-            contra.lang = getLanguageObject(contra.options.get('language'));
-            createMenuText(textLayer, contra.lang);
+            changeLanguage(contra, textLayer, touchSupported);
             break;
           case 2:
             // Запуск переназначения клавиш управления
@@ -106,7 +113,7 @@ export default function mainMenu() {
       if (menuState >= 3 && delay === 0) {
         if (menuState === 9) {
           // Сохранение новых значений
-          createMenuText(textLayer, contra.lang);
+          createMenuText(textLayer, contra.lang, touchSupported);
           menuState = 2;
           newKeys.forEach((key, index) => {
             contra.options.set(KEYS[index], key);
@@ -126,9 +133,26 @@ export default function mainMenu() {
       } else {
         delay -= 1;
       }
-
-      textLayer.draw();
     }
+
+    // Обработка тачпада
+    if (pjs.touchControl.isPress()) {
+      let { x, y } = pjs.touchControl.getPositionS();
+      const canvas = document.querySelector('canvas');
+      const ratio = canvas.offsetWidth / 256;
+      x = (x - canvas.offsetLeft) / ratio;
+      y = (y - canvas.offsetTop) / ratio;
+
+      if (7 * 8 < x && x < (7 + lang.startGame.length) * 8 && 19 * 8 < y && y < 20 * 8) {
+        // Был тач к старту игры
+        startGame(contra);
+      } else if (7 * 8 < x && x < (7 + lang.language.length) * 8 && 21 * 8 < y && y < 22 * 8) {
+        // Был тач к смене языка
+        changeLanguage(contra, textLayer, touchSupported);
+      }
+    }
+
+    textLayer.draw();
   });
 
   pjs.game.setLoop('main_menu');
