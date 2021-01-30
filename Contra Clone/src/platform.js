@@ -1,9 +1,5 @@
-/* eslint-disable eol-last */
-/* eslint-disable import/no-unresolved */
-// collision - направление сталкивания : VERTICAL, LEFT, RIGHT
-// eslint-disable-next-line import/no-cycle
-// eslint-disable-next-line import/no-unresolved
-// eslint-disable-next-line import/no-cycle
+/* eslint-disable */
+
 import SprObject from './sprObject';
 
 export default class Platform extends SprObject {
@@ -13,7 +9,7 @@ export default class Platform extends SprObject {
     if (collision === 'BOTTOM') {
       this.canJumpDown = canJumpDown;
     }
-    this.sprite = this.newRect(x, y, w, h);
+    this.sprite = this.newRect(x, y, w, h, '#000000');
   }
 
   moveX(dx) {

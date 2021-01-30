@@ -1,24 +1,81 @@
-/* eslint-disable eol-last */
-/* eslint-disable import/named */
-/* eslint-disable import/no-cycle */
-/* eslint-disable import/extensions */
-/* import { game, contra, tiles } from './index.js'; */
+/* eslint-disable */
+
 import Platform from './platform.js';
 import SprObject from './sprObject';
 import contra from './index';
 
 export default class Bg extends SprObject {
-  constructor(name, spriteInfo, width, height, x, y, level, canJumpDown) {
+  constructor(name, spriteInfo, width, height, x, y, level, canJumpDown, needVertPlatform) {
     super(x, y, width, height);
 
     switch (name) {
+      case 'a1': // вертикальные на всю ширину
+        if (needVertPlatform) {
+          this.platforms = [new Platform(width - 4, 38, x + 2, y - 5, 'VERTICAL', false)];
+        }
+        break;
+      case 'd30':
+        if (needVertPlatform) {
+          this.platforms = [new Platform(width / 2 - 2, 38, x + width / 2 + 2, y - 5, 'VERTICAL', false)];
+        }
+        break;
+      case 'k2': // вертикальные правая половина
+        this.platforms = [new Platform(width / 2 - 2, 38, x + width / 2 + 2, y - 5, 'VERTICAL', false)];
+        break;
+      case 'k3': // вертикальные левая половина
+        this.platforms = [new Platform(width / 2 - 2, 38, x, y - 5, 'VERTICAL', false)];
+        break;
+      case 'k4': // вертикальные правая половина + низ
+        this.platforms = [
+          new Platform(width / 2 - 2, 26, x + width / 2 + 2, y + 7, 'VERTICAL', false),
+          new Platform(width / 2 - 2, 2, x + width / 2 + 2, y + 6, 'BOTTOM', false)
+        ];
+        break;
+      case 'k3': // вертикальные левая половина + низ
+        this.platforms = [
+          new Platform(width / 2 - 2, 38, x, y - 5, 'VERTICAL', false),
+          new Platform(width / 2 - 2, 2, x, y + 6, 'BOTTOM', false)
+        ];
+        break;
       case 'p1':
+      case 'p4':
+      case 'p5':
+      case 'p22':
       case 'pw1':
-      case 'pw2':
+      case 'pw2': // целая ширина Верх
         this.platforms = [new Platform(width - 4, 1, x + 2, y + 6, 'BOTTOM', canJumpDown)];
+        if (needVertPlatform) {
+          this.platforms.push(new Platform(width - 4, 38, x + 2, y - 5, 'VERTICAL', false));
+        }
+        break;
+      case 'p17': // целая ширина Верх + Вертикаль на всю ширину
+        this.platforms = [
+          new Platform(width - 4, 1, x + 2, y + 6, 'BOTTOM', canJumpDown),
+          new Platform(width - 4, 38, x + 2, y + 7, 'VERTICAL', false)
+        ];
         break;
       case 'p2':
+      case 'p3':
+      case 'p6':
+      case 'p7':
+      case 'p8':
+      case 'p9':
+      case 'p11':
+      case 'p18':
+      case 'p19':
+      case 'p23': // целая ширина Центр
         this.platforms = [new Platform(width - 4, 1, x + 2, y + height / 2 + 6, 'BOTTOM', canJumpDown)];
+        break;
+      case 'p12': // правая половина Верх
+        this.platforms = [new Platform(width / 2 - 2, 1, x + width / 2 + 2, y + 6, 'BOTTOM', canJumpDown)];
+        break;
+      case 'p10': // правая половина Центр
+      case 'p15':
+        this.platforms = [new Platform(width / 2 - 2, 1, x + width / 2 + 2, y + height / 2 + 6, 'BOTTOM', canJumpDown)];
+        break;
+      case 'p14': // Левая половина Центр
+      case 'p21':
+        this.platforms = [new Platform(width / 2 - 2, 1, x, y + height / 2 + 6, 'BOTTOM', canJumpDown)];
         break;
       case 'w':
       case 'w2':
@@ -45,7 +102,7 @@ export default class Bg extends SprObject {
         break;
     }
 
-    this.sprite = this.createSprite(spriteInfo, contra.res.levelS, this.x, this.y);
+    this.sprite = this.createSprite(spriteInfo, contra.res.levelS[level.levelNumber], this.x, this.y);
 
     level.bgArray.push(this);
     if (this.platforms) {
