@@ -3,7 +3,8 @@
 import contra from '../index';
 import Sniper from '../enemy/sniper';
 import Platform from '../platform';
-import BulletL from '../weapon/bulletL'
+import BulletL from '../weapon/bulletL';
+import Sound from '../sound';
 
 const spritesInfo = {
   firstPart: { xS: 193, yS: 10, w: 112, h: 183, frames: 1, delay: 10 },
@@ -22,7 +23,7 @@ export default class Boss1 {
     this.y = y;
     this.health = 4; //32
     this.level = level;
-
+    this.score = 1000;
     const image = contra.res.boss;
     const elementS = contra.res.elementS;
     const mediumBoom = Object.values(level.elementsInfo['mediumBoom']);
@@ -92,7 +93,10 @@ export default class Boss1 {
   tryAction(camPos) {
     if (camPos < this.level.length && camPos > this.level.length - 70) {
       this.level.canMoveCamera = false;
-      this.level.moveCamera(2)
+      this.level.moveCamera(2);
+      if (camPos > this.level.length - 1) {
+        Sound.play('siren');
+      }
     }
 
     this.sprites.first.draw();
@@ -176,7 +180,7 @@ export default class Boss1 {
       this.sniper.die();
     }
     this.bulletsActual = [];
-
+    contra.addScore(this.score);
     this.level.isComplite = true;
 
 
@@ -215,6 +219,7 @@ export default class Boss1 {
       if (this.health > 0 && bullet.needCheckCpllision &&
         ((bullet instanceof BulletL && sprite.isDynamicIntersect(bullet.getBox())) || sprite.isStaticIntersect(bullet.getBox()))) {
         aim.health -= bullet.damage;
+        Sound.play('damage');
         bullet.tryRemove();
       }
     });

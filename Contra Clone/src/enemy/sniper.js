@@ -20,6 +20,7 @@ export default class Sniper extends Person {
   constructor(xCenter, yBottom, type, level, boss = false) {
     super(xCenter, yBottom, 1, level.enemiesInfo, keys, contra.res.enemyS, level, 'enemyDeath');
     this.touchDemage = true;
+    this.score = 100;
     this.type = type; // STAY, HALF, STAYH
     this.boss = boss;
     this.timeToHidden = 3000;
@@ -192,7 +193,7 @@ export default class Sniper extends Person {
     setTimeout(() => {
       this.selectState('death');
       setTimeout(() => {
-        contra.score += 100;
+        contra.addScore(this.score);
         this.tryRemove(true);
       }, 500);
     }, 300);

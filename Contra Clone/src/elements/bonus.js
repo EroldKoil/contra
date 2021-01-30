@@ -2,6 +2,7 @@
 
 import contra from '../index';
 import SprObject from '../sprObject';
+import Sound from '../sound';
 
 export default class Bonus extends SprObject {
   constructor(xCenter, yBottom, type, level) {
@@ -45,6 +46,7 @@ export default class Bonus extends SprObject {
     this.tryRemove(false, camPos);
     const { player } = contra;
     if (spr.isStaticIntersect(player.selectedState.sprite.getStaticBox())) {
+      Sound.play('boost');
       if (this.type === 'R') {
         player.weapon.upgrate();
       } else if (this.type === 'B') {

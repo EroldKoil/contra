@@ -904,8 +904,8 @@ const map = {
 };
 export default class Level {
   constructor(number) {
-    this.levelNumber = number;
-    this.length = map.levels[number].length;
+    this.levelNumber = number - 1;
+    this.length = map.levels[number - 1].length;
     this.lastCameraX = 0;
     this.pausePress = false;
     this.bgArray = [];

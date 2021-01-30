@@ -59,8 +59,8 @@ export default function mainMenu(contra) {
 
   pjs.game.newLoop('main_menu', () => {
     if (cameraPosition !== 0) {
-      cameraPosition = (pjs.keyControl.getCountKeysDown() > 0 || pjs.touchControl.isPress())
-        ? 0 : cameraPosition + 1;
+      cameraPosition = (pjs.keyControl.getCountKeysDown() > 0 || pjs.touchControl.isPress()) ?
+        0 : cameraPosition + 1;
 
       pjs.camera.setPosition(pjs.vector.point(cameraPosition, 0));
     } else {

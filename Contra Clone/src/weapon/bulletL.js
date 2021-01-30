@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Bullet from './bullet';
 import contra from '../index';
+import Sound from '../sound';
 
 export default class BulletL extends Bullet {
   constructor(x, y, dx, dy, level, bulletArray) {
@@ -36,6 +37,7 @@ export default class BulletL extends Bullet {
     }
     this.sprite = this.createSprite(level.elementsInfo.shootL, contra.res.elementS, x + xCor, y + yCor);
     this.sprite.setAngle(dDeg);
+    Sound.play('fireL');
   }
 
   getBox() {

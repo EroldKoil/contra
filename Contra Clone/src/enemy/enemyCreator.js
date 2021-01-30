@@ -37,7 +37,7 @@ export default class EnemyCreator {
     setTimeout(() => {
       this.canCreate = true;
     }, reloading);
-    console.log('add thief');
+    // console.log('add thief');
     switch (this.type) {
       case 'thief':
         let x = vector > 0 ? camPos - 20 : camPos + 300;
@@ -49,7 +49,7 @@ export default class EnemyCreator {
   }
 
   die() {
-    console.log('creator End');
+    // console.log('creator End');
     this.level.elementsActual.splice(this.level.elementsActual.indexOf(this), 1);
   }
 }

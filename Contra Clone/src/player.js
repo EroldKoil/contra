@@ -3,6 +3,7 @@
 import Person from './person';
 import Weapon from './weapon/weapon';
 import contra from './index';
+import Sound from './sound';
 
 const playerSprites = {
   stay: {
@@ -241,7 +242,7 @@ export default class Player extends Person {
     this.pose = 'AIR'; // air , platform , water, death
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
     this.vectorJumpX = 0; // -1 left, 1 right
-    this.moveSpeed = 1;
+    this.moveSpeed = 3;
     this.fallSpeed = 1.8;
     this.timeAfterShoot = 0;
     this.timeForAnimationShot = 15;
@@ -314,6 +315,7 @@ export default class Player extends Person {
           this.selectState('stay');
           this.vectorJumpX = 0;
           this.pose = 'PLATFORM';
+          Sound.play('stomp');
           // this.needCalc = false;
         } else if (waterColArray.length > 0) {
           dy = waterColArray[0].sprite.y - (this.states.run.sprite.y + this.states.run.sprite.h);

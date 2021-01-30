@@ -16,6 +16,7 @@ export default class Thief extends Person {
   constructor(xCenter, yBottom, vector, level) {
     super(xCenter, yBottom, 1, level.enemiesInfo, keys, contra.res.enemyS, level, 'enemyDeath');
     this.vectorMove = vector;
+    this.score = 20;
     this.touchDemage = true;
     this.reloading = 2000;
     this.maxShot = 3;
@@ -130,7 +131,7 @@ export default class Thief extends Person {
     setTimeout(() => {
       this.selectState('death');
       setTimeout(() => {
-        contra.score += 100;
+        contra.addScore(this.score);
         this.tryRemove(true);
       }, 500);
     }, 300);

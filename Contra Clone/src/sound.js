@@ -2,7 +2,7 @@ const sounds = {
   siren: { src: '../assets/audio/siren.mp3' }, // сирена после подхода к боосу первого уровня
   stomp: { src: '../assets/audio/stomp.mp3' }, // приземление игрока
   boost: { src: '../assets/audio/boost.mp3' }, // поднял улучшение
-  fireP: { src: '../assets/audio/fire-plain.mp3' }, // огонь из обычного оружия
+  fireD: { src: '../assets/audio/fire-plain.mp3' }, // огонь из обычного оружия
   fireM: { src: '../assets/audio/fire-m.mp3' },
   fireF: { src: '../assets/audio/fire-f.mp3' },
   fireL: { src: '../assets/audio/fire-l.mp3' },
@@ -47,8 +47,8 @@ export default class Sound {
 
   // Возвращает true, если сейчас проигрывается звук sound
   static isPlaying(sound) {
-    return sounds[sound].audio.currentTime > 0
-      && sounds[sound].audio.currentTime < sounds[sound].audio.duration;
+    return sounds[sound].audio.currentTime > 0 &&
+      sounds[sound].audio.currentTime < sounds[sound].audio.duration;
   }
 
   // Запуск проигрывания музыки

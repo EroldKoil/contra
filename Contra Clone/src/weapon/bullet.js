@@ -1,6 +1,7 @@
 /* eslint-disable */
 import SprObject from '../sprObject';
 import contra from '../index';
+import Sound from '../sound';
 
 export default class Bullet extends SprObject {
   constructor(x, y, dx, dy, level, bulletArray) {

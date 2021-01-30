@@ -2,7 +2,8 @@
 
 import contra from './index';
 import Player from './player';
-import BulletL from './weapon/bulletL'
+import BulletL from './weapon/bulletL';
+import Sound from './sound';
 
 export default class Person {
   constructor(xCenter, yBottom, health, sprites, keys, image, level, typeOfDeath) {
@@ -96,6 +97,8 @@ export default class Person {
         bullet.tryRemove();
         if (this.health < 1) {
           this.die();
+        } else {
+          Sound.play('damage');
         }
       }
     });

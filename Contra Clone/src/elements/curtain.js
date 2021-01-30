@@ -6,7 +6,7 @@ export default class Сurtain {
   constructor(array) {
     this.array = array;
     this.sprite = contra.pjs.game.newRectObject({
-      x: -5,
+      x: -15,
       y: -5,
       w: 300,
       h: 250,

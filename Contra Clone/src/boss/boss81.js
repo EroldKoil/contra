@@ -3,7 +3,8 @@
 import contra from '../index';
 import GoldenAlien from '../enemy/goldenAlien';
 import Platform from '../platform';
-import BulletL from '../weapon/bulletL'
+import BulletL from '../weapon/bulletL';
+import Sound from '../sound';
 
 const spritesInfo = {
   jawOpen: { xS: 60, yS: 1098, w: 114, h: 112, frames: 1, delay: 10 },
@@ -19,7 +20,7 @@ export default class Boss81 {
     this.level = level;
     this.isOpen = false;
     this.updateCount = 30;
-
+    this.score = 1000;
     const image = contra.res.boss;
     const boom = Object.values(level.elementsInfo['bigBoom']);
 
@@ -101,6 +102,7 @@ export default class Boss81 {
   }
 
   die() {
+    contra.addScore(this.score);
     this.level.enemyArray.forEach(enemy => {
       if (enemy instanceof GoldenAlien) {
         enemy.die();

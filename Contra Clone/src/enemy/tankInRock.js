@@ -25,6 +25,7 @@ export default class TankInRock extends Person {
   constructor(xCenter, yBottom, level) {
     super(xCenter, yBottom, 8, level.enemiesInfo, keys, contra.res.enemyS, level, 'mediumBoom');
     this.weapon = new Weapon('E', this, 1000);
+    this.score = 100;
     this.selectState('tankRClose');
     this.aim = contra.pjs.game.newRectObject({
       x: xCenter - 10,
@@ -70,7 +71,7 @@ export default class TankInRock extends Person {
   }
 
   die() {
-    contra.score += 100;
+    contra.addScore(this.score);
     this.selectState('death');
     setTimeout(() => {
       this.tryRemove(true);

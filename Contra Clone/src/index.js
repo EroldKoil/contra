@@ -1,5 +1,5 @@
-/* eslint-disable import/no-cycle */
-// import exports from 'webpack';
+/* eslint-disable */
+
 import Level from './level';
 import Player from './player';
 import PointJS from './pointjs_0.2.0.9';
@@ -27,7 +27,6 @@ function resize() {
 Sound.init();
 
 const contra = {
-  score: 0,
   pjs: new PointJS(256, 224, { backgroundColor: 'black' }),
   options: new Options(),
   selectedLevel: null,
@@ -36,6 +35,7 @@ const contra = {
   lang: null,
   lives: 3,
   score: 0,
+  scoreForLife: 0,
 };
 export default contra;
 
@@ -66,6 +66,16 @@ contra.startGame = () => {
       contra.player = new Player(contra.selectedLevel);
     }
   }, 200);
+};
+
+contra.addScore = (score) => {
+  contra.score += score;
+  contra.scoreForLife += score;
+  if (contra.scoreForLife > 20000) {
+    contra.scoreForLife -= 20000;
+    Sound.play('plusLife');
+    contra.player.lifes += 1;
+  }
 };
 
 contra.lang = getLanguageObject(contra.options.get('language'));

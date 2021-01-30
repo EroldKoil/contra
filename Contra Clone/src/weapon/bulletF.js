@@ -2,6 +2,7 @@
 
 import Bullet from './bullet';
 import contra from '../index';
+import Sound from '../sound';
 
 export default class BulletF extends Bullet {
   constructor(x, y, dx, dy, level, bulletArray) {
@@ -9,6 +10,7 @@ export default class BulletF extends Bullet {
     this.deg = 0;
     this.sprite = this.createSprite(level.elementsInfo.shootF, contra.res.elementS, x, y);
     this.d = 12;
+    Sound.play('fireF');
   }
 
   draw() {
