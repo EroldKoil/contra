@@ -47,6 +47,8 @@ export default class Bonus extends SprObject {
     if (spr.isStaticIntersect(player.selectedState.sprite.getStaticBox())) {
       if (this.type === 'R') {
         player.weapon.upgrate();
+      } else if (this.type === 'B') {
+        player.setAssailable(12000);
       } else {
         player.weapon.changeWeapon(this.type);
       }

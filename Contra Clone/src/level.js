@@ -145,13 +145,15 @@ const map = {
         { name: 'bridge', x: 1056, y: 96, blockCount: 4 },
 
         { name: 'boss1', x: 3216, y: 41 },
-        //{ name: 'boss1', x: 400, y: 41 },
 
         {
           name: 'enemyCreator',
           type: 'thief',
           coords: [
-            { xS: 0, xE: 200, y: 90, vector: -1, reloading: 3000 },
+            { xS: 150, xE: 1114, y: 95, vector: -1, reloading: 3000 },
+            { xS: 1115, xE: 1664, y: 126, vector: -1, reloading: 3000 },
+            { xS: 1665, xE: 2304, y: 137, vector: -1, reloading: 3000 },
+            { xS: 2305, xE: 2650, y: 124, vector: -1, reloading: 3000 },
           ]
 
         }
@@ -250,55 +252,37 @@ const map = {
         ['a2', 'a2', 'a2', 'a2', 'a2', 'a2-n', 'a2'],
       ],
       elements: [
-        /*
-              { name: 'bonusRock', x: 336, y: 160, type: 'M' },
-              { name: 'bonusRock', x: 1584, y: 160, type: 'F' },
-              { name: 'bonusRock', x: 2288, y: 190, type: 'S' },
-
-              { name: 'bonusFly', x: 220, y: 75, type: 'R' },
-              { name: 'bonusFly', x: 1120, y: 75, type: 'S' },
-              { name: 'bonusFly', x: 2324, y: 60, type: 'R' },
-              { name: 'bonusFly', x: 2324, y: 180, type: 'L' },
-
-              { name: 'sniper', x: 317, y: 193, type: 'STAY' },
-              { name: 'sniper', x: 639, y: 193, type: 'STAY' },
-              { name: 'sniper', x: 1279, y: 96, type: 'STAY' },
-              { name: 'sniper', x: 1347, y: 89, type: 'HALF' },
-              { name: 'sniper', x: 1554, y: 56, type: 'HALF' },
-
-
-              { name: 'tankBottom', x: 2065, y: 160 },
-              { name: 'tankBottom', x: 2192, y: 64 },
-              { name: 'tankBottom', x: 2769, y: 128 },
-              { name: 'tankInRock', x: 1264, y: 160 },
-              { name: 'tankInRock', x: 1650, y: 128 },
-              { name: 'tankInRock', x: 1841, y: 128 },
-              { name: 'tankInRock', x: 2993, y: 192 },
-              { name: 'tankInRock', x: 3121, y: 192 },
-              { name: 'bridge', x: 768, y: 96, blockCount: 4 },
-              { name: 'bridge', x: 1056, y: 96, blockCount: 4 },*/
-
-        //{ name: 'boss1', x: 3216, y: 41 },
-        // { name: 'boss1', x: 400, y: 41 },
-
-        /* {
-         name: 'enemyCreator',
-         type: 'thief',
-         coords: [
-					 { xS: 0, xE: 200, y: 90, vector: -1, reloading: 3000 },
-					 { xS: 400, xE: 500, y: 90, vector: 1, reloading: 1000 },
-					 { xS: 0, xE: 4000, y: 90, vector: -1, reloading: 3000 },
-					 { xS: 0, xE: 4000, y: 90, vector: -1, reloading: 3000 },
-         ]
-
-       }*/
+        { name: 'bonusFly', x: 220, y: 75, type: 'M' },
+        { name: 'bonusFly', x: 220, y: 180, type: 'B' },
+        { name: 'boss81', x: 647, y: 0 },
+        { name: 'toothyMouth', x: 200, y: 64 },
+        { name: 'toothyMouth', x: 944, y: 64 },
+        { name: 'toothyMouth', x: 976, y: 64 },
+        { name: 'toothyMouth', x: 1040, y: 96 },
+        { name: 'toothyMouth', x: 1072, y: 96 },
+        { name: 'toothyMouth', x: 1232, y: 96 },
+        { name: 'toothyMouth', x: 1264, y: 96 },
+        { name: 'toothyMouth', x: 1488, y: 223 },
+        { name: 'toothyMouth', x: 1520, y: 223 },
+        { name: 'toothyMouth', x: 1552, y: 223 },
+        { name: 'toothyMouth', x: 1744, y: 128 },
+        { name: 'toothyMouth', x: 1776, y: 128 },
+        { name: 'toothyMouth', x: 1904, y: 223 },
+        { name: 'toothyMouth', x: 1936, y: 223 },
+        { name: 'toothyMouth', x: 2032, y: 128 },
+        { name: 'toothyMouth', x: 2064, y: 128 },
+        { name: 'toothyMouth', x: 2224, y: 223 },
+        { name: 'toothyMouth', x: 2256, y: 223 },
+        { name: 'toothyMouth', x: 2352, y: 96 },
+        { name: 'toothyMouth', x: 2384, y: 96 },
+        { name: 'toothyMouth', x: 2608, y: 223 },
       ],
     }
   ],
   spritesInfo: {
-    b1: { x: 35, y: 1, w: 96, h: 32, frames: 3, delay: 20, },
-    b2: { x: 133, y: 1, w: 96, h: 32, frames: 3, delay: 20, },
-    b3: { x: 1, y: 35, w: 96, h: 32, frames: 3, delay: 20, },
+    b1: { x: 35, y: 1, w: 32, h: 32, frames: 3, delay: 20, },
+    b2: { x: 133, y: 1, w: 32, h: 32, frames: 3, delay: 20, },
+    b3: { x: 1, y: 35, w: 32, h: 32, frames: 3, delay: 20, },
     b4: { x: 268, y: 206, w: 32, h: 32, },
     b5: { x: 301, y: 205, w: 32, h: 32, },
     g1: { x: 231, y: 1, w: 32, h: 32, },
@@ -311,36 +295,36 @@ const map = {
     g7: { x: 35, y: 69, w: 32, h: 32, },
     g8: { x: 69, y: 69, w: 32, h: 32, },
     g9: { x: 103, y: 69, w: 32, h: 32, },
-    m1: { x: 66, y: 238, w: 64, h: 32, frames: 2, delay: 40, },
+    m1: { x: 66, y: 238, w: 32, h: 32, frames: 2, delay: 40, },
     m2: { x: 171, y: 69, w: 32, h: 32, },
-    m3: { x: 132, y: 238, w: 64, h: 32, frames: 2, delay: 40, },
+    m3: { x: 132, y: 238, w: 32, h: 32, frames: 2, delay: 40, },
     m4: { x: 1, y: 103, w: 32, h: 32, },
-    m5: { x: 1, y: 238, w: 64, h: 32, frames: 2, delay: 40, },
+    m5: { x: 1, y: 238, w: 32, h: 32, frames: 2, delay: 40, },
     m6: { x: 69, y: 103, w: 32, h: 32, },
-    m7: { x: 198, y: 238, w: 64, h: 32, frames: 2, delay: 40, },
+    m7: { x: 198, y: 238, w: 32, h: 32, frames: 2, delay: 40, },
     m8: { x: 137, y: 103, w: 32, h: 32, },
     p1: { x: 171, y: 103, w: 32, h: 32, },
     p2: { x: 205, y: 103, w: 32, h: 32, },
-    pw1: { x: 1, y: 137, w: 64, h: 32, frames: 2, delay: 20, },
-    pw2: { x: 67, y: 137, w: 64, h: 32, frames: 2, delay: 20, },
+    pw1: { x: 1, y: 137, w: 32, h: 32, frames: 2, delay: 20, },
+    pw2: { x: 67, y: 137, w: 32, h: 32, frames: 2, delay: 20, },
     r1: { x: 133, y: 137, w: 32, h: 32, },
-    rw1: { x: 167, y: 137, w: 64, h: 32, frames: 2, delay: 20, },
+    rw1: { x: 167, y: 137, w: 32, h: 32, frames: 2, delay: 20, },
     rw11: { x: 233, y: 137, w: 32, h: 32, frames: 2, delay: 20, },
-    rw2: { x: 1, y: 171, w: 64, h: 32, frames: 2, delay: 20, },
-    rw3: { x: 67, y: 171, w: 64, h: 32, frames: 2, delay: 20, },
-    rw4: { x: 133, y: 171, w: 64, h: 32, frames: 2, delay: 20, },
-    s1: { x: 199, y: 171, w: 64, h: 32, frames: 2, delay: 40, },
-    s2: { x: 265, y: 171, w: 64, h: 32, frames: 2, delay: 40, },
-    s3: { x: 264, y: 238, w: 64, h: 32, frames: 2, delay: 40, },
+    rw2: { x: 1, y: 171, w: 32, h: 32, frames: 2, delay: 20, },
+    rw3: { x: 67, y: 171, w: 32, h: 32, frames: 2, delay: 20, },
+    rw4: { x: 133, y: 171, w: 32, h: 32, frames: 2, delay: 20, },
+    s1: { x: 199, y: 171, w: 32, h: 32, frames: 2, delay: 40, },
+    s2: { x: 265, y: 171, w: 32, h: 32, frames: 2, delay: 40, },
+    s3: { x: 264, y: 238, w: 32, h: 32, frames: 2, delay: 40, },
     w: { x: 35, y: 205, w: 32, h: 32, },
-    w1: { x: 69, y: 205, w: 64, h: 32, frames: 2, delay: 20, },
-    w2: { x: 135, y: 205, w: 64, h: 32, frames: 2, delay: 20, },
-    w3: { x: 201, y: 205, w: 64, h: 32, frames: 2, delay: 20, },
-    w4: { x: 268, y: 1, w: 64, h: 32, frames: 2, delay: 20, },
-    w5: { x: 269, y: 35, w: 64, h: 32, frames: 2, delay: 20, },
-    w6: { x: 239, y: 69, w: 64, h: 32, frames: 2, delay: 20, },
-    w7: { x: 239, y: 103, w: 64, h: 32, frames: 2, delay: 20, },
-    w8: { x: 267, y: 137, w: 64, h: 32, frames: 2, delay: 20, },
+    w1: { x: 69, y: 205, w: 32, h: 32, frames: 2, delay: 20, },
+    w2: { x: 135, y: 205, w: 32, h: 32, frames: 2, delay: 20, },
+    w3: { x: 201, y: 205, w: 32, h: 32, frames: 2, delay: 20, },
+    w4: { x: 268, y: 1, w: 32, h: 32, frames: 2, delay: 20, },
+    w5: { x: 269, y: 35, w: 32, h: 32, frames: 2, delay: 20, },
+    w6: { x: 239, y: 69, w: 32, h: 32, frames: 2, delay: 20, },
+    w7: { x: 239, y: 103, w: 32, h: 32, frames: 2, delay: 20, },
+    w8: { x: 267, y: 137, w: 32, h: 32, frames: 2, delay: 20, },
 
     a1: { x: 0, y: 0, w: 32 },
     a2: { x: 32, y: 0, w: 32 },
@@ -407,17 +391,17 @@ const map = {
     p22: { x: 192, y: 128, w: 32 },
     p23: { x: 224, y: 160, w: 32 },
 
-    k1: { x: 0, y: 224, w: 128, frames: 4, delay: 10 },
-    k2: { x: 128, y: 224, w: 128, frames: 4, delay: 10 },
-    k3: { x: 0, y: 256, w: 128, frames: 4, delay: 10 },
-    k4: { x: 128, y: 256, w: 128, frames: 4, delay: 10 },
-    k6: { x: 288, y: 0, w: 128, frames: 4, delay: 10 }
+    k1: { x: 0, y: 224, w: 32, frames: 4, delay: 10 },
+    k2: { x: 128, y: 224, w: 32, frames: 4, delay: 10 },
+    k3: { x: 0, y: 256, w: 32, frames: 4, delay: 10 },
+    k4: { x: 128, y: 256, w: 32, frames: 4, delay: 10 },
+    k6: { x: 288, y: 0, w: 32, frames: 4, delay: 10 }
   },
   elementsInfo: {
     bigBoom: {
       x: 1,
       y: 1,
-      w: 128,
+      w: 32,
       h: 32,
       frames: 4,
       delay: 10,
@@ -532,7 +516,7 @@ const map = {
     shootS: {
       x: 134,
       y: 24,
-      w: 72,
+      w: 8,
       h: 6,
       frames: 9,
       delay: 12,
@@ -567,10 +551,10 @@ const map = {
     },
   },
   enemiesInfo: {
-    firstBossShoot: {
+    goldAlien: {
       x: 1,
       y: 1,
-      w: 50,
+      w: 24,
       h: 24,
       frames: 2,
       delay: 10,
@@ -620,18 +604,18 @@ const map = {
       w: 16,
       h: 16,
     },
-    rot: {
+    toothyMouth: {
       x: 103,
       y: 35,
-      w: 66,
+      w: 34,
       h: 32,
       frames: 2,
-      delay: 10,
+      delay: 50,
     },
-    rotShot: {
-      x: 171,
+    snowShoot: {
+      x: 170,
       y: 35,
-      w: 34,
+      w: 18,
       h: 16,
       frames: 2,
       delay: 10,
@@ -1086,7 +1070,6 @@ export default class Level {
   }
 
   onKeyboard() {
-
     this.keysOn = !this.keysOn;
     console.log('keys', this.keysOn);
   }

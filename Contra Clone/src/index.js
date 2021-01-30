@@ -55,7 +55,7 @@ contra.startGame = () => {
       if (contra.selectedLevel) {
         contra.selectedLevel = new Level(contra.selectedLevel.levelNumber + 1, contra);
       } else {
-        contra.selectedLevel = new Level(0, contra);
+        contra.selectedLevel = new Level(1, contra);
       }
       contra.player = new Player(contra.selectedLevel);
     }

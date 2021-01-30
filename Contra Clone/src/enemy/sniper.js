@@ -62,7 +62,7 @@ export default class Sniper extends Person {
 
 
       if (!this.isHidden) {
-        this.checkColission(this.selectedState.sprite);
+        this.checkColission(spr);
         if (this.health > 0) {
           if (this.type === 'HALF') {
             if (this.weapon.canShoot && this.canShot) {
@@ -71,7 +71,7 @@ export default class Sniper extends Person {
               this.hide(false);
             }
           } else {
-            let degReal = this.getDegree(15, -11);
+            let degReal = this.getDegree(15, spr, -11);
             let deg = degReal;
             if (deg % 45 !== 0) {
               if ((deg + 15) % 45 === 0) {

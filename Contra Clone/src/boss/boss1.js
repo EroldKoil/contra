@@ -181,7 +181,7 @@ export default class Boss1 {
 
 
     setTimeout(() => {
-      this.level.isComplite = true;
+      this.level.onKeyboard();
       this.aim = null;
       this.platforms[0].sprite.y = 163;
       this.sprites.booms = [];

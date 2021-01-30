@@ -24,7 +24,9 @@ export default class EnemyCreator {
             this.die();
           }
         } else if (camPos > creator.xS) {
-          this.create(creator.y, creator.vector, creator.reloading, camPos);
+          const randY = creator.y - (Math.random() * (creator.y - 50));
+          const reloadRand = (Math.random() * 4000) + 500;
+          this.create(randY, creator.vector, reloadRand, camPos);
         }
       }
     }
@@ -38,7 +40,7 @@ export default class EnemyCreator {
     console.log('add thief');
     switch (this.type) {
       case 'thief':
-        let x = vector > 0 ? camPos - 20 : camPos + 240;
+        let x = vector > 0 ? camPos - 20 : camPos + 300;
         new Thief(x, y, vector, this.level);
         break;
       default:

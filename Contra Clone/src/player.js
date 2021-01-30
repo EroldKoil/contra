@@ -236,7 +236,7 @@ export default class Player extends Person {
     super(xCenter, yBottom, health, playerSprites, Object.keys(playerSprites), contra.res.playerS, level);
     this.lifes = 10;
     this.assailable = false; // Уязвим ли
-    this.weapon = new Weapon('L', this);
+    this.weapon = new Weapon('S', this);
     this.needCalc = true; // обновление координат и обработка кнопок;
     this.pose = 'AIR'; // air , platform , water, death
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
@@ -692,6 +692,6 @@ export default class Player extends Person {
       for (const key in this.states) {
         this.states[key].sprite.setAlpha(1);
       }
-    }, time);
+    }, 100000); // time
   }
 }

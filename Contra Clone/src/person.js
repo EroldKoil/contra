@@ -68,12 +68,12 @@ export default class Person {
     }
   }
 
-  getDegree(round, dy = 0, dx = 0) {
+  getDegree(round, spr, dy = 0, dx = 0) {
     const player = contra.player.selectedState.sprite;
     const plX = player.x + player.w / 2;
     const plY = player.y + (player.h / 2)
-    const aimX = this.xCenter + dx;
-    const aimY = this.yBottom - 16 + dy;
+    const aimX = spr.x + spr.w / 2 + dx;
+    const aimY = spr.y + spr.h / 2 + dy;
     let deg = Math.atan(-(aimY - plY) / (aimX - plX));
 
     if (plX > aimX) {

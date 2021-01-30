@@ -7,7 +7,9 @@ import EnemyCreator from '../enemy/enemyCreator';
 import TankInRock from '../enemy/tankInRock';
 import TankBottom from '../enemy/tankBottom';
 import Sniper from '../enemy/sniper';
+import ToothyMouth from '../enemy/toothyMouth';
 import Boss1 from '../boss/boss1';
+import Boss81 from '../boss/boss81';
 // import Boss8 from '../boss/boss8';
 export default class ElementCreator {
   constructor(el, level) {
@@ -33,8 +35,14 @@ export default class ElementCreator {
       case 'enemyCreator':
         new EnemyCreator(el.type, el.coords, level);
         break;
+      case 'toothyMouth':
+        new ToothyMouth(el.x, el.y, level);
+        break;
       case 'boss1':
         new Boss1(el.x, el.y, level);
+        break;
+      case 'boss81':
+        new Boss81(el.x, el.y, level);
         break;
       default:
         break;
