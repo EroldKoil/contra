@@ -52,6 +52,11 @@ export default class Sound {
     sounds[sound].audio.volume = volume;
   }
 
+  // Возвращает уровень громкости звука
+  static getVolume(sound) {
+    return sounds[sound].audio.volume;
+  }
+
   // Возвращает true, если сейчас проигрывается звук sound
   static isPlaying(sound) {
     return sounds[sound].audio.currentTime > 0 &&
@@ -59,7 +64,7 @@ export default class Sound {
   }
 
   // Запуск проигрывания музыки
-  static playMusic(level, volume = 0.5) {
+  static playMusic(level, volume = 1) {
     currentLevel = level;
     musicVolume = volume;
     sounds[`level${level}start`].audio.volume = musicVolume;
