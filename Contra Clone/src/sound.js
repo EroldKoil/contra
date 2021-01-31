@@ -24,6 +24,7 @@ const sounds = {
 };
 
 let currentLevel = 1;
+let musicVolume = 1;
 
 export default class Sound {
   static init() {
@@ -45,6 +46,16 @@ export default class Sound {
     sounds[sound].audio.currentTime = 0;
   }
 
+  // Установить громкость звука
+  static volume(sound, volume) {
+    sounds[sound].audio.volume = volume;
+  }
+
+  // Возвращает уровень громкости звука
+  static getVolume(sound) {
+    return sounds[sound].audio.volume;
+  }
+
   // Возвращает true, если сейчас проигрывается звук sound
   static isPlaying(sound) {
     return sounds[sound].audio.currentTime > 0 &&
@@ -52,8 +63,10 @@ export default class Sound {
   }
 
   // Запуск проигрывания музыки
-  static playMusic(level) {
+  static playMusic(level, volume = 1) {
     currentLevel = level;
+    musicVolume = volume;
+    sounds[`level${level}start`].audio.volume = musicVolume;
     sounds[`level${level}start`].audio.play();
     sounds[`level${level}start`].audio.addEventListener('ended', this.continueMusic);
   }
@@ -69,6 +82,7 @@ export default class Sound {
   static continueMusic() {
     sounds[`level${currentLevel}start`].audio.removeEventListener('ended', this.continueMusic);
     sounds[`level${currentLevel}repeat`].audio.loop = true;
+    sounds[`level${currentLevel}repeat`].audio.volume = musicVolume;
     sounds[`level${currentLevel}repeat`].audio.play();
   }
 }
