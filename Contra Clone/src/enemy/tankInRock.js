@@ -3,6 +3,7 @@
 import Weapon from '../weapon/weapon';
 import Person from '../person';
 import contra from '../index';
+import Sound from '../sound';
 
 const keys = [
   'tankR0',
@@ -68,13 +69,5 @@ export default class TankInRock extends Person {
       this.selectState('tankR180');
       this.started = true;
     }, 200);
-  }
-
-  die() {
-    contra.addScore(this.score);
-    this.selectState('death');
-    setTimeout(() => {
-      this.tryRemove(true);
-    }, 500);
   }
 }

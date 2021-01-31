@@ -117,6 +117,15 @@ export default class Person {
   }
 
   getBox() {
-    return this.selectedState.sprite.getStaticBox();
+    return this.selectedState.sprite; //.getStaticBox();
+  }
+
+  die() {
+    contra.addScore(this.score);
+    this.selectState('death');
+    Sound.play('enemyDeath');
+    setTimeout(() => {
+      this.tryRemove(true);
+    }, 500);
   }
 }

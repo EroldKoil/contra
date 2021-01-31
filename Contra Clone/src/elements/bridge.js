@@ -3,6 +3,7 @@
 import Element from './element';
 import Platform from '../platform';
 import contra from '../index';
+import Sound from '../sound';
 
 export default class Bridge extends Element {
   constructor(blockCount, x, y, level) {
@@ -46,6 +47,7 @@ export default class Bridge extends Element {
   }
 
   boom(i) {
+      Sound.play('explosion');
       const addBoom = (x, y) => {
         this.boomSprites.push(this.createSprite(this.level.elementsInfo.bigBoom, contra.res.elementS, x, y));
       };

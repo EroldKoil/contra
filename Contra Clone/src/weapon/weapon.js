@@ -16,6 +16,11 @@ export default class Weapon {
     this.changeWeapon(type);
   }
 
+  setLevel(level) {
+    this.level = level;
+    this.bulletArray = this.sniper instanceof Player ? this.level.playerBulletsArray : this.level.bulletsArray;
+  }
+
   shoot(vectorShoot, x, y) {
     const getDxy = (vector, speed = this.speed * this.apgreid) => [+(speed * Math.cos(vector)).toFixed(2), +(-speed * Math.sin(vector)).toFixed(2)];
     switch (this.type) {

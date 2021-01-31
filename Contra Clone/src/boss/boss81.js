@@ -7,9 +7,9 @@ import BulletL from '../weapon/bulletL';
 import Sound from '../sound';
 
 const spritesInfo = {
-  jawOpen: { xS: 60, yS: 1098, w: 114, h: 112, frames: 1, delay: 10 },
-  jawClose: { xS: 174, yS: 1098, w: 112, h: 93, frames: 1, delay: 10 },
-  wall: { xS: 1, yS: 1105, w: 48, h: 80, frames: 1, delay: 10 },
+  jawOpen: { xS: 60, yS: 444, w: 114, h: 112, frames: 1, delay: 10 },
+  jawClose: { xS: 174, yS: 444, w: 112, h: 93, frames: 1, delay: 10 },
+  wall: { xS: 1, yS: 451, w: 48, h: 80, frames: 1, delay: 10 },
 };
 
 export default class Boss81 {
@@ -108,7 +108,7 @@ export default class Boss81 {
         enemy.die();
       }
     });
-
+    Sound.play('boss2death');
     this.boomsArray.forEach((boom) => {
       setTimeout(() => {
         boom.sprite.visible = true;
@@ -153,6 +153,7 @@ export default class Boss81 {
       if (this.health > 0 && bullet.needCheckCpllision) {
         aims.forEach(aim => {
           if (((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) || aim.isStaticIntersect(bullet.getBox()))) {
+            Sound.play('damage');
             this.health -= bullet.damage;
             bullet.tryRemove();
           }

@@ -4,7 +4,7 @@ import contra from '../index';
 import SprObject from '../sprObject';
 import Bonus from './bonus';
 import BulletL from '../weapon/bulletL'
-
+import Sound from '../sound';
 
 
 export default class BonusFly extends SprObject {
@@ -79,6 +79,7 @@ export default class BonusFly extends SprObject {
 
   die() {
     let spr = this.sprite;
+    Sound.play('enemyDeath');
     this.sprite = this.createSprite(contra.res.elementS, ...Object.values(this.level.elementsInfo['mediumBoom']), spr.x, spr.y);
     this.level.bonuses.push(new Bonus(spr.x, spr.y, this.type, this.level));
     setTimeout(() => {

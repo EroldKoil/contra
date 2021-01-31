@@ -13,14 +13,15 @@ const sounds = {
   explosion: { src: '../assets/audio/explosion.mp3' }, // взрыв моста, пушек и т.д.
   afterBossDeath: { src: '../assets/audio/after-boss-death.mp3' },
   boss1death: { src: '../assets/audio/boss1-death.mp3' },
-  boss8death: { src: '../assets/audio/boss8-death.mp3' },
+  boss2death: { src: '../assets/audio/boss8-death.mp3' },
   gameOver: { src: '../assets/audio/game-over.mp3' },
+  playerDeath: { src: '../assets/audio/player-death.mp3' },
   credits: { src: '../assets/audio/credits.mp3' }, // Финальные титры
   menuTitle: { src: '../assets/audio/title.mp3' },
   level1start: { src: '../assets/audio/level1-start.mp3' },
   level1repeat: { src: '../assets/audio/level1-repeat.mp3' },
-  level8start: { src: '../assets/audio/level8-start.mp3' },
-  level8repeat: { src: '../assets/audio/level8-repeat.mp3' },
+  level2start: { src: '../assets/audio/level8-start.mp3' },
+  level2repeat: { src: '../assets/audio/level8-repeat.mp3' },
 };
 
 let currentLevel = 1;

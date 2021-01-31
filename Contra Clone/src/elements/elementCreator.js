@@ -8,9 +8,10 @@ import TankInRock from '../enemy/tankInRock';
 import TankBottom from '../enemy/tankBottom';
 import Sniper from '../enemy/sniper';
 import ToothyMouth from '../enemy/toothyMouth';
+import SpiderCocoon from '../enemy/spiderCocoon';
 import Boss1 from '../boss/boss1';
 import Boss81 from '../boss/boss81';
-// import Boss8 from '../boss/boss8';
+import Boss82 from '../boss/boss82';
 export default class ElementCreator {
   constructor(el, level) {
     switch (el.name) {
@@ -38,11 +39,17 @@ export default class ElementCreator {
       case 'toothyMouth':
         new ToothyMouth(el.x, el.y, level);
         break;
+      case 'spiderCocoon':
+        new SpiderCocoon(el.x, el.y, el.flip, level);
+        break;
       case 'boss1':
         new Boss1(el.x, el.y, level);
         break;
       case 'boss81':
         new Boss81(el.x, el.y, level);
+        break;
+      case 'boss82':
+        new Boss82(el.x, el.y, level);
         break;
       default:
         break;

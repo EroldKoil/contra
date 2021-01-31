@@ -3,6 +3,8 @@
 import Person from '../person';
 import contra from '../index';
 import SnowShoot from './snowShoot';
+import Sound from '../sound';
+
 
 export default class ToothyMouth extends Person {
   constructor(xCenter, yBottom, level) {
@@ -35,13 +37,5 @@ export default class ToothyMouth extends Person {
         }, this.reloading);
       }
     }
-  }
-
-  die() {
-    contra.addScore(this.score);
-    this.selectState('death');
-    setTimeout(() => {
-      this.tryRemove(true);
-    }, 500);
   }
 }
