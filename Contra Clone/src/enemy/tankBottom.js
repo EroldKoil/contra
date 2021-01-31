@@ -3,6 +3,7 @@
 import Weapon from '../weapon/weapon';
 import Person from '../person';
 import contra from '../index';
+import Sound from '../sound';
 
 const keys = [
   'tankRB180',
@@ -55,13 +56,5 @@ export default class TankBottom extends Person {
       this.selectState('tankRB180');
       this.started = true;
     }, 480);
-  }
-
-  die() {
-    contra.addScore(this.score);
-    this.selectState('death');
-    setTimeout(() => {
-      this.tryRemove(true);
-    }, 500);
   }
 }

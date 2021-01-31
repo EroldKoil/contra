@@ -27,7 +27,7 @@ export default class Bullet extends SprObject {
   }
 
   getBox() {
-    return this.sprite.getStaticBox();
+    return this.sprite; //.getStaticBox();
   }
 
   tryRemove() {

@@ -5,9 +5,9 @@ import SprObject from './sprObject';
 import contra from './index';
 
 export default class Bg extends SprObject {
-  constructor(name, spriteInfo, width, height, x, y, level, canJumpDown, needVertPlatform) {
+  constructor(name, spriteInfo, width, height, x, y, level, canJumpDown, needVertPlatform, isRoof) {
     super(x, y, width, height);
-
+    this.platforms = [];
     switch (name) {
       case 'a1': // вертикальные на всю ширину
         if (needVertPlatform) {
@@ -102,6 +102,9 @@ export default class Bg extends SprObject {
         break;
     }
 
+    if (isRoof) {
+      this.platforms.push(new Platform(width - 4, 2, x + 2, y + height - 2, 'ROOF', false))
+    }
     this.sprite = this.createSprite(spriteInfo, contra.res.levelS[level.levelNumber], this.x, this.y);
 
     level.bgArray.push(this);

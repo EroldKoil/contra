@@ -3,6 +3,7 @@
 import Weapon from '../weapon/weapon';
 import Person from '../person';
 import contra from '../index';
+import Sound from '../sound';
 
 const keys = [
   'sniper180',
@@ -191,6 +192,7 @@ export default class Sniper extends Person {
     this.selectState('sniper180');
     this.spritesMesh.move(contra.pjs.vector.point(this.isFlip ? -0.5 : 0.5, -0.9));
     setTimeout(() => {
+      Sound.play('enemyDeath');
       this.selectState('death');
       setTimeout(() => {
         contra.addScore(this.score);

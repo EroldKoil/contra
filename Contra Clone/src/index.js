@@ -39,6 +39,9 @@ const contra = {
 };
 export default contra;
 
+const { pjs } = contra;
+
+
 // Инициализация свойств, недоступных при создании объекта
 const { newImage } = contra.pjs.tiles;
 contra.res = {
@@ -58,12 +61,22 @@ contra.startGame = () => {
   const interval = setInterval(() => {
     if (contra.pjs.resources.isLoaded()) {
       clearInterval(interval);
-      if (contra.selectedLevel) {
-        contra.selectedLevel = new Level(contra.selectedLevel.levelNumber + 1, contra);
+      Sound.playMusic(contra.selectedLevel.levelNumber + 1);
+      pjs.camera.setPosition(pjs.vector.point(0, 0));
+      if (contra.player) {
+        const { player } = contra;
+        player.reBurn();
+        player.setLevel(contra.selectedLevel);
       } else {
-        contra.selectedLevel = new Level(1, contra);
+        contra.player = new Player(contra.selectedLevel);
       }
-      contra.player = new Player(contra.selectedLevel);
+      const interval1 = setInterval(() => {
+        if (contra.pjs.resources.isLoaded()) {
+          clearInterval(interval1);
+          contra.selectedLevel.startLevel();
+        }
+      }, 200);
+
     }
   }, 200);
 };
@@ -71,16 +84,21 @@ contra.startGame = () => {
 contra.addScore = (score) => {
   contra.score += score;
   contra.scoreForLife += score;
-  if (contra.scoreForLife > 20000) {
-    contra.scoreForLife -= 20000;
+  if (contra.scoreForLife > 2000) {
+    contra.scoreForLife -= 2000;
     Sound.play('plusLife');
     contra.player.lifes += 1;
   }
 };
+/*
+contra.selectedLevel = new Level(2, contra);
+setTimeout(() => {
+  contra.player = new Player(contra.selectedLevel);
+  contra.selectedLevel.startLevel();
+}, 1000);
+*/
 
 contra.lang = getLanguageObject(contra.options.get('language'));
-
-const { pjs } = contra;
 
 document.querySelector('dialog').showModal(); // Показать модальное окно
 
@@ -90,6 +108,7 @@ function buttonPress() {
 }
 
 // Обработчик кнопки модального окна
+
 document.getElementById('start-button').addEventListener('click', buttonPress);
 document.getElementById('start-button').addEventListener('touchend', buttonPress);
 

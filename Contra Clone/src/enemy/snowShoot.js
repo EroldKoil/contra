@@ -2,6 +2,7 @@
 
 import Person from '../person';
 import contra from '../index';
+import Sound from '../sound';
 
 export default class SnowShoot extends Person {
   constructor(xCenter, yBottom, level) {
@@ -52,7 +53,6 @@ export default class SnowShoot extends Person {
           default:
             break;
         }
-        console.log(this.mode);
       }
 
       if (this.mode === 4) {
@@ -93,18 +93,9 @@ export default class SnowShoot extends Person {
     }
   }
 
-  die() {
-    this.selectState('death');
-    setTimeout(() => {
-      contra.addScore(this.score);
-      this.tryRemove(true);
-    }, 500);
-  }
-
   tryRemove(die) {
     if (die || (!this.selectedState.sprite.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox()) &&
         this.health > 0)) {
-      console.log('die');
       this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
     }
   }

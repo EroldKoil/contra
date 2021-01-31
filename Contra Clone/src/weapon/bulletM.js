@@ -8,7 +8,6 @@ export default class BulletM extends Bullet {
     const { elementS } = contra.res;
     this.sprite = this.createSprite(level.elementsInfo[`shoot${type}`], elementS, x, y);
     if (type !== 'E') {
-      console.log(`fire${type}`);
       Sound.play(`fire${type}`);
     }
   }

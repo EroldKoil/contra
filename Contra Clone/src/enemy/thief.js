@@ -3,6 +3,7 @@
 import Weapon from '../weapon/weapon';
 import Person from '../person';
 import contra from '../index';
+import Sound from '../sound';
 
 const keys = [
   'thiefJump',
@@ -129,9 +130,11 @@ export default class Thief extends Person {
     this.selectState('thiefJump');
     this.spritesMesh.move(contra.pjs.vector.point(this.isFlip ? -0.5 : 0.5, -0.9));
     setTimeout(() => {
+      Sound.play('enemyDeath');
       this.selectState('death');
       setTimeout(() => {
         contra.addScore(this.score);
+
         this.tryRemove(true);
       }, 500);
     }, 300);

@@ -13,17 +13,19 @@ const sounds = {
   explosion: { src: '../assets/audio/explosion.mp3' }, // взрыв моста, пушек и т.д.
   afterBossDeath: { src: '../assets/audio/after-boss-death.mp3' },
   boss1death: { src: '../assets/audio/boss1-death.mp3' },
-  boss8death: { src: '../assets/audio/boss8-death.mp3' },
+  boss2death: { src: '../assets/audio/boss8-death.mp3' },
   gameOver: { src: '../assets/audio/game-over.mp3' },
+  playerDeath: { src: '../assets/audio/player-death.mp3' },
   credits: { src: '../assets/audio/credits.mp3' }, // Финальные титры
   menuTitle: { src: '../assets/audio/title.mp3' },
   level1start: { src: '../assets/audio/level1-start.mp3' },
   level1repeat: { src: '../assets/audio/level1-repeat.mp3' },
-  level8start: { src: '../assets/audio/level8-start.mp3' },
-  level8repeat: { src: '../assets/audio/level8-repeat.mp3' },
+  level2start: { src: '../assets/audio/level8-start.mp3' },
+  level2repeat: { src: '../assets/audio/level8-repeat.mp3' },
 };
 
 let currentLevel = 1;
+let musicVolume = 1;
 
 export default class Sound {
   static init() {
@@ -45,6 +47,11 @@ export default class Sound {
     sounds[sound].audio.currentTime = 0;
   }
 
+  // Установить громкость звука
+  static volume(sound, volume) {
+    sounds[sound].audio.volume = volume;
+  }
+
   // Возвращает true, если сейчас проигрывается звук sound
   static isPlaying(sound) {
     return sounds[sound].audio.currentTime > 0 &&
@@ -52,8 +59,10 @@ export default class Sound {
   }
 
   // Запуск проигрывания музыки
-  static playMusic(level) {
+  static playMusic(level, volume = 0.5) {
     currentLevel = level;
+    musicVolume = volume;
+    sounds[`level${level}start`].audio.volume = musicVolume;
     sounds[`level${level}start`].audio.play();
     sounds[`level${level}start`].audio.addEventListener('ended', this.continueMusic);
   }
@@ -69,6 +78,7 @@ export default class Sound {
   static continueMusic() {
     sounds[`level${currentLevel}start`].audio.removeEventListener('ended', this.continueMusic);
     sounds[`level${currentLevel}repeat`].audio.loop = true;
+    sounds[`level${currentLevel}repeat`].audio.volume = musicVolume;
     sounds[`level${currentLevel}repeat`].audio.play();
   }
 }

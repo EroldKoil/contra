@@ -3,6 +3,20 @@
 import Bg from './bg';
 import Platform from './platform';
 import ElementCreator from './elements/elementCreator';
+/*import Bridge from './elements/bridge';
+import BonusRock from './elements/bonusRock';
+import BonusFly from './elements/bonusFly';
+import EnemyCreator from './enemy/enemyCreator';
+import TankInRock from './enemy/tankInRock';
+import TankBottom from './enemy/tankBottom';
+import Sniper from './enemy/sniper';
+import ToothyMouth from './enemy/toothyMouth';
+import SpiderCocoon from './enemy/spiderCocoon';
+import Boss1 from './boss/boss1';
+import Boss81 from './boss/boss81';
+import Boss82 from './boss/boss82';*/
+
+
 // import EnemyCreator from './enemy/enemyCreator';
 import Sound from './sound';
 import Сurtain from './elements/curtain';
@@ -162,7 +176,7 @@ const map = {
       ],
     },
     {
-      length: 2559, //2559,
+      length: 2559, // 2559, //2559,
       bg: [
         [0, 0, 0, 0, 0, 0, 'p22-n'],
         [0, 0, 0, 0, 0, 0, 'p22-n'],
@@ -242,22 +256,22 @@ const map = {
         ['a1', 'a1', 'd5', 0, 0, 'p23-n', 'a1'],
         ['a1', 'd5', 0, 0, 0, 'p23-n', 'a1'],
         ['a1', 0, 0, 0, 0, 'p23-n', 'a1'],
-        ['a1', 'd16', 0, 0, 0, 'p23-n', 'a1'],
-        ['a1', 'd17', 'd13', 0, 0, 'p23-n', 'a1'],
-        ['a2', 'd16', 0, 0, 0, 'p23-n', 'a2'],
-        ['a2', 0, 0, 0, 0, 'p23-n', 'a3'],
-        ['a2', 0, 0, 0, 0, 'p23-n', 'a2'],
-        ['a2', 0, 0, 0, 0, 'p23-n', 'a2'],
-        ['a2', 0, 0, 0, 0, 'p23-n', 'a2'],
-        ['a2', 0, 0, 0, 0, 'p23-n', 'a2'],
-        ['a2', 0, 0, 0, 0, 'p23-n', 'a2'],
+        ['a1-r', 'd16', 0, 0, 0, 'p23-n', 'a1'],
+        ['a1-r', 'd17', 'd13', 0, 0, 'p23-n', 'a1'],
+        ['a2-r', 'd16', 0, 0, 0, 'p23-n', 'a2'],
+        ['a2-r', 0, 0, 0, 0, 'p23-n', 'a3'],
+        ['a2-r', 0, 0, 0, 0, 'p23-n', 'a2'],
+        ['a2-r', 0, 0, 0, 0, 'p23-n', 'a2'],
+        ['a2-r', 0, 0, 0, 0, 'p23-n', 'a2'],
+        ['a2-r', 0, 0, 0, 0, 'p23-n', 'a2'],
+        ['a2-r', 0, 0, 0, 0, 'p23-n', 'a2'],
         ['a2', 'a2', 'a2', 'a2', 'a2', 'a2-n', 'a2'],
       ],
       elements: [
         { name: 'bonusFly', x: 220, y: 75, type: 'M' },
         { name: 'bonusFly', x: 220, y: 180, type: 'B' },
+        { name: 'bonusFly', x: 990, y: 180, type: 'S' },
         { name: 'boss81', x: 647, y: 0 },
-        { name: 'toothyMouth', x: 200, y: 64 },
         { name: 'toothyMouth', x: 944, y: 64 },
         { name: 'toothyMouth', x: 976, y: 64 },
         { name: 'toothyMouth', x: 1040, y: 96 },
@@ -278,6 +292,18 @@ const map = {
         { name: 'toothyMouth', x: 2352, y: 96 },
         { name: 'toothyMouth', x: 2384, y: 96 },
         { name: 'toothyMouth', x: 2608, y: 223 },
+
+        { name: 'boss82', x: 2696, y: 33 },
+        { name: 'spiderCocoon', x: 2720, y: 47, flip: 1 },
+        { name: 'spiderCocoon', x: 2752, y: 47, flip: 1 },
+        { name: 'spiderCocoon', x: 2720, y: 175, flip: 0 },
+        { name: 'spiderCocoon', x: 2752, y: 175, flip: 0 },
+
+        /* { name: 'boss82', x: 200, y: 33 },
+         { name: 'spiderCocoon', x: 224, y: 47, flip: 1 },
+         { name: 'spiderCocoon', x: 256, y: 47, flip: 1 },
+         { name: 'spiderCocoon', x: 224, y: 175, flip: 0 },
+         { name: 'spiderCocoon', x: 256, y: 175, flip: 0 },*/
       ],
     }
   ],
@@ -587,16 +613,22 @@ const map = {
       delay: 10,
     },
     kokon: {
-      x: 223,
+      x: 224,
       y: 1,
-      w: 64,
+      w: 32,
       h: 14,
       frames: 2,
-      delay: 10,
+      delay: 30,
     },
     kokonDie: {
-      x: 223,
+      x: 224,
       y: 17,
+      w: 32,
+      h: 14,
+    },
+    kokonClose: {
+      x: 56,
+      y: 69,
       w: 32,
       h: 14,
     },
@@ -677,9 +709,17 @@ const map = {
       h: 16,
     },
     spider: {
-      x: 52,
+      x: 47,
       y: 91,
-      w: 126,
+      w: 33,
+      h: 32,
+      frames: 4,
+      delay: 10,
+    },
+    spiderJump: {
+      x: 114,
+      y: 91,
+      w: 32,
       h: 32,
     },
     tankR0: {
@@ -930,8 +970,6 @@ export default class Level {
     this.platformActual.push(this.deathPlatform);
     this.platformActual.push(this.leftBorder);
 
-    Sound.playMusic(1);
-
     // Create All elements
     const createElement = (from, type) => {
       const bs = map.blockSize;
@@ -941,6 +979,7 @@ export default class Level {
             const name = bgColumn[j].split('-');
             let canJumpDown = true;
             let needVertPlatform = false;
+            let isRoof = false;
             if (name.length > 1) {
               if (name.indexOf('n') !== -1) {
                 canJumpDown = false;
@@ -948,8 +987,11 @@ export default class Level {
               if (name.indexOf('v') !== -1) {
                 needVertPlatform = true;
               }
+              if (name.indexOf('r') !== -1) {
+                isRoof = true;
+              }
             }
-            new Bg(name[0], this.spritesInfo[name[0]], bs, bs, i * bs, j * bs, this, canJumpDown, needVertPlatform);
+            new Bg(name[0], this.spritesInfo[name[0]], bs, bs, i * bs, j * bs, this, canJumpDown, needVertPlatform, isRoof);
           }
         }
       };
@@ -976,7 +1018,7 @@ export default class Level {
     createElement(map.levels[this.levelNumber].elements, 'ELEMENT');
 
     this.elementsActual.push(new Сurtain(this.elementsActual));
-    this.startLevel(this);
+    //  this.startLevel(this);
   }
 
   // Проверка сместился ли экран на 32 пикселя. Если да, то добавляем справа новые элементы
@@ -1014,10 +1056,10 @@ export default class Level {
     });
   }
 
-  startLevel(level) {
+  startLevel() {
     const { pjs } = contra;
     const { isDown } = pjs.keyControl;
-
+    const level = this;
     pjs.game.newLoop('myGame', () => {
       pjs.game.clear();
 
@@ -1043,14 +1085,14 @@ export default class Level {
       });
 
       /*
-			level.platformActual.forEach(el => {
-				el.sprite.drawStaticBox();
-			}); */
+            level.platformActual.forEach(el => {
+              el.sprite.drawStaticBox();
+            });*/
       const getKey = contra.options.options;
 
       if (level.debag) {
         if (isDown('B')) {
-          console.log('debag', contra.selectedLevel);
+          console.log('debag', contra);
         }
         this.debag = false;
         setTimeout(() => {

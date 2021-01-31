@@ -5,6 +5,7 @@ import Sniper from '../enemy/sniper';
 import Platform from '../platform';
 import BulletL from '../weapon/bulletL';
 import Sound from '../sound';
+import startScreen from '../startscreen';
 
 const spritesInfo = {
   firstPart: { xS: 193, yS: 10, w: 112, h: 183, frames: 1, delay: 10 },
@@ -37,7 +38,6 @@ export default class Boss1 {
     this.rightGun.selectState('sprite');
 
     this.shootReloading = 1200;
-    this.rightGun.canShoot = false;
 
     this.sprites = {
       first: createSprite(image, ...Object.values(spritesInfo['firstPart']), x, y),
@@ -76,7 +76,7 @@ export default class Boss1 {
       spriteShoot: createSprite(image, ...Object.values(spritesInfo[`${name}Shoot`]), x, y),
       die: createSprite(elementS, ...mediumBoom, x - 5, y - 10),
       needShow: true,
-      canShoot: true,
+      canShoot: false,
       selectState(name) {
         ['sprite', 'spriteShoot', 'die'].forEach((state) => {
           if (state === name) {
@@ -94,8 +94,12 @@ export default class Boss1 {
     if (camPos < this.level.length && camPos > this.level.length - 70) {
       this.level.canMoveCamera = false;
       this.level.moveCamera(2);
-      if (camPos > this.level.length - 1) {
+      if (camPos > this.level.length - 3) {
         Sound.play('siren');
+        this.leftGun.canShoot = true;
+        setTimeout(() => {
+          this.rightGun.canShoot = true;
+        }, this.shootReloading / 2);
       }
     }
 
@@ -130,6 +134,7 @@ export default class Boss1 {
 
         } else {
           gun.selectState('die');
+          Sound.play('enemyDeath');
           setTimeout(() => {
             gun.needShow = false;
           }, 400);
@@ -160,10 +165,7 @@ export default class Boss1 {
       const needJump = this.platforms[1].sprite.isStaticIntersect(contra.player.selectedState.sprite.getStaticBoxD(4, 0, -7));
       contra.player.calculateMoves([false, true, false, false, needJump, false]);
       if (needJump) {
-        setTimeout(() => {
-          /*   contra.player.spritesMesh.x = camPos.x + 10;
-             contra.player.spritesMesh.y = camPos.y + 10;*/
-        }, 2000);
+        setTimeout(startScreen, 2000, contra, 2, contra.startGame);
       }
     }
 
@@ -182,14 +184,17 @@ export default class Boss1 {
     this.bulletsActual = [];
     contra.addScore(this.score);
     this.level.isComplite = true;
-
-
+    Sound.play('boss1death');
     setTimeout(() => {
+      Sound.stopMusic();
+      Sound.play('afterBossDeath');
       this.level.onKeyboard();
-      this.aim = null;
-      this.platforms[0].sprite.y = 163;
       this.sprites.booms = [];
-    }, 1300);
+      setTimeout(() => {
+        this.aim = null;
+        this.platforms[0].sprite.y = 163;
+      }, 1000);
+    }, 2500);
   }
 
   shoot(gun) {
@@ -202,10 +207,6 @@ export default class Boss1 {
 
   isTimeToShow(camPos) {
     if (camPos > this.x - 300) {
-      setTimeout(() => {
-        this.rightGun.canShoot = true;
-      }, this.shootReloading / 2);
-
       this.platforms.forEach((p) => {
         p.addToActual(this.level);
       });
@@ -274,12 +275,7 @@ class BossBullet {
     const spr = this.spritesArr[this.selectedState];
     spr.draw();
     if (this.selectedState === 0) {
-      /* this.time += 1;
-       if (this.time > this.timeForFly) {
-         this.vector[1] = 2;
-       }*/
-
-      if (spr.isStaticIntersect(contra.player.selectedState.sprite.getStaticBox())) {
+      if (contra.player.assailable && spr.isStaticIntersect(contra.player.selectedState.sprite.getStaticBox())) {
         this.die();
         contra.player.die();
       } else if (spr.y + spr.h > 196) {
@@ -295,11 +291,9 @@ class BossBullet {
     this.spritesArr[0].visible = false;
     this.selectedState = 1;
     setTimeout(() => {
-      setTimeout(() => {
-        this.arrTo.splice(this.arrTo.indexOf(this), 1);
-        this.arrFrom.push(this);
-      }, 500);
-    }, 300);
+      this.arrTo.splice(this.arrTo.indexOf(this), 1);
+      this.arrFrom.push(this);
+    }, 500);
   }
 
 }

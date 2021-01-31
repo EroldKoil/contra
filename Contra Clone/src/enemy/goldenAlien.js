@@ -2,6 +2,7 @@
 
 import Person from '../person';
 import contra from '../index';
+import Sound from '../sound';
 
 export default class GoldAlien extends Person {
   constructor(xCenter, yBottom, level, count) {
@@ -11,7 +12,6 @@ export default class GoldAlien extends Person {
     this.selectState('goldAlien');
 
     this.vector = Math.PI / 180 * (this.getDegree(1, this.selectedState.sprite, 4) + 60 - (Math.random() * 120));
-    console.log('vector start', this.vector);
     this.dV = Math.PI / 16 * (count + 1); //* (count + 1) * (count + 1);
     this.speed = 0.7;
     this.isFlip = false;
@@ -62,7 +62,7 @@ export default class GoldAlien extends Person {
         } else if (this.vector < 0) {
           this.vector = 2 * pi + this.vector;
         }
-        console.log(this.vector);
+
         //this.vector = deg;
       }
       const dx = +(this.speed * Math.cos(this.vector)).toFixed(2);
@@ -72,18 +72,9 @@ export default class GoldAlien extends Person {
     }
   }
 
-  die() {
-    this.selectState('death');
-    setTimeout(() => {
-      contra.addScore(this.score);
-      this.tryRemove(true);
-    }, 500);
-  }
-
   tryRemove(die) {
     if (die || (!this.selectedState.sprite.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox()) &&
         this.health > 0)) {
-      console.log('die');
       this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
     }
   }

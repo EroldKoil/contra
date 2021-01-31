@@ -2,6 +2,7 @@
 import BulletL from '../weapon/bulletL'
 import contra from '../index';
 import Bonus from './bonus';
+import Sound from '../sound';
 
 const keys = [
   'bonusR',
@@ -140,6 +141,7 @@ export default class BonusRock {
 
   die() {
     this.selectState('death');
+    Sound.play('enemyDeath');
     this.level.bonuses.push(new Bonus(this.xCenter - 12, this.yBottom - 31, this.type, this.level));
     setTimeout(() => {
       contra.score += 100;
