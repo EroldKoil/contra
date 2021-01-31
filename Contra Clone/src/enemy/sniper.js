@@ -35,6 +35,7 @@ export default class Sniper extends Person {
     if (this.type === 'STAY') {
       this.selectState('sniper180');
       this.isHidden = false;
+      super.drawShadow();
     } else {
       //this.selectState('sniperHead');
       //this.isHidden = true;
@@ -44,6 +45,9 @@ export default class Sniper extends Person {
   }
 
   tryAction() {
+    if (this.type === 'STAY') {
+      this.drawShadow();
+    }
     this.spritesMesh.draw();
     const camPos = contra.pjs.camera.getPosition().x;
     if (!this.started && camPos > this.xCenter - 250) {
@@ -208,6 +212,14 @@ export default class Sniper extends Person {
       } else {
         this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
       }
+    }
+  }
+
+  drawShadow() {
+    if (this.health > 0) {
+      this.shadow.draw();
+    } else {
+      super.drawShadow();
     }
   }
 }

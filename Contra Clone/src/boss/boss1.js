@@ -151,7 +151,6 @@ export default class Boss1 {
 
     if (this.aim) {
       if (this.health < 1) {
-        console.log('aim true . health no')
         contra.player.calculateMoves([false, false, false, false, false, false]);
         this.sprites.tonnel.draw();
         this.sprites.booms.forEach((boom) => {
@@ -231,11 +230,15 @@ class BossBullet {
   constructor(arrFrom, arrTo, level) {
     this.arrFrom = arrFrom;
     this.arrTo = arrTo;
+    const image = contra.res.elementS;
+
 
     this.spritesArr = [
-      createSprite(contra.res.elementS, ...Object.values(level.elementsInfo['shootM1'])),
-      createSprite(contra.res.elementS, ...Object.values(level.elementsInfo['mediumBoom']), -3, -10),
+      createSprite(image, ...Object.values(level.elementsInfo['shootM1'])),
+      createSprite(image, ...Object.values(level.elementsInfo['mediumBoom']), -3, -10),
     ]
+    this.shadow = createSprite(image, ...Object.values(level.elementsInfo['shadow']));
+
     this.spritesArr[0].visible = false;
     this.spritesArr[1].visible = false;
     this.selectedState = -1;
@@ -273,6 +276,7 @@ class BossBullet {
 
   draw() {
     const spr = this.spritesArr[this.selectedState];
+    this.drawShadow()
     spr.draw();
     if (this.selectedState === 0) {
       if (contra.player.assailable && spr.isStaticIntersect(contra.player.selectedState.sprite.getStaticBox())) {
@@ -283,6 +287,22 @@ class BossBullet {
       } else {
         this.spritesMesh.move(contra.pjs.vector.point(...this.vector));
       }
+    }
+  }
+
+  drawShadow() {
+    const sh = this.shadow;
+    const spr = this.spritesArr[this.selectedState];
+    sh.x = spr.x + 1
+    sh.w = spr.w - 2;
+    const platforms = contra.selectedLevel.platformActual.filter(
+      (platform) => platform.collision === 'BOTTOM' &&
+      platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, spr.h * 0.8, -2, 40))
+    );
+    if (platforms.length > 0) {
+      sh.y = platforms[0].sprite.y - 2;
+      sh.setAlpha(1 - ((sh.y - spr.y - spr.h) * 0.02));
+      sh.draw();
     }
   }
 

@@ -59,7 +59,7 @@ export default class Sound {
   }
 
   // Запуск проигрывания музыки
-  static playMusic(level, volume = 0.5) {
+  static playMusic(level, volume = 0.1) {
     currentLevel = level;
     musicVolume = volume;
     sounds[`level${level}start`].audio.volume = musicVolume;

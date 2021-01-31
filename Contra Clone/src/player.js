@@ -243,7 +243,7 @@ export default class Player extends Person {
     this.pose = 'AIR'; // air , platform , water, death
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
     this.vectorJumpX = 0; // -1 left, 1 right
-    this.moveSpeed = 1;
+    this.moveSpeed = 1.5;
     this.fallSpeed = 1.8;
     this.timeAfterShoot = 0;
     this.timeForAnimationShot = 15;
@@ -289,10 +289,11 @@ export default class Player extends Person {
       this.medal.draw();
     }
 
+    ////
     if (!this.needCalc) {
-      console.log('ret');
       return;
     }
+    ///
 
     const collisionSArray = contra.selectedLevel.platformActual.filter(
       (platform) => platform.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxS(2, 28, -4, this.fallSpeed - 28)),
@@ -438,6 +439,7 @@ export default class Player extends Person {
     /////////
     this.spritesMesh.move(p(dx, dy));
     this.spritesMesh.draw();
+    this.drawShadow();
 
     if (dx > 0 && this.spritesMesh.x > camPos + 32 * 4 && camPos <= contra.selectedLevel.length && this.level.canMoveCamera) {
       contra.selectedLevel.moveCamera(dx);
@@ -719,6 +721,6 @@ export default class Player extends Person {
       for (const key in this.states) {
         this.states[key].sprite.setAlpha(1);
       }
-    }, time); // time
+    }, 100000); // time
   }
 }

@@ -76,7 +76,6 @@ contra.startGame = () => {
           contra.selectedLevel.startLevel();
         }
       }, 200);
-
     }
   }, 200);
 };

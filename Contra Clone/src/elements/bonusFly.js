@@ -16,7 +16,6 @@ export default class BonusFly extends SprObject {
     this.vectorY = 2;
     this.health = 1;
     this.sprite = this.createSprite(contra.res.elementS, ...Object.values(level.elementsInfo['flyBonus']), 100, x, y);
-
     level.elementsArray.push(this);
   }
 

@@ -7,6 +7,7 @@ import Sound from '../sound';
 export default class Bonus extends SprObject {
   constructor(xCenter, yBottom, type, level) {
     super(xCenter, yBottom, 0, 0);
+
     this.type = type;
     this.level = level;
     this.vectorX = 1;
@@ -22,6 +23,7 @@ export default class Bonus extends SprObject {
     }, 300);
 
     this.sprite = this.createSprite(level.elementsInfo[`bonus${type}`], contra.res.elementS, xCenter, yBottom);
+    this.shadow = this.createSprite(level.elementsInfo['shadow'], contra.res.elementS, xCenter, yBottom);
   }
 
   tryAction() {
@@ -40,8 +42,9 @@ export default class Bonus extends SprObject {
       }
       spr.move(contra.pjs.vector.point(this.vectorX, dy));
     }
-
+    this.drawShadow();
     spr.draw();
+
     const camPos = contra.pjs.camera.getPosition().x;
     this.tryRemove(false, camPos);
     const { player } = contra;
@@ -62,6 +65,22 @@ export default class Bonus extends SprObject {
   tryRemove(die, camPos) {
     if (die || camPos > this.xCenter + 20) {
       this.level.bonuses.splice(this.level.elementsActual.indexOf(this), 1);
+    }
+  }
+
+  drawShadow() {
+    const sh = this.shadow;
+    const spr = this.sprite;
+    sh.x = spr.x + 1
+    sh.w = spr.w - 2;
+    const platforms = this.level.platformActual.filter(
+      (platform) => platform.collision === 'BOTTOM' &&
+      platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, spr.h * 0.8, -2, 40))
+    );
+    if (platforms.length > 0) {
+      sh.y = platforms[0].sprite.y - 2;
+      sh.setAlpha(1 - ((sh.y - spr.y - spr.h) * 0.02));
+      sh.draw();
     }
   }
 }

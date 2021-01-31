@@ -41,6 +41,7 @@ export default class Spider extends Person {
   }
 
   tryAction() {
+    this.drawShadow();
     this.spritesMesh.draw();
     if (this.health > 0) {
       this.checkColission(this.selectedState.sprite);

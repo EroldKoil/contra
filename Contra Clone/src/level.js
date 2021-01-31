@@ -142,11 +142,12 @@ const map = {
         { name: 'bonusFly', x: 2324, y: 60, type: 'R' },
         { name: 'bonusFly', x: 2324, y: 180, type: 'L' },
 
-        { name: 'sniper', x: 317, y: 193, type: 'STAY' },
-        { name: 'sniper', x: 639, y: 193, type: 'STAY' },
-        { name: 'sniper', x: 1279, y: 96, type: 'STAY' },
+        { name: 'sniper', x: 317, y: 198, type: 'STAY' },
+        { name: 'sniper', x: 639, y: 198, type: 'STAY' },
+        { name: 'sniper', x: 1279, y: 102, type: 'STAY' },
         { name: 'sniper', x: 1347, y: 89, type: 'HALF' },
         { name: 'sniper', x: 1554, y: 56, type: 'HALF' },
+        { name: 'sniper', x: 2360, y: 134, type: 'STAY' },
 
 
         { name: 'tankBottom', x: 2065, y: 160 },
@@ -504,6 +505,13 @@ const map = {
       y: 1,
       w: 1,
       h: 1,
+      frames: 1,
+    },
+    shadow: {
+      x: 388,
+      y: 22,
+      w: 16,
+      h: 3,
       frames: 1,
     },
     shootD: {

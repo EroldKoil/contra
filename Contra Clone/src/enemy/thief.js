@@ -41,6 +41,7 @@ export default class Thief extends Person {
 
   tryAction() {
     const camPos = contra.pjs.camera.getPosition().x;
+    this.drawShadow();
     this.spritesMesh.draw();
     this.checkColission(this.selectedState.sprite);
     if (this.health > 0) {
