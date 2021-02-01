@@ -20,6 +20,7 @@ const keys = [
 export default class Sniper extends Person {
   constructor(xCenter, yBottom, type, level, boss = false) {
     super(xCenter, yBottom, 1, level.enemiesInfo, keys, contra.res.enemyS, level, 'enemyDeath');
+    this.score = 500;
     this.touchDemage = true;
     this.score = 100;
     this.type = type; // STAY, HALF, STAYH

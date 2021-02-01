@@ -236,6 +236,7 @@ export default class Player extends Person {
   constructor(level) {
     super(xCenter, yBottom, health, playerSprites, Object.keys(playerSprites), contra.res.playerS, level);
     console.log(level);
+    this.positionX = 0;
     this.lifes = 10;
     this.assailable = false; // Уязвим ли
     this.weapon = new Weapon('S', this);
@@ -300,16 +301,19 @@ export default class Player extends Person {
     );
 
     const collisionDArray = contra.selectedLevel.platformActual.filter(
-      (platform) => platform.sprite.isStaticIntersect(this.selectedState.sprite.getStaticBoxD(4, 0, -8 + this.moveSpeed)),
+      (platform) => platform.sprite.isStaticIntersect(this.selectedState.sprite.getStaticBoxD(12, 0, -16 + this.moveSpeed)),
     );
 
     const collisionAArray = contra.selectedLevel.platformActual.filter(
-      (platform) => platform.sprite.isStaticIntersect(this.selectedState.sprite.getStaticBoxA(4 - this.moveSpeed, 0, -8)),
+      (platform) => platform.sprite.isStaticIntersect(this.selectedState.sprite.getStaticBoxA(4 - this.moveSpeed, 0, -12)),
     );
 
-    //this.selectedState.sprite.drawStaticBoxA(4, 0, -8)
-    //this.selectedState.sprite.drawStaticBoxA(4 - this.moveSpeed, 0, -8)
+    //this.selectedState.sprite.drawStaticBoxA(4 - this.moveSpeed, 0, -12);
+    //this.selectedState.sprite.drawStaticBoxD(12, 0, -16 + this.moveSpeed);
 
+    /*[...collisionSArray, ...collisionDArray].forEach(element => {
+      element.sprite.drawStaticBox();
+    });*/
     const buttomColArray = collisionSArray.filter((platform) => platform.collision === 'BOTTOM');
     const waterColArray = buttomColArray.length > 0 ? [] : collisionSArray.filter((platform) => platform.collision === 'WATER');
 
@@ -412,22 +416,25 @@ export default class Player extends Person {
       }
     }
 
-    /*
-			if (dx < 0 && this.level.leftBorder.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxA(4 - this.moveSpeed, 0, -8))) {
-				dx = 0;
-			}*/
-
     if (dx !== 0) {
       const array = dx > 0 ? collisionDArray : collisionAArray;
       const collV = array.filter((platform) => platform.collision === 'VERTICAL');
       if (collV.length > 0) {
         const spr = this.selectedState.sprite;
-        dx = dx > 0 ? (collV[0].x - (spr.x + spr.w) + 4) : (collV[0].x + collV[0].w - spr.x + 4);
+        dx = dx > 0 ? (collV[0].sprite.x - (spr.x + spr.w) + 4) : (collV[0].sprite.x + collV[0].width - spr.x - 4);
       }
     }
 
-    if (this.health < 1 && this.selectedState.sprite.y + this.selectedState.sprite.h > 222) {
-      dy = 0;
+    if (dy < 0) {
+      const spr = this.selectedState.sprite;
+      const collisionWArray = contra.selectedLevel.platformActual.filter(
+        (platform) => platform.collision === 'ROOF' &&
+        platform.sprite.isStaticIntersect(spr.getStaticBoxW(0, dy, 0, 0)),
+      );
+      if (collisionWArray.length > 0) {
+        dy = collisionWArray[0].sprite.y - collisionWArray[0].sprite.h - spr.y + 1;
+        this.vectorJumpY = 1;
+      }
     }
 
     /////
@@ -436,7 +443,21 @@ export default class Player extends Person {
       dx = dx * 10;
     }
 
+    if (contra.pjs.keyControl.isDown('C')) {
+      this.spritesMesh.x = contra.pjs.camera.getPosition().x + 100;
+      this.positionX = contra.pjs.camera.getPosition().x + 100;
+      this.spritesMesh.y = contra.pjs.camera.getPosition().y + 10;
+    }
+
     /////////
+
+
+    this.positionX += dx;
+    if (Number.isNaN(this.positionX)) {
+      console.log(dx);
+    }
+    dx = Math.floor(this.positionX - this.spritesMesh.x);
+
     this.spritesMesh.move(p(dx, dy));
     this.spritesMesh.draw();
     this.drawShadow();
@@ -494,7 +515,7 @@ export default class Player extends Person {
               shootCoord.x = sprite.x + sprite.w;
               shotVector = 315;
             } else if (buttons[3]) {
-              shootCoord.x = sprite.x + sprite.w;
+              shootCoord.x = sprite.x;
               shotVector = 225;
             } else {
               shootCoord.x = sprite.x + sprite.w / 2;
@@ -639,15 +660,6 @@ export default class Player extends Person {
     }
   }
 
-  /* checkColission() {
-    const dengerousEnemy = contra.selectedLevel.enemyArray.filter((enemy) => enemy.touchDemage && enemy.health > 0);
-    [...dengerousEnemy, ...this.level.bulletsArray].forEach(el => {
-      if (this.health > 0 && this.selectedState.sprite.isStaticIntersect(el.getBox())) {
-        this.die();
-      }
-    });
-	}*/
-
   checkColission() {
     const dengerousEnemy = contra.selectedLevel.enemyArray.filter((enemy) => enemy.touchDemage && enemy.health > 0);
     [...dengerousEnemy, ...this.level.bulletsArray].forEach(el => {
@@ -676,6 +688,13 @@ export default class Player extends Person {
   }
 
   die() {
+    this.pose = 'AIR';
+    this.vectorJumpY = -0.3; // Направление силы притяжения. 1 - вниз. -1 - вверх
+    setTimeout(() => {
+      this.vectorJumpY = 0.3
+    }, 300);
+
+    this.vectorJumpX = -this.vectorMove;
     Sound.play('playerDeath');
     this.selectState('die', true);
     this.health = 0;
@@ -696,15 +715,19 @@ export default class Player extends Person {
 
   reBurn() {
     this.spritesMesh.y = 10;
-    this.spritesMesh.x = contra.pjs.camera.getPosition().x + 40;
+    this.positionX = contra.pjs.camera.getPosition().x + 40
+    this.spritesMesh.x = this.positionX;
     this.vectorJumpX = 0;
     this.selectState('jump', true);
     this.pose = 'AIR';
-    // this.level.onKeyboard();
     this.setAssailable(4000);
     setTimeout(() => {
+      this.vectorJumpY = 1;
+      this.vectorJumpX = 0;
       this.health = 1;
-    }, 100);
+      this.selectState('jump', true);
+      this.pose = 'AIR';
+    }, 300);
   }
 
   setAssailable(time) {
@@ -721,6 +744,6 @@ export default class Player extends Person {
       for (const key in this.states) {
         this.states[key].sprite.setAlpha(1);
       }
-    }, 100000); // time
+    }, time); // time
   }
 }

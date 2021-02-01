@@ -7,6 +7,8 @@ import BulletL from '../weapon/bulletL';
 import Sound from '../sound';
 import startScreen from '../startscreen';
 
+import gameComplite from '../gameComplite';
+
 const spritesInfo = {
   firstPart: { xS: 193, yS: 10, w: 112, h: 183, frames: 1, delay: 10 },
   secondPart: { xS: 318, yS: 75, w: 31, h: 44, frames: 1, delay: 10 },
@@ -22,9 +24,10 @@ export default class Boss1 {
   constructor(x, y, level) {
     this.x = x;
     this.y = y;
-    this.health = 4; //32
+    this.health = 32; //32
     this.level = level;
-    this.score = 1000;
+    this.score = 10000;
+    this.gunScore = 1000;
     const image = contra.res.boss;
     const elementS = contra.res.elementS;
     const mediumBoom = Object.values(level.elementsInfo['mediumBoom']);
@@ -117,27 +120,22 @@ export default class Boss1 {
         gun.selectedState.draw();
         if (gun.health > 0) {
           this.checkColission(gun, gun.selectedState);
-        }
-
-        if (gun.health > 0) {
-          if (gun.canShoot) {
-            this.shoot(gun.spriteShoot);
-            gun.canShoot = false;
-            gun.selectState('spriteShoot');
-            setTimeout(() => {
-              gun.selectState('sprite');
-            }, 100);
-            setTimeout(() => {
-              gun.canShoot = true;
-            }, this.shootReloading);
+          if (gun.health > 0) {
+            if (gun.canShoot) {
+              this.shoot(gun.spriteShoot);
+              gun.canShoot = false;
+              gun.selectState('spriteShoot');
+              setTimeout(() => {
+                gun.selectState('sprite');
+              }, 100);
+              setTimeout(() => {
+                gun.canShoot = true;
+              }, this.shootReloading);
+            }
+          } else {
+            contra.addScore(this.gunScore);
+            this.gunDie(gun);
           }
-
-        } else {
-          gun.selectState('die');
-          Sound.play('enemyDeath');
-          setTimeout(() => {
-            gun.needShow = false;
-          }, 400);
         }
       }
     });
@@ -164,6 +162,7 @@ export default class Boss1 {
       const needJump = this.platforms[1].sprite.isStaticIntersect(contra.player.selectedState.sprite.getStaticBoxD(4, 0, -7));
       contra.player.calculateMoves([false, true, false, false, needJump, false]);
       if (needJump) {
+        //gameComplite();
         setTimeout(startScreen, 2000, contra, 2, contra.startGame);
       }
     }
@@ -173,21 +172,34 @@ export default class Boss1 {
     });
   }
 
+  gunDie(gun) {
+    gun.selectState('die');
+    Sound.play('enemyDeath');
+    setTimeout(() => {
+      gun.needShow = false;
+    }, 400);
+  }
+
   die() {
     [this.leftGun, this.rightGun].forEach((gun) => {
       gun.health = 0;
+      this.gunDie(gun);
     });
     if (this.sniper) {
       this.sniper.die();
     }
+    this.level.enemyArray.forEach(enemy => {
+      enemy.die();
+    });
     this.bulletsActual = [];
     contra.addScore(this.score);
     this.level.isComplite = true;
     Sound.play('boss1death');
+    this.level.onKeyboard();
     setTimeout(() => {
       Sound.stopMusic();
       Sound.play('afterBossDeath');
-      this.level.onKeyboard();
+
       this.sprites.booms = [];
       setTimeout(() => {
         this.aim = null;

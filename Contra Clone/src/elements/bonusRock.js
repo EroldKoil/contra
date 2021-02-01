@@ -12,6 +12,7 @@ const keys = [
 
 export default class BonusRock {
   constructor(xCenter, yBottom, type, level) {
+    this.score = 500;
     this.type = type;
     this.level = level;
     this.xCenter = xCenter;
@@ -142,6 +143,7 @@ export default class BonusRock {
   die() {
     this.selectState('death');
     Sound.play('enemyDeath');
+    contra.addScore(this.score);
     this.level.bonuses.push(new Bonus(this.xCenter - 12, this.yBottom - 31, this.type, this.level));
     setTimeout(() => {
       contra.score += 100;

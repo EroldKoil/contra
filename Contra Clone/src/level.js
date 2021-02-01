@@ -2,7 +2,7 @@
 
 import Bg from './bg';
 import Platform from './platform';
-import ElementCreator from './elements/elementCreator';
+import elementCreator from './elements/elementCreator';
 /*import Bridge from './elements/bridge';
 import BonusRock from './elements/bonusRock';
 import BonusFly from './elements/bonusFly';
@@ -177,6 +177,96 @@ const map = {
       ],
     },
     {
+      length: 3072, // 3328
+      bg: [],
+      elements: [{
+          name: 'background',
+          img: 2,
+          platforms: [
+            // пол
+            { x: 0, y: 198, w: 1071, h: 1, collision: 'BOTTOM' },
+            { x: 1126, y: 198, w: 1001, h: 1, collision: 'BOTTOM' },
+            { x: 2182, y: 198, w: 345, h: 1, collision: 'BOTTOM' },
+            { x: 2598, y: 198, w: 181, h: 1, collision: 'BOTTOM' },
+
+            // конец ступенек
+            { x: 526, y: 103, w: 2, h: 96, collision: 'VERTICAL' },
+            // столбы
+            { x: 1368, y: 0, w: 40, h: 156, collision: 'VERTICAL' },
+            { x: 1464, y: 54, w: 40, h: 156, collision: 'VERTICAL' },
+            { x: 1408, y: 150, w: 56, h: 1, collision: 'BOTTOM', canFallDown: true },
+            { x: 1408, y: 102, w: 56, h: 1, collision: 'BOTTOM', canFallDown: true },
+            { x: 1408, y: 54, w: 96, h: 1, collision: 'BOTTOM', canFallDown: true },
+
+            { x: 1528, y: 0, w: 40, h: 124, collision: 'VERTICAL' },
+            { x: 1624, y: 70, w: 40, h: 137, collision: 'VERTICAL' },
+            { x: 1568, y: 118, w: 56, h: 1, collision: 'BOTTOM', canFallDown: true },
+            { x: 1568, y: 70, w: 96, h: 1, collision: 'BOTTOM', canFallDown: true },
+
+
+            { x: 1784, y: 54, w: 40, h: 158, collision: 'VERTICAL' },
+            { x: 1880, y: 0, w: 40, h: 124, collision: 'VERTICAL' },
+            { x: 1759, y: 150, w: 25, h: 1, collision: 'BOTTOM', canFallDown: true },
+            { x: 1759, y: 102, w: 25, h: 1, collision: 'BOTTOM', canFallDown: true },
+            { x: 1728, y: 54, w: 96, h: 1, collision: 'BOTTOM', canFallDown: true },
+            { x: 1824, y: 70, w: 56, h: 1, collision: 'BOTTOM', canFallDown: true },
+            { x: 1824, y: 118, w: 56, h: 1, collision: 'BOTTOM', canFallDown: true },
+
+            { x: 1368, y: 158, w: 40, h: 2, collision: 'ROOF' },
+            { x: 1528, y: 126, w: 40, h: 2, collision: 'ROOF' },
+            { x: 1880, y: 126, w: 40, h: 2, collision: 'ROOF' },
+          ],
+          paddons: [
+            // ступеньки
+            { x: 272, y: 166, w: 48, length: '1', needVertical: true, cantFallDown: true },
+            { x: 304, y: 134, w: 48, length: '1', needVertical: true, cantFallDown: true },
+            { x: 336, y: 102, w: 192, length: '5', needVertical: true, cantFallDown: true },
+
+            { x: 576, y: 102, length: '6', needVertical: false },
+            { x: 864, y: 102, length: '5', needVertical: false },
+            { x: 1104, y: 102, length: '5', needVertical: false },
+            { x: 688, y: 150, length: '3', needVertical: false },
+            { x: 848, y: 150, length: '3', needVertical: false },
+            { x: 1200, y: 150, length: '2', needVertical: false },
+
+            { x: 1584, y: 166, w: 48, length: '1', needVertical: true, cantFallDown: true },
+            { x: 1824, y: 166, w: 48, length: '1', needVertical: true, cantFallDown: true, back: true },
+
+            { x: 2000, y: 102, length: '7', needVertical: false },
+            { x: 2304, y: 102, length: '3', needVertical: false },
+            { x: 2480, y: 102, length: '4', needVertical: false },
+
+            { x: 1968, y: 150, length: '2', needVertical: false },
+            { x: 2288, y: 150, length: '8', needVertical: false },
+
+            { x: 2672, y: 166, length: '19', needVertical: true },
+          ]
+        },
+        { name: 'bonusRock', x: 432, y: 161, type: 'M' },
+        { name: 'bonusRock', x: 1072, y: 161, type: 'L' },
+        { name: 'bonusRock', x: 1682, y: 161, type: 'B' },
+
+        { name: 'bonusFly', x: 220, y: 180, type: 'B' },
+        { name: 'bonusFly', x: 990, y: 180, type: 'S' },
+
+        { name: 'sniper', x: 459, y: 100, type: 'STAY' },
+        { name: 'sniper', x: 912, y: 149, type: 'STAY' },
+        { name: 'sniper', x: 1736, y: 53, type: 'STAY' },
+
+        { name: 'turel', x: 619, y: 101 },
+        { name: 'turel', x: 744, y: 101 },
+        { name: 'turel', x: 731, y: 197 },
+        { name: 'turel', x: 906, y: 197 },
+        { name: 'turel', x: 1227, y: 148 },
+        { name: 'turel', x: 1237, y: 197 },
+        { name: 'turel', x: 2091, y: 101 },
+        { name: 'turel', x: 2376, y: 148 },
+        { name: 'turel', x: 2378, y: 197 },
+        { name: 'turel', x: 2506, y: 148 },
+
+      ],
+    },
+    {
       length: 2559, // 2559, //2559,
       bg: [
         [0, 0, 0, 0, 0, 0, 'p22-n'],
@@ -295,10 +385,10 @@ const map = {
         { name: 'toothyMouth', x: 2608, y: 223 },
 
         { name: 'boss82', x: 2696, y: 33 },
-        { name: 'spiderCocoon', x: 2720, y: 47, flip: 1 },
-        { name: 'spiderCocoon', x: 2752, y: 47, flip: 1 },
-        { name: 'spiderCocoon', x: 2720, y: 175, flip: 0 },
-        { name: 'spiderCocoon', x: 2752, y: 175, flip: 0 },
+        { name: 'spiderCocoon', x: 2736, y: 47, flip: 1 },
+        { name: 'spiderCocoon', x: 2768, y: 47, flip: 1 },
+        { name: 'spiderCocoon', x: 2736, y: 175, flip: 0 },
+        { name: 'spiderCocoon', x: 2768, y: 175, flip: 0 },
 
         /* { name: 'boss82', x: 200, y: 33 },
          { name: 'spiderCocoon', x: 224, y: 47, flip: 1 },
@@ -306,7 +396,8 @@ const map = {
          { name: 'spiderCocoon', x: 224, y: 175, flip: 0 },
          { name: 'spiderCocoon', x: 256, y: 175, flip: 0 },*/
       ],
-    }
+    },
+
   ],
   spritesInfo: {
     b1: { x: 35, y: 1, w: 32, h: 32, frames: 3, delay: 20, },
@@ -506,6 +597,14 @@ const map = {
       w: 1,
       h: 1,
       frames: 1,
+    },
+    signal: {
+      x: 217,
+      y: 31,
+      w: 17,
+      h: 3,
+      frames: 4,
+      delay: 10,
     },
     shadow: {
       x: 388,
@@ -910,6 +1009,18 @@ const map = {
       xCoef: -1,
       yCoef: 0,
     },
+    turel: {
+      x: 335,
+      y: 207,
+      w: 32,
+      h: 32,
+    },
+    turelShoot: {
+      x: 368,
+      y: 207,
+      w: 32,
+      h: 32,
+    },
     thiefJump: {
       x: 384,
       y: 103,
@@ -954,8 +1065,8 @@ export default class Level {
   constructor(number) {
     this.levelNumber = number - 1;
     this.length = map.levels[number - 1].length;
-    this.lastCameraX = 0;
-    this.pausePress = false;
+    //this.cameraX = 0;
+    //this.pausePress = false;
     this.bgArray = [];
     this.elementsArray = [];
     this.canMoveCamera = true;
@@ -972,7 +1083,7 @@ export default class Level {
     this.playerBulletsArray = [];
 
     this.deathPlatform = new Platform(map.blockSize * 9, 2, -map.blockSize * 0.5, map.blockSize * 7 - 2, 'DEATH', false);
-    this.leftBorder = new Platform(2, map.blockSize * 8, -4, -map.blockSize * 0.5, 'VERTICAL', false); //LEFTBORDER
+    this.leftBorder = new Platform(2, map.blockSize * 8, -1, -map.blockSize * 0.5, 'VERTICAL', false); //LEFTBORDER
     this.levelBorder = new Platform(map.blockSize * 12, map.blockSize * 11, -map.blockSize * 2, -map.blockSize * 2, 'LEVELBORDER', false);
 
     this.platformActual.push(this.deathPlatform);
@@ -1010,7 +1121,7 @@ export default class Level {
             createBG(from[i], i);
             break;
           case 'ELEMENT':
-            new ElementCreator(from[i], this);
+            elementCreator(from[i], this);
             break;
           default:
             break;
@@ -1029,32 +1140,8 @@ export default class Level {
     //  this.startLevel(this);
   }
 
-  // Проверка сместился ли экран на 32 пикселя. Если да, то добавляем справа новые элементы
-  /*tryRefreshActualElements() {
-    if (this.lastCameraX > 32) {
-      this.addActualElements();
-      this.lastCameraX -= 32;
-    }
-  }*/
-
-  // Добавление элементов из обычного массива в актуальный. Если его час настал
-  /*  addActualElements() {
-      const addElements = (from) => {
-        for (let i = 0; i < from.length; i += 1) {
-          if (!from[i].tryToActual(this, true)) {
-            break;
-          }
-        }
-      };
-
-      // addElements(this.bgArray, 'BG');
-      // addElements(this.enemyArray, 'ENEMY');
-      addElements(this.elementsArray, 'ELEMENT');
-    }*/
-
   moveCamera(dx) {
     const p = contra.pjs.vector.point;
-
     [this.deathPlatform.sprite,
       this.leftBorder.sprite,
       this.levelBorder.sprite,
@@ -1068,6 +1155,8 @@ export default class Level {
     const { pjs } = contra;
     const { isDown } = pjs.keyControl;
     const level = this;
+    const j = contra.joystick;
+
     pjs.game.newLoop('myGame', () => {
       pjs.game.clear();
 
@@ -1110,12 +1199,12 @@ export default class Level {
 
       if (this.keysOn) {
         contra.player.calculateMoves([
-          isDown(getKey.keyUp),
-          isDown(getKey.keyRight),
-          isDown(getKey.keyDown),
-          isDown(getKey.keyLeft),
-          isDown(getKey.keyJump),
-          isDown(getKey.keyFire),
+          isDown(getKey.keyUp) || (j && j.buttons.up),
+          isDown(getKey.keyRight) || (j && j.buttons.right),
+          isDown(getKey.keyDown) || (j && j.buttons.down),
+          isDown(getKey.keyLeft) || (j && j.buttons.left),
+          isDown(getKey.keyJump) || (j && j.buttons.a),
+          isDown(getKey.keyFire) || (j && j.buttons.b),
         ]);
       }
     });

@@ -15,7 +15,7 @@ export default class Spider extends Person {
   constructor(xCenter, yBottom, isFlipY, level) {
     super(xCenter, yBottom, 2, level.enemiesInfo, keys, contra.res.enemyS, level, 'enemyDeath');
     this.vectorMove = xCenter > contra.player.spritesMesh.x ? -1 : 1;
-    this.score = 40;
+    this.score = 500;
     this.isFlipY = isFlipY;
     this.touchDemage = true;
     this.isFlipX = this.vectorMove > 0 ? 1 : 0;
@@ -131,12 +131,11 @@ export default class Spider extends Person {
 
   tryRemove(die, camPos) {
     if (die || camPos > this.spritesMesh.x + 20) {
-      console.log('remove')
       this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
     }
   }
 
-  jump(isLong) {
+  jump() {
     this.pose = 'AIR';
     this.vectorJumpY = -1;
     this.selectState('thiefJump');

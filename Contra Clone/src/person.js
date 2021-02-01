@@ -48,7 +48,7 @@ export default class Person {
   }
 
   isTimeToShow(camPos) {
-    if (camPos > this.xCenter - 300) {
+    if (camPos > this.xCenter - 256 - 16) {
       this.level.enemyArray.push(this);
       this.level.elementsArray.splice(this.level.elementsArray.indexOf(this), 1);
     }
@@ -137,7 +137,13 @@ export default class Person {
       platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, spr.h * 0.8, -2, 40))
     );
     if (platforms.length > 0) {
-      sh.y = platforms[0].sprite.y - 2;
+      let minY = platforms[0].sprite.y;
+      for (let i = 1; i < platforms.length; i += 1) {
+        if (platforms[i].sprite.y < minY) {
+          minY = platforms[i].sprite.y;
+        }
+      }
+      sh.y = minY - 2;
       sh.setAlpha(1 - ((sh.y - spr.y - spr.h) * 0.02));
       sh.draw();
     }

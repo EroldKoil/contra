@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import TextLayer from './text';
 import Sound from './sound';
 import Level from './level';
@@ -8,13 +6,13 @@ export default function startScreen(contra, level, callback) {
   const textLayer = new TextLayer(contra.pjs);
   const blinkingTextLayer = new TextLayer(contra.pjs);
   let frameCounter = 0;
-  const lastFrame = 208; //208;
+  const lastFrame = 208;
 
   contra.selectedLevel = new Level(level, contra);
 
   // Очки
   textLayer.addText(2, 3, contra.lang.player1);
-  blinkingTextLayer.addText(11, 3, contra.score.toString());
+  blinkingTextLayer.addText(11, 3, contra.results.score.toString());
   // Жизни
   textLayer.addText(2, 5, contra.lang.lives);
   textLayer.addText(8, 5, contra.lives.toString());
