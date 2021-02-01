@@ -7,6 +7,7 @@ import mainMenu from './mainmenu';
 import getLanguageObject from './multilang';
 import Options from './options';
 import Sound from './sound';
+import Joystick from './joystick';
 
 function resize() {
   let width = window.innerWidth;
@@ -33,6 +34,7 @@ const contra = {
   player: null,
   startGame: null,
   lang: null,
+  joystick: null,
   lives: 3,
   score: 0,
   scoreForLife: 0,
@@ -58,6 +60,10 @@ contra.res = {
 // метод сохранения хайскора
 
 contra.startGame = () => {
+  if (pjs.touchControl.isTouchSupported()) {
+    contra.joystick.show();
+  }
+
   const interval = setInterval(() => {
     if (contra.pjs.resources.isLoaded()) {
       clearInterval(interval);
@@ -107,15 +113,20 @@ function buttonPress() {
   mainMenu(contra); // Все стартует отсюда!
 }
 
-// Обработчик кнопки модального окна
-
-document.getElementById('start-button').addEventListener('click', buttonPress);
-document.getElementById('start-button').addEventListener('touchend', buttonPress);
-
 window.onresize = resize;
 
 pjs.keyControl.initControl();
-pjs.touchControl.initControl();
+
+// Обработчик кнопки модального окна
+document.getElementById('start-button').addEventListener('click', buttonPress);
+
+if (pjs.touchControl.isTouchSupported()) {
+  document.getElementById('start-button').addEventListener('touchend', buttonPress);
+  pjs.touchControl.initControl();
+  contra.joystick = new Joystick();
+  contra.joystick.hide();
+}
+
 
 function resizeInit() {
   if (document.querySelector('canvas') === null) {
