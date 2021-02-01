@@ -15,7 +15,7 @@ export default class SpiderCocoon extends Person {
   constructor(xCenter, yBottom, isFlip, level) {
     super(xCenter, yBottom, 4, level.enemiesInfo, keys, contra.res.enemyS, level, 'enemyDeath');
     this.selectState('kokonClose');
-    this.score = 200;
+    this.score = 3000;
     this.reloading = 4000;
     this.isFlip = isFlip;
     this.flip(0, isFlip);

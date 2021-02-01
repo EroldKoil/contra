@@ -6,8 +6,8 @@ import Sound from './sound';
 function createMenuText(textLayer, lang, touchSupported) {
   textLayer.clear();
   textLayer.addText(5, 17, lang.menu);
-  textLayer.addText(7, 19 + touchSupported, lang.startGame);
-  textLayer.addText(7, 21, lang.language);
+  textLayer.addText(7, 19, lang.startGame);
+  textLayer.addText(7, 21 + touchSupported, lang.language);
   if (!touchSupported) {
     textLayer.addText(7, 23, lang.controls);
   }
@@ -59,8 +59,8 @@ export default function mainMenu(contra) {
 
   pjs.game.newLoop('main_menu', () => {
     if (cameraPosition !== 0) {
-      cameraPosition = (pjs.keyControl.getCountKeysDown() > 0 || pjs.touchControl.isPress()) ?
-        0 : cameraPosition + 1;
+      cameraPosition = (pjs.keyControl.getCountKeysDown() > 0
+        || pjs.touchControl.isPress()) ? 0 : cameraPosition + 1;
 
       pjs.camera.setPosition(pjs.vector.point(cameraPosition, 0));
     } else {
@@ -143,10 +143,12 @@ export default function mainMenu(contra) {
       x = (x - canvas.offsetLeft) / ratio;
       y = (y - canvas.offsetTop) / ratio;
 
-      if (7 * 8 < x && x < (7 + lang.startGame.length) * 8 && 19 * 8 < y && y < 20 * 8) {
+      if (7 * 8 < x && x < (7 + lang.startGame.length) * 8
+        && 19 * 8 - 4 < y && y < 20 * 8 + 4) {
         // Был тач к старту игры
         startGame(contra);
-      } else if (7 * 8 < x && x < (7 + lang.language.length) * 8 && 21 * 8 < y && y < 22 * 8) {
+      } else if (7 * 8 < x && x < (7 + lang.language.length) * 8
+        && 22 * 8 - 4 < y && y < 23 * 8 + 4) {
         // Был тач к смене языка
         changeLanguage(contra, textLayer, touchSupported);
       }

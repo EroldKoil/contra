@@ -7,12 +7,10 @@ import Sound from './sound';
 
 export default class Person {
   constructor(xCenter, yBottom, health, sprites, keys, image, level, typeOfDeath) {
-    // if (this instanceof TankBottom) {
-    //console.log(xCenter, yBottom, health, sprites, keys, image, level);
-    //  }
     this.level = level;
     this.xCenter = xCenter;
     this.yBottom = yBottom;
+    this.shadow = this.createSprite(contra.res.elementS, ...Object.values(level.elementsInfo['shadow']));
 
     this.states = {};
     this.dontShoot = true; // flag to understand? am I shoot now
@@ -50,7 +48,7 @@ export default class Person {
   }
 
   isTimeToShow(camPos) {
-    if (camPos > this.xCenter - 300) {
+    if (camPos > this.xCenter - 256 - 16) {
       this.level.enemyArray.push(this);
       this.level.elementsArray.splice(this.level.elementsArray.indexOf(this), 1);
     }
@@ -127,5 +125,27 @@ export default class Person {
     setTimeout(() => {
       this.tryRemove(true);
     }, 500);
+  }
+
+  drawShadow() {
+    const sh = this.shadow;
+    const spr = this.selectedState.sprite;
+    sh.x = spr.x + 1
+    sh.w = spr.w - 2;
+    const platforms = this.level.platformActual.filter(
+      (platform) => platform.collision === 'BOTTOM' &&
+      platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, spr.h * 0.8, -2, 40))
+    );
+    if (platforms.length > 0) {
+      let minY = platforms[0].sprite.y;
+      for (let i = 1; i < platforms.length; i += 1) {
+        if (platforms[i].sprite.y < minY) {
+          minY = platforms[i].sprite.y;
+        }
+      }
+      sh.y = minY - 2;
+      sh.setAlpha(1 - ((sh.y - spr.y - spr.h) * 0.02));
+      sh.draw();
+    }
   }
 }

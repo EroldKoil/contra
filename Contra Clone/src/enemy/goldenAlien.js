@@ -8,7 +8,7 @@ export default class GoldAlien extends Person {
   constructor(xCenter, yBottom, level, count) {
     super(xCenter, yBottom, 2, level.enemiesInfo, ['goldAlien'], contra.res.enemyS, level, 'enemyDeath');
     this.touchDemage = true;
-    this.score = 30;
+    this.score = 300;
     this.selectState('goldAlien');
 
     this.vector = Math.PI / 180 * (this.getDegree(1, this.selectedState.sprite, 4) + 60 - (Math.random() * 120));

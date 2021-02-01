@@ -9,7 +9,7 @@ export default class SnowShoot extends Person {
     super(xCenter, yBottom, 1, level.enemiesInfo, ['snowShoot'], contra.res.enemyS, level, 'enemyDeath');
     this.touchDemage = true;
     this.selectState('snowShoot');
-    this.score = 10;
+    this.score = 300;
     this.vector = Math.PI / 180 * this.getDegree(1, this.selectedState.sprite);
     this.dV = Math.PI;
     this.speed = 0.3;

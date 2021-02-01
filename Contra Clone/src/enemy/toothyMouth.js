@@ -10,7 +10,7 @@ export default class ToothyMouth extends Person {
   constructor(xCenter, yBottom, level) {
     super(xCenter, yBottom, 8, level.enemiesInfo, ['toothyMouth'], contra.res.enemyS, level, 'mediumBoom');
     this.selectState('toothyMouth');
-    this.score = 100;
+    this.score = 1000;
     this.reloading = 4000;
     this.canShoot = true;
     this.aim = contra.pjs.game.newRectObject({

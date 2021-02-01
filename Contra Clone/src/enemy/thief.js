@@ -17,7 +17,7 @@ export default class Thief extends Person {
   constructor(xCenter, yBottom, vector, level) {
     super(xCenter, yBottom, 1, level.enemiesInfo, keys, contra.res.enemyS, level, 'enemyDeath');
     this.vectorMove = vector;
-    this.score = 20;
+    this.score = 100;
     this.touchDemage = true;
     this.reloading = 2000;
     this.maxShot = 3;
@@ -36,11 +36,12 @@ export default class Thief extends Person {
     this.weapon = new Weapon('E', this, 200);
     this.selectState('thiefJump');
 
-    level.elementsArray.push(this);
+    level.enemyArray.push(this);
   }
 
   tryAction() {
     const camPos = contra.pjs.camera.getPosition().x;
+    this.drawShadow();
     this.spritesMesh.draw();
     this.checkColission(this.selectedState.sprite);
     if (this.health > 0) {
@@ -142,7 +143,6 @@ export default class Thief extends Person {
 
   tryRemove(die, camPos) {
     if (die || camPos > this.spritesMesh.x + 20) {
-      console.log('remove')
       this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
     }
   }

@@ -12,7 +12,7 @@ export default function startScreen(contra, level, callback) {
 
   // Очки
   textLayer.addText(2, 3, contra.lang.player1);
-  blinkingTextLayer.addText(11, 3, contra.score.toString());
+  blinkingTextLayer.addText(11, 3, contra.results.score.toString());
   // Жизни
   textLayer.addText(2, 5, contra.lang.lives);
   textLayer.addText(8, 5, contra.lives.toString());

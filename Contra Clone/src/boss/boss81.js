@@ -20,7 +20,7 @@ export default class Boss81 {
     this.level = level;
     this.isOpen = false;
     this.updateCount = 30;
-    this.score = 1000;
+    this.score = 5000;
     const image = contra.res.boss;
     const boom = Object.values(level.elementsInfo['bigBoom']);
 

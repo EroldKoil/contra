@@ -5,6 +5,7 @@ import Platform from '../platform';
 import BulletL from '../weapon/bulletL';
 import Sound from '../sound';
 import startScreen from '../startscreen';
+import gameComplite from '../gameComplite';
 
 const spritesInfo = {
   body: { xS: 1, yS: 560, w: 90, h: 144, frames: 8, delay: 10 },
@@ -17,7 +18,7 @@ export default class Boss82 {
     this.y = y;
     this.health = 5;
     this.level = level;
-    this.score = 1000;
+    this.score = 500000;
     const image = contra.res.boss;
     const boom = Object.values(level.elementsInfo['bigBoom']);
 
@@ -76,12 +77,14 @@ export default class Boss82 {
       }, boom.delay);
     });
     Sound.play('boss2death');
+    this.level.onKeyboard();
     setTimeout(() => {
       Sound.stopMusic();
       Sound.play('afterBossDeath');
-      this.level.onKeyboard();
+
       setTimeout(() => {
-        setTimeout(startScreen, 2000, contra, 1, contra.startGame);
+        setTimeout(gameComplite, 2000);
+        //setTimeout(startScreen, 2000, contra, 1, contra.startGame);
       }, 2000);
     }, 2500);
   }

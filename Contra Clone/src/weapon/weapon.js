@@ -6,7 +6,7 @@ import BulletF from './bulletF';
 import BulletL from './bulletL';
 
 export default class Weapon {
-  constructor(type, sniper, reloading = 500, speed = 2) {
+  constructor(type, sniper, reloading, speed) {
     this.level = sniper.level;
     this.sniper = sniper;
     this.reloading = reloading;
@@ -70,28 +70,28 @@ export default class Weapon {
     this.apgreid = 1;
     switch (type) {
       case 'E':
-        this.reloading = 1200;
-        this.speed = 1.5;
+        this.reloading = this.reloading || 1200;
+        this.speed = this.speed || 1.5;
         break;
       case 'D':
-        this.reloading = 300;
-        this.speed = 3;
+        this.reloading = this.reloading || 300;
+        this.speed = this.speed || 3;
         break;
       case 'M':
-        this.reloading = 200;
-        this.speed = 3;
+        this.reloading = this.reloading || 200;
+        this.speed = this.speed || 3;
         break;
       case 'F':
-        this.speed = 2;
-        this.reloading = 1200;
+        this.speed = this.speed || 2;
+        this.reloading = this.reloading || 1200;
         break;
       case 'S':
-        this.reloading = 500;
-        this.speed = 3;
+        this.reloading = this.reloading || 500;
+        this.speed = this.speed || 3;
         break;
       case 'L':
-        this.reloading = 1000;
-        this.speed = 4;
+        this.reloading = this.reloading || 1000;
+        this.speed = this.speed || 4;
         break;
       default:
         break;

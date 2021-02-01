@@ -5,7 +5,8 @@ import Platform from './platform';
 import ElementCreator from './elements/elementCreator';
 import Curtain from './elements/curtain';
 import contra from './index';
-/* import Bridge from './elements/bridge';
+import elementCreator from './elements/elementCreator';
+import Bridge from './elements/bridge';
 import BonusRock from './elements/bonusRock';
 import BonusFly from './elements/bonusFly';
 import EnemyCreator from './enemy/enemyCreator';
@@ -16,7 +17,7 @@ import ToothyMouth from './enemy/toothyMouth';
 import SpiderCocoon from './enemy/spiderCocoon';
 import Boss1 from './boss/boss1';
 import Boss81 from './boss/boss81';
-import Boss82 from './boss/boss82'; */
+import Boss82 from './boss/boss82';
 
 // import EnemyCreator from './enemy/enemyCreator';
 // import Sound from './sound';
@@ -140,12 +141,12 @@ const map = {
       { name: 'bonusFly', x: 2324, y: 60, type: 'R' },
       { name: 'bonusFly', x: 2324, y: 180, type: 'L' },
 
-      { name: 'sniper', x: 317, y: 193, type: 'STAY' },
-      { name: 'sniper', x: 639, y: 193, type: 'STAY' },
-      { name: 'sniper', x: 1279, y: 96, type: 'STAY' },
-      { name: 'sniper', x: 1347, y: 89, type: 'HALF' },
-      { name: 'sniper', x: 1554, y: 56, type: 'HALF' },
-
+        { name: 'sniper', x: 317, y: 198, type: 'STAY' },
+        { name: 'sniper', x: 639, y: 198, type: 'STAY' },
+        { name: 'sniper', x: 1279, y: 102, type: 'STAY' },
+        { name: 'sniper', x: 1347, y: 89, type: 'HALF' },
+        { name: 'sniper', x: 1554, y: 56, type: 'HALF' },
+        { name: 'sniper', x: 2360, y: 134, type: 'STAY' },
 
       { name: 'tankBottom', x: 2065, y: 160 },
       { name: 'tankBottom', x: 2192, y: 64 },
@@ -169,141 +170,230 @@ const map = {
           { xS: 1665, xE: 2304, y: 137, vector: -1, reloading: 3000 },
           { xS: 2305, xE: 2650, y: 124, vector: -1, reloading: 3000 },
         ]
+        }
+      ],
+    },
+    {
+      length: 3072, // 3328
+      bg: [],
+      elements: [{
+          name: 'background',
+          img: 2,
+          platforms: [
+            // пол
+            { x: 0, y: 198, w: 1071, h: 1, collision: 'BOTTOM' },
+            { x: 1126, y: 198, w: 1001, h: 1, collision: 'BOTTOM' },
+            { x: 2182, y: 198, w: 345, h: 1, collision: 'BOTTOM' },
+            { x: 2598, y: 198, w: 181, h: 1, collision: 'BOTTOM' },
 
-      },
-    ],
-  },
-  {
-    length: 2559, // 2559, //2559,
-    bg: [
-      [0, 0, 0, 0, 0, 0, 'p22-n'],
-      [0, 0, 0, 0, 0, 0, 'p22-n'],
-      [0, 'd6', 'd7', 'd7', 'd7', 'd8', 'p22-n'],
-      ['d6', 'd1', 'd1', 'd1', 'd12', 'd9', 'p22-n'],
-      ['d2', 'd1', 'd1', 'd1', 'p7-n', 'a1-v', 'a1'],
-      ['d2', 'd1', 'd28', 'd9', 'p23-n', 'a1', 'a1'],
-      ['d2', 'd1', 'd3', 'p4', 'p6-n', 'a1', 'a1'],
-      ['d2', 'd1', 'd3', 'p5', 'p11-n', 'a1-v', 'a1-v'],
-      ['d2', 'd1', 'd18', 'd7', 'd8', 0, 'k1'],
-      ['d2', 'd1', 'd22', 'p12', 'd29', 'p9-n', 'a1-v'],
-      ['d2', 'd1', 'd3', 'p22', 'd23', 'd8', 'k1'],
-      ['d2', 'd1', 'd3', 'p22', 'd23', 'p10-n', 'k2'],
-      ['d2', 'd1', 'd3', 'p22', 'd23', 'p14-n', 'k3'],
-      ['d2', 'd1', 'd3', 'p22', 'p15-n', 'd30', 'k2'],
-      ['d2', 'd1', 'd3', 'p5', 'p6-n', 'a1', 'a1'],
-      ['d2', 'd1', 'd18', 'd7', 'p3-n', 'a1', 'a1'],
-      ['d2', 'd1', 'd1', 'd1', 'p8-n', 'a1-v', 'a1'],
-      ['d2', 'd1', 'd1', 'd1', 'd8', 'p23-n', 'a1'],
-      ['d11', 'd12', 'd12', 'd20', 'd12', 'p23-n', 'a1'],
-      [0, 0, 0, 0, 0, 'p23-n', 'a1'],
-      [0, 0, 0, 0, 0, 'p23-n', 'a1'],
-      ['c1', 0, 0, 0, 0, 'p23-n', 'a1'],
-      ['c2', 0, 0, 'd6', 'd7', 'p3-n', 'a1'],
-      ['c3', 'c4', 'd6', 'd1', 'd1', 'p3-n', 'a1'],
-      ['a1', 'd6', 'd1', 'd1', 'd1', 'p8-n', 'a1-v'],
-      ['a1', 'd2', 'd1', 'd1', 'd1', 'd18', 'k1'],
-      ['a1', 'd14', 'd20', 'd1', 'd1', 'd22', 'k4-n'],
-      ['a1', 'd17', 'd13', 'd21', 'd1', 'd3', 'p22-n'],
-      ['a1', 'd4', 'd6', 'd1', 'd1', 'd3', 'p22-n'],
-      ['a1', 'a3', 'd2', 'd1', 'd1', 'd3', 'p22-n'],
-      ['a1', 'a3', 'd11', 'd1', 'd1', 'd3', 'p22-n'],
-      ['a1', 'a1', 'd4', 'd19', 'd1', 'd3', 'p22-n'],
-      ['a1', 'a1', 'a3', 'd2', 'd1', 'd9', 'p22-n'],
-      ['a1', 'a1', 'a3', 'd2', 'd1', 'p9-n', 'a1-v'],
-      ['a1', 'a1', 'a1', 'd2', 'd22', 0, 'k1'],
-      ['a1', 'a1', 'a1', 'd11', 'd3', 'p17-n', 'a1-v'],
-      ['a1', 'a1', 'a1', 'd13', 'd21', 'd8', 'k1'],
-      ['a1', 'a1', 'a1', 'd15', 'd1', 'p10-n', 'k2'],
-      ['a1', 'a1', 'a3', 'd6', 'd1', 'p3-n', 'a1'],
-      ['a1', 'a1', 'a3', 'd2', 'd1', 'p8-n', 'a1-v'],
-      ['a1', 'a1', 'd5', 'd34', 'p12', 'd35', 'p4-n'],
-      ['a1', 'a1', 'd15', 'd3', 'p22', 'd24', 'p22-n'],
-      ['a1', 'a1', 'd13', 'd26', 'p22', 'd24', 'p22-n'],
-      ['a1', 'd5', 'd6', 'd3', 'p22', 'd24', 'p22-n'],
-      ['a1', 'd15', 'd1', 'd3', 'p22', 'd24', 'p5-n'],
-      ['a1', 'd10', 'd20', 'd3', 'p22', 'p18-n', 'a1-v'],
-      ['a1', 'd17', 'd13', 'd26', 'p5', 'p6-n', 'a3'],
-      ['a1', 'd16', 'd6', 'd18', 'd7', 'p3-n', 'a3'],
-      ['a1', 'd6', 'd1', 'd1', 'd1', 'p3-n', 'a3'],
-      ['a1', 'd14', 'd19', 'd22', 'p12', 'p19-n', 'a1'],
-      ['a1', 'd13', 'd21', 'd3', 'p22', 'p6-n', 'a1'],
-      ['a1', 'd6', 'd12', 'd9', 'p22', 'p11-n', 'a1-v'],
-      ['a1', 'd2', 'p7', 'a1', 'p22', 'd24', 'p4-n'],
-      ['a1', 'd2', 'p3', 'a1', 'p5', 'd24', 'p22-n'],
-      ['a1', 'd2', 'p3', 'a3', 'd6', 'd8', 'p22-n'],
-      ['a1', 'd2', 'p8', 'a3', 'd2', 'd3', 'p5-n'],
-      ['a1', 'd2', 'd18', 'd7', 'd27', 'd9', 'k1'],
-      ['a1', 'd2', 'p10', 'd30', 'd19', 'p7-n', 'a1-v'],
-      ['a1', 'd2', 'p3', 'a1', 'd2', 'p3-n', 'a1'],
-      ['a1', 'd2', 'p3', 'a1', 'd2', 'p3-n', 'a3'],
-      ['a1', 'd2', 'p3', 'a1', 'd10', 'p3-n', 'a3'],
-      ['a1', 'd2', 'p3', 'a1', 'd13', 'p21-n', 'k3'],
-      ['a1', 'd2', 'p3', 'a1', 'd15', 'd22', 'k1'],
-      ['a1', 'd2', 'p3', 'a3', 'd6', 'd3', 'p4-n'],
-      ['a1', 'd2', 'p3', 'a3', 'd2', 'd3', 'p22-n'],
-      ['a1', 'd2', 'p8', 'a1', 'd2', 'd3', 'k6-n'],
-      ['a1', 'd11', 'd18', 'd7', 'd27', 'd9', 'k1'],
-      ['a1', 'd4', 'd11', 'd1', 'd1', 'p7-n', 'a1-v'],
-      ['a1', 'a1', 'd4', 'd19', 'd1', 'p3-n', 'a1'],
-      ['a1', 'a1', 'a1', 'd14', 'd1', 'p3-n', 'a3'],
-      ['a1', 'a1', 'a1', 'd13', 'd19', 'p3-n', 'a3'],
-      ['a1', 'a1', 'a1', 0, 'd10', 'p23-n', 'a1'],
-      ['a1', 'a1', 'a1', 0, 0, 'p23-n', 'a1'],
-      ['a1', 'a1', 'a3', 0, 0, 'p23-n', 'a1'],
-      ['a1', 'a1', 'a3', 0, 0, 'p23-n', 'a1'],
-      ['a1', 'a1', 'd5', 0, 0, 'p23-n', 'a1'],
-      ['a1', 'd5', 0, 0, 0, 'p23-n', 'a1'],
-      ['a1', 0, 0, 0, 0, 'p23-n', 'a1'],
-      ['a1-r', 'd16', 0, 0, 0, 'p23-n', 'a1'],
-      ['a1-r', 'd17', 'd13', 0, 0, 'p23-n', 'a1'],
-      ['a2-r', 'd16', 0, 0, 0, 'p23-n', 'a2'],
-      ['a2-r', 0, 0, 0, 0, 'p23-n', 'a3'],
-      ['a2-r', 0, 0, 0, 0, 'p23-n', 'a2'],
-      ['a2-r', 0, 0, 0, 0, 'p23-n', 'a2'],
-      ['a2-r', 0, 0, 0, 0, 'p23-n', 'a2'],
-      ['a2-r', 0, 0, 0, 0, 'p23-n', 'a2'],
-      ['a2-r', 0, 0, 0, 0, 'p23-n', 'a2'],
-      ['a2', 'a2', 'a2', 'a2', 'a2', 'a2-n', 'a2'],
-    ],
-    elements: [
-      { name: 'bonusFly', x: 220, y: 75, type: 'M' },
-      { name: 'bonusFly', x: 220, y: 180, type: 'B' },
-      { name: 'bonusFly', x: 990, y: 180, type: 'S' },
-      { name: 'boss81', x: 647, y: 0 },
-      { name: 'toothyMouth', x: 944, y: 64 },
-      { name: 'toothyMouth', x: 976, y: 64 },
-      { name: 'toothyMouth', x: 1040, y: 96 },
-      { name: 'toothyMouth', x: 1072, y: 96 },
-      { name: 'toothyMouth', x: 1232, y: 96 },
-      { name: 'toothyMouth', x: 1264, y: 96 },
-      { name: 'toothyMouth', x: 1488, y: 223 },
-      { name: 'toothyMouth', x: 1520, y: 223 },
-      { name: 'toothyMouth', x: 1552, y: 223 },
-      { name: 'toothyMouth', x: 1744, y: 128 },
-      { name: 'toothyMouth', x: 1776, y: 128 },
-      { name: 'toothyMouth', x: 1904, y: 223 },
-      { name: 'toothyMouth', x: 1936, y: 223 },
-      { name: 'toothyMouth', x: 2032, y: 128 },
-      { name: 'toothyMouth', x: 2064, y: 128 },
-      { name: 'toothyMouth', x: 2224, y: 223 },
-      { name: 'toothyMouth', x: 2256, y: 223 },
-      { name: 'toothyMouth', x: 2352, y: 96 },
-      { name: 'toothyMouth', x: 2384, y: 96 },
-      { name: 'toothyMouth', x: 2608, y: 223 },
+            // конец ступенек
+            { x: 526, y: 103, w: 2, h: 96, collision: 'VERTICAL' },
+            // столбы
+            { x: 1368, y: 0, w: 40, h: 156, collision: 'VERTICAL' },
+            { x: 1464, y: 54, w: 40, h: 156, collision: 'VERTICAL' },
+            { x: 1408, y: 150, w: 56, h: 1, collision: 'BOTTOM', canFallDown: true },
+            { x: 1408, y: 102, w: 56, h: 1, collision: 'BOTTOM', canFallDown: true },
+            { x: 1408, y: 54, w: 96, h: 1, collision: 'BOTTOM', canFallDown: true },
 
-      { name: 'boss82', x: 2696, y: 33 },
-      { name: 'spiderCocoon', x: 2720, y: 47, flip: 1 },
-      { name: 'spiderCocoon', x: 2752, y: 47, flip: 1 },
-      { name: 'spiderCocoon', x: 2720, y: 175, flip: 0 },
-      { name: 'spiderCocoon', x: 2752, y: 175, flip: 0 },
+            { x: 1528, y: 0, w: 40, h: 124, collision: 'VERTICAL' },
+            { x: 1624, y: 70, w: 40, h: 137, collision: 'VERTICAL' },
+            { x: 1568, y: 118, w: 56, h: 1, collision: 'BOTTOM', canFallDown: true },
+            { x: 1568, y: 70, w: 96, h: 1, collision: 'BOTTOM', canFallDown: true },
 
-      /* { name: 'boss82', x: 200, y: 33 },
-       { name: 'spiderCocoon', x: 224, y: 47, flip: 1 },
-       { name: 'spiderCocoon', x: 256, y: 47, flip: 1 },
-       { name: 'spiderCocoon', x: 224, y: 175, flip: 0 },
-       { name: 'spiderCocoon', x: 256, y: 175, flip: 0 }, */
-    ],
-  },
+
+            { x: 1784, y: 54, w: 40, h: 158, collision: 'VERTICAL' },
+            { x: 1880, y: 0, w: 40, h: 124, collision: 'VERTICAL' },
+            { x: 1759, y: 150, w: 25, h: 1, collision: 'BOTTOM', canFallDown: true },
+            { x: 1759, y: 102, w: 25, h: 1, collision: 'BOTTOM', canFallDown: true },
+            { x: 1728, y: 54, w: 96, h: 1, collision: 'BOTTOM', canFallDown: true },
+            { x: 1824, y: 70, w: 56, h: 1, collision: 'BOTTOM', canFallDown: true },
+            { x: 1824, y: 118, w: 56, h: 1, collision: 'BOTTOM', canFallDown: true },
+
+            { x: 1368, y: 158, w: 40, h: 2, collision: 'ROOF' },
+            { x: 1528, y: 126, w: 40, h: 2, collision: 'ROOF' },
+            { x: 1880, y: 126, w: 40, h: 2, collision: 'ROOF' },
+          ],
+          paddons: [
+            // ступеньки
+            { x: 272, y: 166, w: 48, length: '1', needVertical: true, cantFallDown: true },
+            { x: 304, y: 134, w: 48, length: '1', needVertical: true, cantFallDown: true },
+            { x: 336, y: 102, w: 192, length: '5', needVertical: true, cantFallDown: true },
+
+            { x: 576, y: 102, length: '6', needVertical: false },
+            { x: 864, y: 102, length: '5', needVertical: false },
+            { x: 1104, y: 102, length: '5', needVertical: false },
+            { x: 688, y: 150, length: '3', needVertical: false },
+            { x: 848, y: 150, length: '3', needVertical: false },
+            { x: 1200, y: 150, length: '2', needVertical: false },
+
+            { x: 1584, y: 166, w: 48, length: '1', needVertical: true, cantFallDown: true },
+            { x: 1824, y: 166, w: 48, length: '1', needVertical: true, cantFallDown: true, back: true },
+
+            { x: 2000, y: 102, length: '7', needVertical: false },
+            { x: 2304, y: 102, length: '3', needVertical: false },
+            { x: 2480, y: 102, length: '4', needVertical: false },
+
+            { x: 1968, y: 150, length: '2', needVertical: false },
+            { x: 2288, y: 150, length: '8', needVertical: false },
+
+            { x: 2672, y: 166, length: '19', needVertical: true },
+          ]
+        },
+        { name: 'bonusRock', x: 432, y: 161, type: 'M' },
+        { name: 'bonusRock', x: 1072, y: 161, type: 'L' },
+        { name: 'bonusRock', x: 1682, y: 161, type: 'B' },
+
+        { name: 'bonusFly', x: 220, y: 180, type: 'B' },
+        { name: 'bonusFly', x: 990, y: 180, type: 'S' },
+
+        { name: 'sniper', x: 459, y: 100, type: 'STAY' },
+        { name: 'sniper', x: 912, y: 149, type: 'STAY' },
+        { name: 'sniper', x: 1736, y: 53, type: 'STAY' },
+
+        { name: 'turel', x: 619, y: 101 },
+        { name: 'turel', x: 744, y: 101 },
+        { name: 'turel', x: 731, y: 197 },
+        { name: 'turel', x: 906, y: 197 },
+        { name: 'turel', x: 1227, y: 148 },
+        { name: 'turel', x: 1237, y: 197 },
+        { name: 'turel', x: 2091, y: 101 },
+        { name: 'turel', x: 2376, y: 148 },
+        { name: 'turel', x: 2378, y: 197 },
+        { name: 'turel', x: 2506, y: 148 },
+
+      ],
+    },
+    {
+      length: 2559, // 2559, //2559,
+      bg: [
+        [0, 0, 0, 0, 0, 0, 'p22-n'],
+        [0, 0, 0, 0, 0, 0, 'p22-n'],
+        [0, 'd6', 'd7', 'd7', 'd7', 'd8', 'p22-n'],
+        ['d6', 'd1', 'd1', 'd1', 'd12', 'd9', 'p22-n'],
+        ['d2', 'd1', 'd1', 'd1', 'p7-n', 'a1-v', 'a1'],
+        ['d2', 'd1', 'd28', 'd9', 'p23-n', 'a1', 'a1'],
+        ['d2', 'd1', 'd3', 'p4', 'p6-n', 'a1', 'a1'],
+        ['d2', 'd1', 'd3', 'p5', 'p11-n', 'a1-v', 'a1-v'],
+        ['d2', 'd1', 'd18', 'd7', 'd8', 0, 'k1'],
+        ['d2', 'd1', 'd22', 'p12', 'd29', 'p9-n', 'a1-v'],
+        ['d2', 'd1', 'd3', 'p22', 'd23', 'd8', 'k1'],
+        ['d2', 'd1', 'd3', 'p22', 'd23', 'p10-n', 'k2'],
+        ['d2', 'd1', 'd3', 'p22', 'd23', 'p14-n', 'k3'],
+        ['d2', 'd1', 'd3', 'p22', 'p15-n', 'd30', 'k2'],
+        ['d2', 'd1', 'd3', 'p5', 'p6-n', 'a1', 'a1'],
+        ['d2', 'd1', 'd18', 'd7', 'p3-n', 'a1', 'a1'],
+        ['d2', 'd1', 'd1', 'd1', 'p8-n', 'a1-v', 'a1'],
+        ['d2', 'd1', 'd1', 'd1', 'd8', 'p23-n', 'a1'],
+        ['d11', 'd12', 'd12', 'd20', 'd12', 'p23-n', 'a1'],
+        [0, 0, 0, 0, 0, 'p23-n', 'a1'],
+        [0, 0, 0, 0, 0, 'p23-n', 'a1'],
+        ['c1', 0, 0, 0, 0, 'p23-n', 'a1'],
+        ['c2', 0, 0, 'd6', 'd7', 'p3-n', 'a1'],
+        ['c3', 'c4', 'd6', 'd1', 'd1', 'p3-n', 'a1'],
+        ['a1', 'd6', 'd1', 'd1', 'd1', 'p8-n', 'a1-v'],
+        ['a1', 'd2', 'd1', 'd1', 'd1', 'd18', 'k1'],
+        ['a1', 'd14', 'd20', 'd1', 'd1', 'd22', 'k4-n'],
+        ['a1', 'd17', 'd13', 'd21', 'd1', 'd3', 'p22-n'],
+        ['a1', 'd4', 'd6', 'd1', 'd1', 'd3', 'p22-n'],
+        ['a1', 'a3', 'd2', 'd1', 'd1', 'd3', 'p22-n'],
+        ['a1', 'a3', 'd11', 'd1', 'd1', 'd3', 'p22-n'],
+        ['a1', 'a1', 'd4', 'd19', 'd1', 'd3', 'p22-n'],
+        ['a1', 'a1', 'a3', 'd2', 'd1', 'd9', 'p22-n'],
+        ['a1', 'a1', 'a3', 'd2', 'd1', 'p9-n', 'a1-v'],
+        ['a1', 'a1', 'a1', 'd2', 'd22', 0, 'k1'],
+        ['a1', 'a1', 'a1', 'd11', 'd3', 'p17-n', 'a1-v'],
+        ['a1', 'a1', 'a1', 'd13', 'd21', 'd8', 'k1'],
+        ['a1', 'a1', 'a1', 'd15', 'd1', 'p10-n', 'k2'],
+        ['a1', 'a1', 'a3', 'd6', 'd1', 'p3-n', 'a1'],
+        ['a1', 'a1', 'a3', 'd2', 'd1', 'p8-n', 'a1-v'],
+        ['a1', 'a1', 'd5', 'd34', 'p12', 'd35', 'p4-n'],
+        ['a1', 'a1', 'd15', 'd3', 'p22', 'd24', 'p22-n'],
+        ['a1', 'a1', 'd13', 'd26', 'p22', 'd24', 'p22-n'],
+        ['a1', 'd5', 'd6', 'd3', 'p22', 'd24', 'p22-n'],
+        ['a1', 'd15', 'd1', 'd3', 'p22', 'd24', 'p5-n'],
+        ['a1', 'd10', 'd20', 'd3', 'p22', 'p18-n', 'a1-v'],
+        ['a1', 'd17', 'd13', 'd26', 'p5', 'p6-n', 'a3'],
+        ['a1', 'd16', 'd6', 'd18', 'd7', 'p3-n', 'a3'],
+        ['a1', 'd6', 'd1', 'd1', 'd1', 'p3-n', 'a3'],
+        ['a1', 'd14', 'd19', 'd22', 'p12', 'p19-n', 'a1'],
+        ['a1', 'd13', 'd21', 'd3', 'p22', 'p6-n', 'a1'],
+        ['a1', 'd6', 'd12', 'd9', 'p22', 'p11-n', 'a1-v'],
+        ['a1', 'd2', 'p7', 'a1', 'p22', 'd24', 'p4-n'],
+        ['a1', 'd2', 'p3', 'a1', 'p5', 'd24', 'p22-n'],
+        ['a1', 'd2', 'p3', 'a3', 'd6', 'd8', 'p22-n'],
+        ['a1', 'd2', 'p8', 'a3', 'd2', 'd3', 'p5-n'],
+        ['a1', 'd2', 'd18', 'd7', 'd27', 'd9', 'k1'],
+        ['a1', 'd2', 'p10', 'd30', 'd19', 'p7-n', 'a1-v'],
+        ['a1', 'd2', 'p3', 'a1', 'd2', 'p3-n', 'a1'],
+        ['a1', 'd2', 'p3', 'a1', 'd2', 'p3-n', 'a3'],
+        ['a1', 'd2', 'p3', 'a1', 'd10', 'p3-n', 'a3'],
+        ['a1', 'd2', 'p3', 'a1', 'd13', 'p21-n', 'k3'],
+        ['a1', 'd2', 'p3', 'a1', 'd15', 'd22', 'k1'],
+        ['a1', 'd2', 'p3', 'a3', 'd6', 'd3', 'p4-n'],
+        ['a1', 'd2', 'p3', 'a3', 'd2', 'd3', 'p22-n'],
+        ['a1', 'd2', 'p8', 'a1', 'd2', 'd3', 'k6-n'],
+        ['a1', 'd11', 'd18', 'd7', 'd27', 'd9', 'k1'],
+        ['a1', 'd4', 'd11', 'd1', 'd1', 'p7-n', 'a1-v'],
+        ['a1', 'a1', 'd4', 'd19', 'd1', 'p3-n', 'a1'],
+        ['a1', 'a1', 'a1', 'd14', 'd1', 'p3-n', 'a3'],
+        ['a1', 'a1', 'a1', 'd13', 'd19', 'p3-n', 'a3'],
+        ['a1', 'a1', 'a1', 0, 'd10', 'p23-n', 'a1'],
+        ['a1', 'a1', 'a1', 0, 0, 'p23-n', 'a1'],
+        ['a1', 'a1', 'a3', 0, 0, 'p23-n', 'a1'],
+        ['a1', 'a1', 'a3', 0, 0, 'p23-n', 'a1'],
+        ['a1', 'a1', 'd5', 0, 0, 'p23-n', 'a1'],
+        ['a1', 'd5', 0, 0, 0, 'p23-n', 'a1'],
+        ['a1', 0, 0, 0, 0, 'p23-n', 'a1'],
+        ['a1-r', 'd16', 0, 0, 0, 'p23-n', 'a1'],
+        ['a1-r', 'd17', 'd13', 0, 0, 'p23-n', 'a1'],
+        ['a2-r', 'd16', 0, 0, 0, 'p23-n', 'a2'],
+        ['a2-r', 0, 0, 0, 0, 'p23-n', 'a3'],
+        ['a2-r', 0, 0, 0, 0, 'p23-n', 'a2'],
+        ['a2-r', 0, 0, 0, 0, 'p23-n', 'a2'],
+        ['a2-r', 0, 0, 0, 0, 'p23-n', 'a2'],
+        ['a2-r', 0, 0, 0, 0, 'p23-n', 'a2'],
+        ['a2-r', 0, 0, 0, 0, 'p23-n', 'a2'],
+        ['a2', 'a2', 'a2', 'a2', 'a2', 'a2-n', 'a2'],
+      ],
+      elements: [
+        { name: 'bonusFly', x: 220, y: 75, type: 'M' },
+        { name: 'bonusFly', x: 220, y: 180, type: 'B' },
+        { name: 'bonusFly', x: 990, y: 180, type: 'S' },
+        { name: 'boss81', x: 647, y: 0 },
+        { name: 'toothyMouth', x: 944, y: 64 },
+        { name: 'toothyMouth', x: 976, y: 64 },
+        { name: 'toothyMouth', x: 1040, y: 96 },
+        { name: 'toothyMouth', x: 1072, y: 96 },
+        { name: 'toothyMouth', x: 1232, y: 96 },
+        { name: 'toothyMouth', x: 1264, y: 96 },
+        { name: 'toothyMouth', x: 1488, y: 223 },
+        { name: 'toothyMouth', x: 1520, y: 223 },
+        { name: 'toothyMouth', x: 1552, y: 223 },
+        { name: 'toothyMouth', x: 1744, y: 128 },
+        { name: 'toothyMouth', x: 1776, y: 128 },
+        { name: 'toothyMouth', x: 1904, y: 223 },
+        { name: 'toothyMouth', x: 1936, y: 223 },
+        { name: 'toothyMouth', x: 2032, y: 128 },
+        { name: 'toothyMouth', x: 2064, y: 128 },
+        { name: 'toothyMouth', x: 2224, y: 223 },
+        { name: 'toothyMouth', x: 2256, y: 223 },
+        { name: 'toothyMouth', x: 2352, y: 96 },
+        { name: 'toothyMouth', x: 2384, y: 96 },
+        { name: 'toothyMouth', x: 2608, y: 223 },
+
+        { name: 'boss82', x: 2696, y: 33 },
+        { name: 'spiderCocoon', x: 2736, y: 47, flip: 1 },
+        { name: 'spiderCocoon', x: 2768, y: 47, flip: 1 },
+        { name: 'spiderCocoon', x: 2736, y: 175, flip: 0 },
+        { name: 'spiderCocoon', x: 2768, y: 175, flip: 0 },
+
+        /* { name: 'boss82', x: 200, y: 33 },
+         { name: 'spiderCocoon', x: 224, y: 47, flip: 1 },
+         { name: 'spiderCocoon', x: 256, y: 47, flip: 1 },
+         { name: 'spiderCocoon', x: 224, y: 175, flip: 0 },
+         { name: 'spiderCocoon', x: 256, y: 175, flip: 0 },*/
+      ],
+    },
   ],
   spritesInfo: {
     b1: { x: 35, y: 1, w: 32, h: 32, frames: 3, delay: 20, },
@@ -502,6 +592,21 @@ const map = {
       y: 1,
       w: 1,
       h: 1,
+      frames: 1,
+    },
+    signal: {
+      x: 217,
+      y: 31,
+      w: 17,
+      h: 3,
+      frames: 4,
+      delay: 10,
+    },
+    shadow: {
+      x: 388,
+      y: 22,
+      w: 16,
+      h: 3,
       frames: 1,
     },
     shootD: {
@@ -900,6 +1005,18 @@ const map = {
       xCoef: -1,
       yCoef: 0,
     },
+    turel: {
+      x: 335,
+      y: 207,
+      w: 32,
+      h: 32,
+    },
+    turelShoot: {
+      x: 368,
+      y: 207,
+      w: 32,
+      h: 32,
+    },
     thiefJump: {
       x: 384,
       y: 103,
@@ -944,8 +1061,8 @@ export default class Level {
   constructor(number) {
     this.levelNumber = number - 1;
     this.length = map.levels[number - 1].length;
-    // this.lastCameraX = 0;
-    // this.pausePress = false;
+    //this.cameraX = 0;
+    //this.pausePress = false;
     this.bgArray = [];
     this.elementsArray = [];
     this.canMoveCamera = true;
@@ -962,7 +1079,7 @@ export default class Level {
     this.playerBulletsArray = [];
 
     this.deathPlatform = new Platform(map.blockSize * 9, 2, -map.blockSize * 0.5, map.blockSize * 7 - 2, 'DEATH', false);
-    this.leftBorder = new Platform(2, map.blockSize * 8, -4, -map.blockSize * 0.5, 'VERTICAL', false); // LEFTBORDER
+    this.leftBorder = new Platform(2, map.blockSize * 8, -1, -map.blockSize * 0.5, 'VERTICAL', false); //LEFTBORDER
     this.levelBorder = new Platform(map.blockSize * 12, map.blockSize * 11, -map.blockSize * 2, -map.blockSize * 2, 'LEVELBORDER', false);
 
     this.platformActual.push(this.deathPlatform);
@@ -1001,7 +1118,7 @@ export default class Level {
             createBG(from[i], i);
             break;
           case 'ELEMENT':
-            new ElementCreator(from[i], this);
+            elementCreator(from[i], this);
             break;
           default:
             break;
@@ -1020,32 +1137,8 @@ export default class Level {
     //  this.startLevel(this);
   }
 
-  // Проверка сместился ли экран на 32 пикселя. Если да, то добавляем справа новые элементы
-  /* tryRefreshActualElements() {
-    if (this.lastCameraX > 32) {
-      this.addActualElements();
-      this.lastCameraX -= 32;
-    }
-  } */
-
-  // Добавление элементов из обычного массива в актуальный. Если его час настал
-  /* addActualElements() {
-      const addElements = (from) => {
-        for (let i = 0; i < from.length; i += 1) {
-          if (!from[i].tryToActual(this, true)) {
-            break;
-          }
-        }
-      };
-
-      // addElements(this.bgArray, 'BG');
-      // addElements(this.enemyArray, 'ENEMY');
-      addElements(this.elementsArray, 'ELEMENT');
-    } */
-
   moveCamera(dx) {
     const p = contra.pjs.vector.point;
-
     [this.deathPlatform.sprite,
       this.leftBorder.sprite,
       this.levelBorder.sprite,

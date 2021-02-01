@@ -10,13 +10,13 @@ import Sound from '../sound';
 export default class BonusFly extends SprObject {
   constructor(x, y, type, level) {
     super(x, y, 0, 0);
+    this.score = 500;
     this.type = type;
     this.level = level;
     this.vectorX = 2;
     this.vectorY = 2;
     this.health = 1;
     this.sprite = this.createSprite(contra.res.elementS, ...Object.values(level.elementsInfo['flyBonus']), 100, x, y);
-
     level.elementsArray.push(this);
   }
 
@@ -80,6 +80,7 @@ export default class BonusFly extends SprObject {
   die() {
     let spr = this.sprite;
     Sound.play('enemyDeath');
+    contra.addScore(this.score);
     this.sprite = this.createSprite(contra.res.elementS, ...Object.values(this.level.elementsInfo['mediumBoom']), spr.x, spr.y);
     this.level.bonuses.push(new Bonus(spr.x, spr.y, this.type, this.level));
     setTimeout(() => {

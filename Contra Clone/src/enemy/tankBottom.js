@@ -16,7 +16,7 @@ export default class TankBottom extends Person {
   constructor(xCenter, yBottom, level) {
     super(xCenter, yBottom, 8, level.enemiesInfo, keys, contra.res.enemyS, level, 'mediumBoom');
     this.weapon = new Weapon('E', this, 1000);
-    this.score = 100;
+    this.score = 500;
     this.selectState('none');
     level.elementsArray.push(this);
   }

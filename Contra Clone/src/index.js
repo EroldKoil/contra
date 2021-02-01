@@ -8,6 +8,7 @@ import getLanguageObject from './multilang';
 import Options from './options';
 import Sound from './sound';
 import Joystick from './joystick';
+import gameComplite from './gameComplite';
 
 function resize() {
   let width = window.innerWidth;
@@ -36,8 +37,13 @@ const contra = {
   lang: null,
   joystick: null,
   lives: 3,
-  score: 0,
-  scoreForLife: 0,
+  hardLevel: 0,
+  results: {
+    score: 0,
+    scoreForLife: 0,
+    kills: 0,
+    killsBoss: 0,
+  }
 };
 export default contra;
 
@@ -51,6 +57,7 @@ contra.res = {
   levelS: [
     newImage('./assets/sprites/levels/1/spritesheet.png'),
     newImage('./assets/sprites/levels/2/spritesheet.png'),
+    newImage('./assets/sprites/levels/3/level6.png'),
   ],
   elementS: newImage('./assets/sprites/elements.png'),
   enemyS: newImage('./assets/sprites/enemy.png'),
@@ -76,33 +83,31 @@ contra.startGame = () => {
       } else {
         contra.player = new Player(contra.selectedLevel);
       }
+
       const interval1 = setInterval(() => {
         if (contra.pjs.resources.isLoaded()) {
           clearInterval(interval1);
           contra.selectedLevel.startLevel();
         }
       }, 200);
-
     }
   }, 200);
 };
 
 contra.addScore = (score) => {
-  contra.score += score;
-  contra.scoreForLife += score;
-  if (contra.scoreForLife > 2000) {
-    contra.scoreForLife -= 2000;
+  contra.results.score += score;
+  if (score > 900) {
+    contra.results.killsBoss += 1;
+  } else {
+    contra.results.kills += 1;
+  }
+  contra.results.scoreForLife += score;
+  if (contra.results.scoreForLife > 20000) {
+    contra.results.scoreForLife -= 20000;
     Sound.play('plusLife');
     contra.player.lifes += 1;
   }
 };
-/*
-contra.selectedLevel = new Level(2, contra);
-setTimeout(() => {
-  contra.player = new Player(contra.selectedLevel);
-  contra.selectedLevel.startLevel();
-}, 1000);
-*/
 
 contra.lang = getLanguageObject(contra.options.get('language'));
 
@@ -110,6 +115,7 @@ document.querySelector('dialog').showModal(); // Показать модальн
 
 function buttonPress() {
   document.querySelector('dialog').close();
+  //gameComplite();
   mainMenu(contra); // Все стартует отсюда!
 }
 
@@ -126,7 +132,6 @@ if (pjs.touchControl.isTouchSupported()) {
   contra.joystick = new Joystick();
   contra.joystick.displayJoystick(false);
 }
-
 
 function resizeInit() {
   if (document.querySelector('canvas') === null) {
