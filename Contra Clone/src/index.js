@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-//import Level from './level';
+// import Level from './level';
 import Player from './player';
 import PointJS from './pointjs_0.2.0.9';
 import mainMenu from './mainmenu';
@@ -8,7 +8,6 @@ import getLanguageObject from './multilang';
 import Options from './options';
 import Sound from './sound';
 import Joystick from './joystick';
-
 import gameComplite from './gameComplite';
 
 function resize() {
@@ -71,6 +70,7 @@ contra.startGame = () => {
   if (pjs.touchControl.isTouchSupported()) {
     contra.joystick.displayJoystick(true);
   }
+
   const interval = setInterval(() => {
     if (contra.pjs.resources.isLoaded()) {
       clearInterval(interval);
@@ -128,13 +128,15 @@ window.onresize = resizeInit;
 
 pjs.keyControl.initControl();
 
+// Обработчик кнопки модального окна
+document.getElementById('start-button').addEventListener('click', buttonPress);
+
 if (pjs.touchControl.isTouchSupported()) {
   document.getElementById('start-button').addEventListener('touchend', buttonPress);
   pjs.touchControl.initControl();
   contra.joystick = new Joystick();
   contra.joystick.displayJoystick(false);
 }
-
 
 function resizeInit() {
   if (document.querySelector('canvas') === null) {

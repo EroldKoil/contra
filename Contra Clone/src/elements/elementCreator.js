@@ -47,8 +47,6 @@ export default function elementCreator(el, level) {
     case 'turel':
       new Turel(el.x, el.y, level);
       break;
-
-
     case 'boss1':
       new Boss1(el.x, el.y, level);
       break;
@@ -58,7 +56,6 @@ export default function elementCreator(el, level) {
     case 'boss82':
       new Boss82(el.x, el.y, level);
       break;
-
     case 'background':
       new Background(el.img, el.platforms, el.paddons, level);
       break;

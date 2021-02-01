@@ -2,8 +2,11 @@
 
 import Bg from './bg';
 import Platform from './platform';
+import ElementCreator from './elements/elementCreator';
+import Curtain from './elements/curtain';
+import contra from './index';
 import elementCreator from './elements/elementCreator';
-/*import Bridge from './elements/bridge';
+import Bridge from './elements/bridge';
 import BonusRock from './elements/bonusRock';
 import BonusFly from './elements/bonusFly';
 import EnemyCreator from './enemy/enemyCreator';
@@ -14,133 +17,129 @@ import ToothyMouth from './enemy/toothyMouth';
 import SpiderCocoon from './enemy/spiderCocoon';
 import Boss1 from './boss/boss1';
 import Boss81 from './boss/boss81';
-import Boss82 from './boss/boss82';*/
-
+import Boss82 from './boss/boss82';
 
 // import EnemyCreator from './enemy/enemyCreator';
-import Sound from './sound';
-import Сurtain from './elements/curtain';
-
-import contra from './index';
+// import Sound from './sound';
 
 const map = {
   blockSize: 32,
   levels: [{
-      length: 3071, //3071, // 250
-      bg: [
-        ['s1', 's2', 0, 0, 'w', 'w1', 'w'],
-        ['s2', 0, 'g1', 'p1', 'r1', 'rw1', 'w'],
-        ['s1', 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
-        ['m1', 'm2', 'g2', 'p1', 'r1', 'rw1', 'w'],
-        ['m3', 'm4', 'g2', 'p1', 'r1', 'rw4', 'w2'],
-        ['m5', 'm6', 'g2', 'p1', 'p1', 'r1', 'w3'],
-        ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'], //
-        ['m7', 'm8', 'g2', 'p1', 'p1', 'r1', 'w3'],
-        ['s1', 0, 'g2', 'p1', 'r1', 'p1', 'w4'],
-        ['s2', 0, 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
-        ['m1', 'm2', 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
-        ['m3', 'm4', 'g2', 'p1', 'r1', 'p1', 'w5'],
-        ['m5', 'm6', 'g2', 'p1', 'r1', 'rw2', 'w8'],
-        ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'],
-        ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'],
-        ['m5', 'm6', 'g2', 'p1', 'r1', 'rw3', 'w6'],
-        ['m3', 'm4', 'g2', 'p1', 'r1', 'rw1', 'w'],
-        ['m5', 'm6', 'g2', 'p1', 'r1', 'rw4', 'w2'],
-        ['m3', 'm4', 'g2', 'p1', 'r1', 'r1', 'w4'],
-        ['m5', 'm6', 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
-        ['m7', 'm8', 'g2', 'p1', 'p2', 'r1', 'pw1-n'],
-        [0, 's1', 'g2', 'p1', 'p2', 'r1', 'w5'],
-        ['s1', 's2', 'g2', 'p1', 'p2', 'r1', 'w3'],
-        [0, 0, 'g3', 'p1', 'r1', 'rw3', 'w6'],
-        ['s1', 0, 0, 'b4', 'w', 'w7', 'w'],
-        ['s2', 0, 's2', 0, 'w', 'w', 'w'],
-        [0, 's1', 0, 0, 'w', 'w', 'w'],
-        ['s3', 's2', 0, 'b5', 'w', 'w1', 'w'],
-        ['s2', 's1', 'g1', 'p1', 'r1', 'rw1', 'w'],
-        ['s2', 's1', 'g2', 'p1', 'r1', 'rw1', 'w'],
-        [0, 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
-        ['s1', 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
-        [0, 's2', 'g3', 'p1', 'r1', 'rw1', 'w'],
-        [0, 's2', 0, 'b4', 'w', 'w7', 'w'],
-        [0, 0, 0, 0, 'w', 'w', 'w'],
-        ['s2', 's1', 0, 0, 'w', 'w', 'w'],
-        ['s1', 0, 0, 'b5', 'w', 'w1', 'w'],
-        [0, 0, 'g1', 'p1', 'r1', 'rw1', 'w'],
-        ['s2', 0, 'g2', 'p1', 'r1', 'rw4', 'w2'],
-        ['m1', 'm2', 'g2', 'p1', 'r1', 'r1', 'w3'],
-        ['m3', 'm4', 'g2', 'p1', 'r1', 'r1', 'w3'],
-        ['m7', 'm8', 'g2', 'p1', 'r1', 'r1', 'w3'],
-        ['s2', 's1', 'g3', 'p1', 'r1', 'r1', 'w3'],
-        ['g4', 'g6', 'p1', 'p1', 'r1', 'r1', 'w4'],
-        ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'pw1-n'],
-        ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'pw1-n'],
-        ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'pw1-n'],
-        ['g5', 'g6', 'p1', 'p1', 'p2', 'r1', 'w5'],
-        ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'w3'],
-        ['g5', 'g6', 'p1', 'r1', 'r1', 'rw2', 'w8'],
-        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
-        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
-        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
-        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w4'],
-        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'pw1-n'],
-        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'pw2-n'],
-        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'p1-n'],
-        ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'p1-n'],
-        ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'p1-n'],
-        ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'p1-n'],
-        ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
-        ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
-        ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
-        ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
-        ['g5', 'g6', 'p1', 'p1', 'r1', 'p1', 'r1'],
-        ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'r1'],
-        ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'r1'],
-        ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'r1'],
-        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'r1'],
-        ['g5', 'g7', 'g7', 'g6', 'p1', 'r1', 'r1'],
-        ['g5', 'g7', 'g6', 'p1', 'p1', 'r1', 'r1'],
-        ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
-        ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
-        ['g5', 'g7', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
-        ['g5', 'g7', 'g7', 'g6', 'p1', 'p1', 'r1'],
-        ['g5', 'g7', 'g7', 'g7', 'g6', 'p1', 'r1'],
-        ['g5', 'g7', 'g7', 'g7', 'g6', 'p1', 'r1'],
-        ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
-        ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'p1-n'],
-        ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'r1'],
-        ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
-        ['g8', 'g9', 'g6', 'p1', 'r1', 'r1', 'r1'],
-        ['g8', 'g5', 'g6', 'p1', 'p1', 'r1', 'r1'],
-        ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
-        ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
-        ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
-        ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
-        ['g8', 'g5', 'g7', 'g7', 'g7', 'g6', 'p1-n'],
-        ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
-        ['g8', 'g5', 'g7', 'g7', 'g6', 'p1', 'r1'],
-        ['g8', 'g5', 'g7', 'g7', 'g6', 'p1', 'r1'],
-        ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
-        ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
-        ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'], //
-        ['g8', 'g5', 'g6', 'p1', 'r1', 'r1', 'p1-n'],
-        ['g8', 'g5', 'g6', 'p1', 'p2', 'r1', 'p1-n'],
-        ['g8', 'g5', 'g6', 'p1', 'p2', 'r1', 'p1-n'],
-        ['g8', 'g5', 'g6', 'p1', 'p2', 'r1', 'p1-n'],
-        ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
-        ['g10', 'g5', 'g7', 'g7', 'g6', 'p1', 'p1-n'],
-        [0, 'g10', 'g7', 'g7', 'g7', 'g7', 'p1-n'],
-        [0, 0, 0, 0, 0, 0, 'p1'],
-      ],
-      elements: [
+    length: 3071, // 3071, // 250
+    bg: [
+      ['s1', 's2', 0, 0, 'w', 'w1', 'w'],
+      ['s2', 0, 'g1', 'p1', 'r1', 'rw1', 'w'],
+      ['s1', 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
+      ['m1', 'm2', 'g2', 'p1', 'r1', 'rw1', 'w'],
+      ['m3', 'm4', 'g2', 'p1', 'r1', 'rw4', 'w2'],
+      ['m5', 'm6', 'g2', 'p1', 'p1', 'r1', 'w3'],
+      ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'], //
+      ['m7', 'm8', 'g2', 'p1', 'p1', 'r1', 'w3'],
+      ['s1', 0, 'g2', 'p1', 'r1', 'p1', 'w4'],
+      ['s2', 0, 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
+      ['m1', 'm2', 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
+      ['m3', 'm4', 'g2', 'p1', 'r1', 'p1', 'w5'],
+      ['m5', 'm6', 'g2', 'p1', 'r1', 'rw2', 'w8'],
+      ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'],
+      ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'],
+      ['m5', 'm6', 'g2', 'p1', 'r1', 'rw3', 'w6'],
+      ['m3', 'm4', 'g2', 'p1', 'r1', 'rw1', 'w'],
+      ['m5', 'm6', 'g2', 'p1', 'r1', 'rw4', 'w2'],
+      ['m3', 'm4', 'g2', 'p1', 'r1', 'r1', 'w4'],
+      ['m5', 'm6', 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
+      ['m7', 'm8', 'g2', 'p1', 'p2', 'r1', 'pw1-n'],
+      [0, 's1', 'g2', 'p1', 'p2', 'r1', 'w5'],
+      ['s1', 's2', 'g2', 'p1', 'p2', 'r1', 'w3'],
+      [0, 0, 'g3', 'p1', 'r1', 'rw3', 'w6'],
+      ['s1', 0, 0, 'b4', 'w', 'w7', 'w'],
+      ['s2', 0, 's2', 0, 'w', 'w', 'w'],
+      [0, 's1', 0, 0, 'w', 'w', 'w'],
+      ['s3', 's2', 0, 'b5', 'w', 'w1', 'w'],
+      ['s2', 's1', 'g1', 'p1', 'r1', 'rw1', 'w'],
+      ['s2', 's1', 'g2', 'p1', 'r1', 'rw1', 'w'],
+      [0, 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
+      ['s1', 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
+      [0, 's2', 'g3', 'p1', 'r1', 'rw1', 'w'],
+      [0, 's2', 0, 'b4', 'w', 'w7', 'w'],
+      [0, 0, 0, 0, 'w', 'w', 'w'],
+      ['s2', 's1', 0, 0, 'w', 'w', 'w'],
+      ['s1', 0, 0, 'b5', 'w', 'w1', 'w'],
+      [0, 0, 'g1', 'p1', 'r1', 'rw1', 'w'],
+      ['s2', 0, 'g2', 'p1', 'r1', 'rw4', 'w2'],
+      ['m1', 'm2', 'g2', 'p1', 'r1', 'r1', 'w3'],
+      ['m3', 'm4', 'g2', 'p1', 'r1', 'r1', 'w3'],
+      ['m7', 'm8', 'g2', 'p1', 'r1', 'r1', 'w3'],
+      ['s2', 's1', 'g3', 'p1', 'r1', 'r1', 'w3'],
+      ['g4', 'g6', 'p1', 'p1', 'r1', 'r1', 'w4'],
+      ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'pw1-n'],
+      ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'pw1-n'],
+      ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'pw1-n'],
+      ['g5', 'g6', 'p1', 'p1', 'p2', 'r1', 'w5'],
+      ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'w3'],
+      ['g5', 'g6', 'p1', 'r1', 'r1', 'rw2', 'w8'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w4'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'pw1-n'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'pw2-n'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'p1-n'],
+      ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'p1-n'],
+      ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'p1-n'],
+      ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'p1-n'],
+      ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
+      ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
+      ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
+      ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
+      ['g5', 'g6', 'p1', 'p1', 'r1', 'p1', 'r1'],
+      ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'r1'],
+      ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'r1'],
+      ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'r1'],
+      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'r1'],
+      ['g5', 'g7', 'g7', 'g6', 'p1', 'r1', 'r1'],
+      ['g5', 'g7', 'g6', 'p1', 'p1', 'r1', 'r1'],
+      ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
+      ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
+      ['g5', 'g7', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
+      ['g5', 'g7', 'g7', 'g6', 'p1', 'p1', 'r1'],
+      ['g5', 'g7', 'g7', 'g7', 'g6', 'p1', 'r1'],
+      ['g5', 'g7', 'g7', 'g7', 'g6', 'p1', 'r1'],
+      ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
+      ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'p1-n'],
+      ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'r1'],
+      ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
+      ['g8', 'g9', 'g6', 'p1', 'r1', 'r1', 'r1'],
+      ['g8', 'g5', 'g6', 'p1', 'p1', 'r1', 'r1'],
+      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
+      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
+      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
+      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
+      ['g8', 'g5', 'g7', 'g7', 'g7', 'g6', 'p1-n'],
+      ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
+      ['g8', 'g5', 'g7', 'g7', 'g6', 'p1', 'r1'],
+      ['g8', 'g5', 'g7', 'g7', 'g6', 'p1', 'r1'],
+      ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
+      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
+      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'], //
+      ['g8', 'g5', 'g6', 'p1', 'r1', 'r1', 'p1-n'],
+      ['g8', 'g5', 'g6', 'p1', 'p2', 'r1', 'p1-n'],
+      ['g8', 'g5', 'g6', 'p1', 'p2', 'r1', 'p1-n'],
+      ['g8', 'g5', 'g6', 'p1', 'p2', 'r1', 'p1-n'],
+      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
+      ['g10', 'g5', 'g7', 'g7', 'g6', 'p1', 'p1-n'],
+      [0, 'g10', 'g7', 'g7', 'g7', 'g7', 'p1-n'],
+      [0, 0, 0, 0, 0, 0, 'p1'],
+    ],
+    elements: [
 
-        { name: 'bonusRock', x: 336, y: 160, type: 'M' },
-        { name: 'bonusRock', x: 1584, y: 160, type: 'F' },
-        { name: 'bonusRock', x: 2288, y: 190, type: 'S' },
+      { name: 'bonusRock', x: 336, y: 160, type: 'M' },
+      { name: 'bonusRock', x: 1584, y: 160, type: 'F' },
+      { name: 'bonusRock', x: 2288, y: 190, type: 'S' },
 
-        { name: 'bonusFly', x: 220, y: 75, type: 'R' },
-        { name: 'bonusFly', x: 1120, y: 75, type: 'S' },
-        { name: 'bonusFly', x: 2324, y: 60, type: 'R' },
-        { name: 'bonusFly', x: 2324, y: 180, type: 'L' },
+      { name: 'bonusFly', x: 220, y: 75, type: 'R' },
+      { name: 'bonusFly', x: 1120, y: 75, type: 'S' },
+      { name: 'bonusFly', x: 2324, y: 60, type: 'R' },
+      { name: 'bonusFly', x: 2324, y: 180, type: 'L' },
 
         { name: 'sniper', x: 317, y: 198, type: 'STAY' },
         { name: 'sniper', x: 639, y: 198, type: 'STAY' },
@@ -149,30 +148,28 @@ const map = {
         { name: 'sniper', x: 1554, y: 56, type: 'HALF' },
         { name: 'sniper', x: 2360, y: 134, type: 'STAY' },
 
+      { name: 'tankBottom', x: 2065, y: 160 },
+      { name: 'tankBottom', x: 2192, y: 64 },
+      { name: 'tankBottom', x: 2769, y: 128 },
+      { name: 'tankInRock', x: 1264, y: 160 },
+      { name: 'tankInRock', x: 1650, y: 128 },
+      { name: 'tankInRock', x: 1841, y: 128 },
+      { name: 'tankInRock', x: 2993, y: 192 },
+      { name: 'tankInRock', x: 3121, y: 192 },
+      { name: 'bridge', x: 768, y: 96, blockCount: 4 },
+      { name: 'bridge', x: 1056, y: 96, blockCount: 4 },
 
-        { name: 'tankBottom', x: 2065, y: 160 },
-        { name: 'tankBottom', x: 2192, y: 64 },
-        { name: 'tankBottom', x: 2769, y: 128 },
-        { name: 'tankInRock', x: 1264, y: 160 },
-        { name: 'tankInRock', x: 1650, y: 128 },
-        { name: 'tankInRock', x: 1841, y: 128 },
-        { name: 'tankInRock', x: 2993, y: 192 },
-        { name: 'tankInRock', x: 3121, y: 192 },
-        { name: 'bridge', x: 768, y: 96, blockCount: 4 },
-        { name: 'bridge', x: 1056, y: 96, blockCount: 4 },
+      { name: 'boss1', x: 3216, y: 41 },
 
-        { name: 'boss1', x: 3216, y: 41 },
-
-        {
-          name: 'enemyCreator',
-          type: 'thief',
-          coords: [
-            { xS: 150, xE: 1114, y: 95, vector: -1, reloading: 3000 },
-            { xS: 1115, xE: 1664, y: 126, vector: -1, reloading: 3000 },
-            { xS: 1665, xE: 2304, y: 137, vector: -1, reloading: 3000 },
-            { xS: 2305, xE: 2650, y: 124, vector: -1, reloading: 3000 },
-          ]
-
+      {
+        name: 'enemyCreator',
+        type: 'thief',
+        coords: [
+          { xS: 150, xE: 1114, y: 95, vector: -1, reloading: 3000 },
+          { xS: 1115, xE: 1664, y: 126, vector: -1, reloading: 3000 },
+          { xS: 1665, xE: 2304, y: 137, vector: -1, reloading: 3000 },
+          { xS: 2305, xE: 2650, y: 124, vector: -1, reloading: 3000 },
+        ]
         }
       ],
     },
@@ -397,7 +394,6 @@ const map = {
          { name: 'spiderCocoon', x: 256, y: 175, flip: 0 },*/
       ],
     },
-
   ],
   spritesInfo: {
     b1: { x: 35, y: 1, w: 32, h: 32, frames: 3, delay: 20, },
@@ -709,7 +705,7 @@ const map = {
       h: 32,
       frames: 1,
       delay: 100,
-      xCoef: -1
+      xCoef: -1,
     },
     bonusROpen: {
       x: 1,
@@ -1077,7 +1073,7 @@ export default class Level {
     this.platformActual = [];
     this.elementsActual = [];
     this.bonuses = [];
-    this.bosses = []
+    this.bosses = [];
 
     this.bulletsArray = [];
     this.playerBulletsArray = [];
@@ -1110,7 +1106,8 @@ export default class Level {
                 isRoof = true;
               }
             }
-            new Bg(name[0], this.spritesInfo[name[0]], bs, bs, i * bs, j * bs, this, canJumpDown, needVertPlatform, isRoof);
+            new Bg(name[0], this.spritesInfo[name[0]], bs, bs, i * bs, j * bs, this,
+              canJumpDown, needVertPlatform, isRoof);
           }
         }
       };
@@ -1136,7 +1133,7 @@ export default class Level {
     createElement(map.levels[this.levelNumber].bg, 'BG');
     createElement(map.levels[this.levelNumber].elements, 'ELEMENT');
 
-    this.elementsActual.push(new Сurtain(this.elementsActual));
+    this.elementsActual.push(new Curtain(this.elementsActual));
     //  this.startLevel(this);
   }
 
@@ -1146,7 +1143,7 @@ export default class Level {
       this.leftBorder.sprite,
       this.levelBorder.sprite,
       contra.pjs.camera,
-    ].forEach(element => {
+    ].forEach((element) => {
       element.move(p(dx, 0));
     });
   }
@@ -1172,19 +1169,19 @@ export default class Level {
       });
 
       // draw elements
-      [...level.bosses, ...level.elementsActual, ...level.enemyArray, ...level.bonuses].forEach((el) => {
-        el.tryAction(camPos);
-      });
+      [...level.bosses, ...level.elementsActual, ...level.enemyArray, ...level.bonuses]
+        .forEach((el) => {
+          el.tryAction(camPos);
+        });
 
       // draw bullets
       [...level.bulletsArray, ...level.playerBulletsArray].forEach((el) => {
         el.draw();
       });
 
-      /*
-            level.platformActual.forEach(el => {
+      /* level.platformActual.forEach(el => {
               el.sprite.drawStaticBox();
-            });*/
+            }); */
       const getKey = contra.options.options;
 
       if (level.debag) {
@@ -1217,10 +1214,10 @@ export default class Level {
     console.log('keys', this.keysOn);
   }
 
-  compliteLevel() {
-    this.keysOn = false;
-    [...level.elementsActual, ...level.enemyArray, ...level.bonuses].forEach((el) => {
-      el.tryRemove(true);
-    });
-  }
+  // compliteLevel() {
+  //   this.keysOn = false;
+  //   [...level.elementsActual, ...level.enemyArray, ...level.bonuses].forEach((el) => {
+  //     el.tryRemove(true);
+  //   });
+  // }
 }
