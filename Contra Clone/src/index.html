@@ -24,11 +24,36 @@
       height: 100px;
     }
 
+    .zone_joystick {
+      position: absolute;
+      bottom:50px;
+      left:70px;
+    }
+
+    #a_button {
+      position: absolute;
+      right: 20px;
+      bottom: 90px;
+      z-index:101;
+    }
+
+    #b_button {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      z-index:101;
+    }
+
+    .button_image {
+      width: 55px;
+      height: 55px;
+    }
   </style>
   <title></title>
 </head>
 
 <body>
+  <dir class="zone_joystick" id="zone_joystick"></dir>
   <dialog>
     Добро пожаловать в Контру!
     <button id="start-button" tabindex="1">Ok</button>
