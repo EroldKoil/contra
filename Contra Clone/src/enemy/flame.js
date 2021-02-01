@@ -3,7 +3,6 @@
 import Weapon from '../weapon/weapon';
 import Person from '../person';
 import contra from '../index';
-import Sound from '../sound';
 
 const keys = [
   'turel',
