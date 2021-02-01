@@ -6,7 +6,7 @@ import Sound from './sound';
 function createMenuText(textLayer, lang, touchSupported) {
   textLayer.clear();
   textLayer.addText(5, 17, lang.menu);
-  textLayer.addText(7, 19, lang.startGame);
+  textLayer.addText(7, 19 + touchSupported, lang.startGame);
   textLayer.addText(7, 21, lang.language);
   if (!touchSupported) {
     textLayer.addText(7, 23, lang.controls);

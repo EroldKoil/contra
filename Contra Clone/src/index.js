@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import Level from './level';
+// import Level from './level';
 import Player from './player';
 import PointJS from './pointjs_0.2.0.9';
 import mainMenu from './mainmenu';
@@ -61,7 +61,7 @@ contra.res = {
 
 contra.startGame = () => {
   if (pjs.touchControl.isTouchSupported()) {
-    contra.joystick.show();
+    contra.joystick.displayJoystick(true);
   }
 
   const interval = setInterval(() => {
@@ -124,7 +124,7 @@ if (pjs.touchControl.isTouchSupported()) {
   document.getElementById('start-button').addEventListener('touchend', buttonPress);
   pjs.touchControl.initControl();
   contra.joystick = new Joystick();
-  contra.joystick.hide();
+  contra.joystick.displayJoystick(false);
 }
 
 

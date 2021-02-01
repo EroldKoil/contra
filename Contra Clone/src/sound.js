@@ -7,21 +7,26 @@ const sounds = {
   fireF: { src: '../assets/audio/fire-f.mp3' },
   fireL: { src: '../assets/audio/fire-l.mp3' },
   fireS: { src: '../assets/audio/fire-s.mp3' },
+  fireBeam: { src: '../assets/audio/fire-beam.mp3' }, // огненный столб в 6 уровне
   plusLife: { src: '../assets/audio/plus-life.mp3' }, // призовая жизнь
   damage: { src: '../assets/audio/damage.mp3' }, // попадание, урон врагу
   enemyDeath: { src: '../assets/audio/enemy-death.mp3' }, // взрыв врага
   explosion: { src: '../assets/audio/explosion.mp3' }, // взрыв моста, пушек и т.д.
   afterBossDeath: { src: '../assets/audio/after-boss-death.mp3' },
   boss1death: { src: '../assets/audio/boss1-death.mp3' },
-  boss2death: { src: '../assets/audio/boss8-death.mp3' },
+  boss2death: { src: '../assets/audio/boss6-death.mp3' },
+  boss3death: { src: '../assets/audio/boss8-death.mp3' },
+  boss2jump: { src: '../assets/audio/boss6-jump.mp3' },
   gameOver: { src: '../assets/audio/game-over.mp3' },
   playerDeath: { src: '../assets/audio/player-death.mp3' },
   credits: { src: '../assets/audio/credits.mp3' }, // Финальные титры
   menuTitle: { src: '../assets/audio/title.mp3' },
   level1start: { src: '../assets/audio/level1-start.mp3' },
   level1repeat: { src: '../assets/audio/level1-repeat.mp3' },
-  level2start: { src: '../assets/audio/level8-start.mp3' },
-  level2repeat: { src: '../assets/audio/level8-repeat.mp3' },
+  level2start: { src: '../assets/audio/level6-start.mp3' },
+  level2repeat: { src: '../assets/audio/level6-repeat.mp3' },
+  level3start: { src: '../assets/audio/level8-start.mp3' },
+  level3repeat: { src: '../assets/audio/level8-repeat.mp3' },
 };
 
 let currentLevel = 1;
@@ -59,8 +64,8 @@ export default class Sound {
 
   // Возвращает true, если сейчас проигрывается звук sound
   static isPlaying(sound) {
-    return sounds[sound].audio.currentTime > 0 &&
-      sounds[sound].audio.currentTime < sounds[sound].audio.duration;
+    return sounds[sound].audio.currentTime > 0
+      && sounds[sound].audio.currentTime < sounds[sound].audio.duration;
   }
 
   // Запуск проигрывания музыки

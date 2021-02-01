@@ -3,13 +3,11 @@ import nipplejs from 'nipplejs';
 export default class Joystick {
   constructor() {
     this.buttons = {
-      up: false,
-      right: false,
-      down: false,
-      left: false,
       a: false,
       b: false,
     };
+    this.setButtons(false, false, false, false);
+
     this.options = {
       zone: document.getElementById('zone_joystick'), // active zone
       color: 'darkgrey',
@@ -29,35 +27,18 @@ export default class Joystick {
     };
 
     const manager = nipplejs.create(this.options);
-    manager.on('dir:up  dir:left dir:down dir:right',
-      (evt) => {
-        this.buttons.up = false;
-        this.buttons.right = false;
-        this.buttons.down = false;
-        this.buttons.left = false;
 
-        switch (evt.type) {
-          case 'dir:up':
-            this.buttons.up = true;
-            break;
-          case 'dir:right':
-            this.buttons.right = true;
-            break;
-          case 'dir:down':
-            this.buttons.down = true;
-            break;
-          case 'dir:left':
-            this.buttons.left = true;
-            break;
-          default: break;
+    manager.on('move',
+      (evt, x) => {
+        if (x.distance > this.options.size * this.options.threshold) {
+          const angle = x.angle.degree;
+          this.setButtons(angle > 22.5 && angle < 157.5, !(angle > 67.5 && angle < 292.5),
+            angle > 202.5 && angle < 337.5, angle > 112.5 && angle < 247.5);
         }
       });
     manager.on('end',
       () => {
-        this.buttons.up = false;
-        this.buttons.right = false;
-        this.buttons.down = false;
-        this.buttons.left = false;
+        this.setButtons(false, false, false, false);
       });
 
     const createButton = (name) => {
@@ -73,17 +54,19 @@ export default class Joystick {
     createButton('b');
   }
 
-  // Показать джойстик и кнопки
-  show() {
-    this.options.zone.style.display = '';
-    document.getElementById('a_button').style.display = '';
-    document.getElementById('b_button').style.display = '';
+  // Установка значений кнопок
+  setButtons(up, right, down, left) {
+    this.buttons.up = up;
+    this.buttons.right = right;
+    this.buttons.down = down;
+    this.buttons.left = left;
   }
 
-  // Скрыть джойстик и кнопки
-  hide() {
-    this.options.zone.style.display = 'none';
-    document.getElementById('a_button').style.display = 'none';
-    document.getElementById('b_button').style.display = 'none';
+  // Скрыть/показать джойстик
+  displayJoystick(show) {
+    const value = show ? '' : 'none';
+    this.options.zone.style.display = value;
+    document.getElementById('a_button').style.display = value;
+    document.getElementById('b_button').style.display = value;
   }
 }

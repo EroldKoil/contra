@@ -12,6 +12,7 @@ import SpiderCocoon from '../enemy/spiderCocoon';
 import Boss1 from '../boss/boss1';
 import Boss81 from '../boss/boss81';
 import Boss82 from '../boss/boss82';
+
 export default class ElementCreator {
   constructor(el, level) {
     switch (el.name) {
