@@ -8,42 +8,79 @@
   <style>
     body {
       background-color: rgb(14 14 30);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
     }
-    
+
+    dialog {
+      background-color: #141518;
+      border: 1px solid #3b3a3a;
+    }
+
     canvas {
       margin: 0 auto;
       width: 100%;
       image-rendering: pixelated;
     }
-    
+
+    p {
+      margin: 8px 0;
+      color: white;
+    }
+
+    h3 {
+      text-align: center;
+      font-size: 18px;
+      color: white;
+      margin: 10px 0;
+    }
+
     button {
       width: 100px;
-      height: 100px;
+      height: 40px;
+      position: relative;
+      left: 50%;
+      transform: translate(-50%, 0);
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #3b3a3a;
+      color: white;
+      border: 1px solid #3b3a3a;
     }
-    
+
+    ul {
+      color: white;
+    }
+
+    .two-columns {
+      column-count: 2;
+    }
+
+    a {
+      color: white;
+      outline: none;
+    }
+
     .zone_joystick {
       position: absolute;
       bottom: 50px;
       left: 70px;
     }
-    
+
     #a_button {
       position: absolute;
       right: 20px;
       bottom: 90px;
       z-index: 101;
     }
-    
+
     #b_button {
       position: absolute;
       right: 20px;
       bottom: 20px;
       z-index: 101;
     }
-    
+
     .button_image {
       width: 55px;
       height: 55px;
@@ -55,8 +92,6 @@
 <body>
   <dir class="zone_joystick" id="zone_joystick"></dir>
   <dialog>
-    Добро пожаловать в Контру!
-    <button id="start-button" tabindex="1">Ok</button>
   </dialog>
 </body>
 

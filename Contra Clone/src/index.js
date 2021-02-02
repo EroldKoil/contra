@@ -1,6 +1,4 @@
 /* eslint-disable */
-
-// import Level from './level';
 import Player from './player';
 import PointJS from './pointjs_0.2.0.9';
 import mainMenu from './mainmenu';
@@ -8,8 +6,6 @@ import getLanguageObject from './multilang';
 import Options from './options';
 import Sound from './sound';
 import Joystick from './joystick';
-import gameComplite from './gameComplite';
-import endScreen from './endscreen';
 
 function resize() {
   let width = window.innerWidth;
@@ -120,28 +116,42 @@ contra.addScore = (score) => {
 
 contra.lang = getLanguageObject(contra.options.get('language'));
 
-document.querySelector('dialog').showModal(); // Показать модальное окно
+let dialogText = contra.lang.dialog;
+if (pjs.touchControl.isTouchSupported()) {
+  dialogText = dialogText.replace(/{{.*}}/,'');
+} else {
+  dialogText = dialogText.replace(/{{|}}/g,'')
+    .replace(/{up}/, contra.options.get('keyUp'))
+    .replace(/{down}/, contra.options.get('keyDown'))
+    .replace(/{left}/, contra.options.get('keyLeft'))
+    .replace(/{right}/, contra.options.get('keyRight'))
+    .replace(/{fire}/, contra.options.get('keyFire'))
+    .replace(/{jump}/, contra.options.get('keyJump'));
+}
+
+const dialogEl = document.querySelector('dialog');
+dialogEl.innerHTML = dialogText;
+dialogEl.showModal(); // Показать модальное окно
 
 function buttonPress() {
-  document.querySelector('dialog').close();
-  //gameComplite();
+  dialogEl.close();
   mainMenu(contra); // Все стартует отсюда!
 }
 
 // Обработчик кнопки модального окна
-
-document.getElementById('start-button').addEventListener('click', buttonPress);
-document.getElementById('start-button').addEventListener('touchend', buttonPress);
+const startButtonEl = document.getElementById('start-button');
+startButtonEl.addEventListener('click', buttonPress);
+startButtonEl.addEventListener('touchend', buttonPress);
 
 window.onresize = resizeInit;
 
+// Обработчик кнопки модального окна
+startButtonEl.addEventListener('click', buttonPress);
+
 pjs.keyControl.initControl();
 
-// Обработчик кнопки модального окна
-document.getElementById('start-button').addEventListener('click', buttonPress);
-
 if (pjs.touchControl.isTouchSupported()) {
-  document.getElementById('start-button').addEventListener('touchend', buttonPress);
+  startButtonEl.addEventListener('touchend', buttonPress);
   pjs.touchControl.initControl();
   contra.joystick = new Joystick();
   contra.joystick.displayJoystick(false);

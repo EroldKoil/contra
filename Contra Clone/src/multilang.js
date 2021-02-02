@@ -30,23 +30,68 @@ const STRINGS = {
   end: ['End', 'Закончить', 'Скончыць'],
   statistics: ['Statistics:', 'Статистика:', 'Статыстыка:'],
   gameTime: ['Game time ', 'Время игры ', 'Час гульни  '],
-  killed: ['Killed    ', 'Убито      ', 'Забіты      '],
-  shots: ['Shots     ', 'Выстрелов  ', 'Выстралаў   '],
-  jumps: ['Jumps     ', 'Прыжков    ', 'Скачкоў     '],
-  accuracy: ['Accuracy  ', 'Точность   ', 'Дакладнасць '],
-  dialog: ['',
-    'Добро пожаловать в Контру! \n' +
-    'Легенда игровых салонов теперь и в браузере.\n' +
-    'Над воссозданием игры трудились:\n' +
-    'Николай Якубов (гитхаб), Федор Одинцов, Александр Матвеенков\n' +
-    'Управление: вверх - W, вниз - S, влево - A, вправо - D, огонь - O, прыжок - P.\n' +
-    'Удачи в игре!',
-    'Сардэчна запрашаем у Контру! \n ' +
-    'Легенда гульнявых салонаў зараз і ў браўзэры. \n' +
-    'Над аднаўленнем гульні працавалі: \n' +
-    'Мікалай Якубаў (гитхаб), Фёдар Адзінцоў, Аляксандр Мацвеенка \n' +
-    'Упраўленне: уверх - W, уніз - S, налева - A, направа - D, агонь - O, скачок - P. \n' +
-    'Поспехаў у гульні!',
+  killed: ['Killed ', 'Убито ', 'Забіты '],
+  shots: ['Shots ', 'Выстрелов ', 'Выстралаў '],
+  jumps: ['Jumps ', 'Прыжков ', 'Скачкоў '],
+  accuracy: ['Accuracy ', 'Точность ', 'Дакладнасць '],
+  play: ['Play!', 'Играть!', 'Гуляць!'],
+  dialog: ['<h3>Welcome to Contra!</h3>'
+    + '<p>The gaming parlor legend is now in your browser!</p>'
+    + '<p>On recreating the masterpiece worked:</p>'
+    + '<ul>'
+    + '  <li><a href="https://github.com/EroldKoil">Nikolay Yakubov</a></li>'
+    + '  <li><a href="https://github.com/Fodin">Fedor Odintsov</a></li>'
+    + '  <li><a href="https://github.com/JustAnotherAlexander">Alexander Matveenkov</a></li>'
+    + '</ul>'
+    + '{{<p>Controls:</p>'
+    + '<ul class="two-columns">'
+    + '  <li>up - {up}'
+    + '  <li>down - {down}</li>'
+    + '  <li>left - {left}</li>'
+    + '  <li>right - {right}</li>'
+    + '  <li>fire - {fire}</li>'
+    + '  <li>jump - {jump}</li>'
+    + '</ul>}}'
+    + '<h3>Good luck in the game!</h3>'
+    + '<button id="start-button">Play!</button>',
+  '<h3>Добро пожаловать в Контру!</h3>'
+    + '<p>Легенда игровых салонов теперь и в браузере!</p>'
+    + '<p>Над воссозданием шедевра трудились:</p>'
+    + '<ul>'
+    + '  <li><a href="https://github.com/EroldKoil">Николай Якубов</a></li>'
+    + '  <li><a href="https://github.com/Fodin">Федор Одинцов</a></li>'
+    + '  <li><a href="https://github.com/JustAnotherAlexander">Александр Матвеенков</a></li>'
+    + '</ul>'
+    + '{{<p>Управление:</p>'
+    + '<ul class="two-columns">'
+    + '  <li>вверх - {up}'
+    + '  <li>вниз - {down}</li>'
+    + '  <li>влево - {left}</li>'
+    + '  <li>вправо - {right}</li>'
+    + '  <li>огонь - {fire}</li>'
+    + '  <li>прыжок - {jump}</li>'
+    + '</ul>}}'
+    + '<h3>Удачи в игре!</h3>'
+    + '<button id="start-button">Играть!</button>',
+  '<h3>Сардэчна запрашаем у Контру!</h3>'
+    + '<p>Легенда гульнявых салонаў зараз і ў браўзэры!</p>'
+    + '<p>Над аднаўленнем шэдэўра працавалі:</p>'
+    + '<ul>'
+    + '  <li><a href="https://github.com/EroldKoil">Мікалай Якубаў</a></li>'
+    + '  <li><a href="https://github.com/Fodin">Фёдар Адзінцоў</a></li>'
+    + '  <li><a href="https://github.com/JustAnotherAlexander">Аляксандр Мацвеенка</a></li>'
+    + '</ul>'
+    + '{{<p>Упраўленне:</p>'
+    + '<ul class="two-columns">'
+    + '  <li>уверх - {up}'
+    + '  <li>уніз - {down}</li>'
+    + '  <li>налева - {left}</li>'
+    + '  <li>направа - {right}</li>'
+    + '  <li>агонь - {fire}</li>'
+    + '  <li>скачок - {jump}</li>'
+    + '</ul>}}'
+    + '<h3>Поспехаў у гульні!</h3>'
+    + '<button id="start-button">Гуляць!</button>',
   ],
   // Шаблон   z: ['', '', ''],
 };
