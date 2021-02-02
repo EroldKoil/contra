@@ -13,7 +13,7 @@ export default class Turel extends Person {
   constructor(xCenter, yBottom, level) {
     super(xCenter, yBottom, 10, level.enemiesInfo, keys, contra.res.enemyS, level, 'mediumBoom');
     this.touchDemage = true;
-    this.weapon = new Weapon('M', this, 1000);
+    this.weapon = new Weapon('M', this, 1000, 3);
     this.score = 300;
     this.selectState('turel');
     level.elementsArray.push(this);

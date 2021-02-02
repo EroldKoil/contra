@@ -58,7 +58,6 @@ export default class Bonus extends SprObject {
       } else {
         player.weapon.changeWeapon(this.type);
       }
-
       this.tryRemove(true);
     }
   }

@@ -227,6 +227,11 @@ const playerSprites = {
     yCoef: 0,
   },
 };
+const gameOverSpr = [
+  { x: 234, y: 31, w: 46, h: 18 },
+  { x: 175, y: 31, w: 46, h: 10 },
+  { x: 291, y: 31, w: 71, h: 10 },
+]
 
 const xCenter = 80;
 const yBottom = 60;
@@ -235,11 +240,10 @@ const health = 1;
 export default class Player extends Person {
   constructor(level) {
     super(xCenter, yBottom, health, playerSprites, Object.keys(playerSprites), contra.res.playerS, level);
-    console.log(level);
     this.positionX = 0;
-    this.lifes = 10;
+    this.lifes = 20;
     this.assailable = false; // Уязвим ли
-    this.weapon = new Weapon('S', this);
+    this.weapon = new Weapon('L', this, 1200, 3); //200, 5
     this.needCalc = true; // обновление координат и обработка кнопок;
     this.pose = 'AIR'; // air , platform , water, death
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
@@ -254,6 +258,7 @@ export default class Player extends Person {
     this.selectState('jump');
 
     this.medal = this.createSprite(contra.res.elementS, ...Object.values(level.elementsInfo.medal));
+    this.gameOverspr = this.createSprite(contra.res.playerS, ...Object.values(gameOverSpr[contra.options.options.language]));
     this.medal.y = 2;
     this.reBurn();
   }
@@ -266,7 +271,8 @@ export default class Player extends Person {
   // buttons = [UP, Right, Bottom, Left,   Jump, Shot]
   calculateMoves(buttons) {
     if (this.health < 1) {
-      buttons = [false, false, false, false, false, false]
+      buttons = [false, false, false, false, false, false];
+      this.gameOverspr.draw();
     }
     const camPos = contra.pjs.camera.getPosition().x;
     this.timeAfterShoot += 1;
@@ -301,7 +307,7 @@ export default class Player extends Person {
     );
 
     const collisionDArray = contra.selectedLevel.platformActual.filter(
-      (platform) => platform.sprite.isStaticIntersect(this.selectedState.sprite.getStaticBoxD(12, 0, -16 + this.moveSpeed)),
+      (platform) => platform.sprite.isStaticIntersect(this.selectedState.sprite.getStaticBoxD(14, 0, -16 + this.moveSpeed)),
     );
 
     const collisionAArray = contra.selectedLevel.platformActual.filter(
@@ -309,11 +315,11 @@ export default class Player extends Person {
     );
 
     //this.selectedState.sprite.drawStaticBoxA(4 - this.moveSpeed, 0, -12);
-    //this.selectedState.sprite.drawStaticBoxD(12, 0, -16 + this.moveSpeed);
-
-    /*[...collisionSArray, ...collisionDArray].forEach(element => {
-      element.sprite.drawStaticBox();
-    });*/
+    //this.selectedState.sprite.drawStaticBoxD(14, 0, -16 + this.moveSpeed);
+    /*
+        [...collisionSArray, ...collisionDArray].forEach(element => {
+          element.sprite.drawStaticBox();
+        });*/
     const buttomColArray = collisionSArray.filter((platform) => platform.collision === 'BOTTOM');
     const waterColArray = buttomColArray.length > 0 ? [] : collisionSArray.filter((platform) => platform.collision === 'WATER');
 
@@ -388,15 +394,12 @@ export default class Player extends Person {
         }
         if (buttons[2]) {
           this.selectState('dive');
-          this.assailable = false;
         } else {
           if (this.timeAfterShoot > this.timeForAnimationShot) {
             this.selectState('swim');
           }
           dx = moveX * this.moveSpeed;
-          this.assailable = true;
         }
-
         break;
       default:
         break;
@@ -411,7 +414,7 @@ export default class Player extends Person {
     if (this.health > 0) {
       if (collisionSArray[0] && collisionSArray[0].collision === 'DEATH') {
         this.die();
-      } else if (this.assailable) {
+      } else if (this.assailable && this.selectedState.name !== 'dive') {
         this.checkColission();
       }
     }
@@ -421,7 +424,7 @@ export default class Player extends Person {
       const collV = array.filter((platform) => platform.collision === 'VERTICAL');
       if (collV.length > 0) {
         const spr = this.selectedState.sprite;
-        dx = dx > 0 ? (collV[0].sprite.x - (spr.x + spr.w) + 4) : (collV[0].sprite.x + collV[0].width - spr.x - 4);
+        dx = dx > 0 ? (collV[0].sprite.x - (spr.x + spr.w) + 2) : (collV[0].sprite.x + collV[0].width - spr.x - 4);
       }
     }
 
@@ -709,6 +712,9 @@ export default class Player extends Person {
         }, 1000);
       } else {
         Sound.play('gameOver');
+        this.gameOverspr.x = contra.pjs.camera.getPosition().x + 20;
+        this.gameOverspr.y = 10;
+        this.gameOverspr.draw()
       }
     }, 500);
   }

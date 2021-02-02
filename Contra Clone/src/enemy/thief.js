@@ -19,11 +19,10 @@ export default class Thief extends Person {
     this.vectorMove = vector;
     this.score = 100;
     this.touchDemage = true;
-    this.reloading = 2000;
-    this.maxShot = 3;
-    this.canShot = true;
-    this.shotCount = 0;
+    this.reloading = 5000;
+    this.maxShoot = 2;
     this.canShoot = true;
+    this.shootCount = 0;
 
     this.isFlip = vector > 0;
     if (this.isFlip) {
@@ -33,9 +32,10 @@ export default class Thief extends Person {
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
     this.moveSpeed = 0.9;
     this.fallSpeed = 1.8;
-    this.weapon = new Weapon('E', this, 200);
+    this.weapon = new Weapon('E', this, 300);
     this.selectState('thiefJump');
 
+    this.checkPosition();
     level.enemyArray.push(this);
   }
 
@@ -56,9 +56,7 @@ export default class Thief extends Person {
 
       switch (this.pose) {
         case 'AIR':
-
           if (this.vectorJumpY < 0) {
-
             dy = this.fallSpeed * this.vectorJumpY;
           } else if (buttomColArray.length > 0) {
 
@@ -78,7 +76,6 @@ export default class Thief extends Person {
             dy = this.fallSpeed * this.vectorJumpY;
           }
           dx = this.vectorMove * this.moveSpeed;
-
           break;
         case 'PLATFORM':
           if (buttomColArray.length === 0) {
@@ -102,9 +99,10 @@ export default class Thief extends Person {
               } else if (collisionSBottom.length > 0) {
                 this.jump();
               } else {
-                if (Math.random() > 0.5) {
+                if (Math.random() > 0.2) {
                   this.vectorMove *= -1;
                   this.flip(this.vectorMove === 1 ? 1 : 0, 0);
+                  this.isFlip = !this.isFlip;
                 } else {
                   this.jump();
                 }
@@ -113,12 +111,34 @@ export default class Thief extends Person {
               dx = this.vectorMove * this.moveSpeed;
             }
           }
-
           break;
-
         default:
           break;
       }
+      if (this.pose === 'PLATFORM' && this.canShoot) {
+
+      }
+
+      if (dx !== 0) {
+        let collV = [];
+        if (dx > 0) {
+          collV = this.level.platformActual.filter((platform) => platform.collision === 'VERTICAL' &&
+            platform.sprite.isStaticIntersect(this.selectedState.sprite.getStaticBoxD(14, 0, -16 + this.moveSpeed)),
+          );
+        } else {
+          collV = this.level.platformActual.filter((platform) => platform.collision === 'VERTICAL' &&
+            platform.sprite.isStaticIntersect(this.selectedState.sprite.getStaticBoxA(4 - this.moveSpeed, 0, -12)),
+          );
+        }
+        if (collV.length > 0 && collV[0] !== this.level.leftBorder) {
+          dx = -dx;
+          this.vectorMove *= -1;
+          this.flip(this.vectorMove === 1 ? 1 : 0, 0);
+          this.isFlip = !this.isFlip;
+        }
+      }
+
+
       this.spritesMesh.move(contra.pjs.vector.point(dx, dy));
       const spr = this.selectedState.sprite;
     } else if (this.health < 1 && this.selectedState.name !== 'death') {
@@ -164,5 +184,22 @@ export default class Thief extends Person {
         }, 50);
       }
     }, isLong ? 350 : 150);
+  }
+
+  checkPosition() {
+    const spr = this.selectedState.sprite;
+    const platforms = this.level.platformActual.filter(
+      (platform) => platform.collision === 'BOTTOM' &&
+      platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, 0, -2, 200))
+    );
+    if (platforms.length > 0) {
+      let minY = platforms[0].sprite.y;
+      for (let i = 1; i < platforms.length; i += 1) {
+        if (platforms[i].sprite.y < minY) {
+          minY = platforms[i].sprite.y;
+        }
+      }
+      this.spritesMesh.y = minY - spr.h - 1;
+    }
   }
 }

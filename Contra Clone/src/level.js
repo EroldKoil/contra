@@ -229,9 +229,6 @@ const map = {
         { name: 'bonusRock', x: 1072, y: 161, type: 'L' },
         { name: 'bonusRock', x: 1682, y: 161, type: 'B' },
 
-        { name: 'bonusFly', x: 220, y: 180, type: 'B' },
-        { name: 'bonusFly', x: 990, y: 180, type: 'S' },
-
         { name: 'sniper', x: 459, y: 100, type: 'STAY' },
         { name: 'sniper', x: 912, y: 149, type: 'STAY' },
         { name: 'sniper', x: 1736, y: 53, type: 'STAY' },
@@ -247,6 +244,48 @@ const map = {
         { name: 'turel', x: 2378, y: 197 },
         { name: 'turel', x: 2506, y: 148 },
 
+        { name: 'flame', x: 1073, y: 14, type: 'TOP', length: 11, delay: 100, reloading: 3000 },
+        { name: 'flame', x: 1201, y: 14, type: 'TOP', length: 8, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 1297, y: 14, type: 'TOP', length: 11, delay: 100, reloading: 2000 },
+
+        { name: 'flame', x: 1457, y: 167, type: 'RIGHT', length: 11, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 1457, y: 119, type: 'RIGHT', length: 4, delay: 800, reloading: 2000 },
+        { name: 'flame', x: 1457, y: 71, type: 'RIGHT', length: 4, delay: 1600, reloading: 2000 },
+
+        { name: 'flame', x: 1617, y: 135, type: 'RIGHT', length: 8, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 1617, y: 87, type: 'RIGHT', length: 4, delay: 900, reloading: 2000 },
+        { name: 'flame', x: 1681, y: 14, type: 'TOP', length: 11, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 1777, y: 183, type: 'RIGHT', length: 11, delay: 1600, reloading: 3000 },
+
+        { name: 'flame', x: 1873, y: 39, type: 'RIGHT', length: 8, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 1873, y: 87, type: 'RIGHT', length: 4, delay: 900, reloading: 2000 },
+
+        { name: 'flame', x: 2129, y: 14, type: 'TOP', length: 8, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 1933, y: 81, type: 'LEFT', length: 11, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 2095, y: 129, type: 'LEFT', length: 7, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 2189, y: 176, type: 'LEFT', length: 5, delay: 100, reloading: 2000 },
+
+        { name: 'flame', x: 2256, y: 14, type: 'TOP', length: 8, delay: 100, reloading: 2000 },
+
+        { name: 'flame', x: 2383, y: 81, type: 'LEFT', length: 11, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 2383, y: 176, type: 'LEFT', length: 11, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 2510, y: 81, type: 'LEFT', length: 9, delay: 100, reloading: 2000 },
+
+        { name: 'flame', x: 2640, y: 14, type: 'TOP', length: 11, delay: 100, reloading: 2000 },
+
+        {
+          name: 'enemyCreator',
+          type: 'thief',
+          coords: [
+            { xS: 150, xE: 270, y: 20, vector: -1, reloading: 3000 },
+            { xS: 271, xE: 1020, y: 195, vector: -1, reloading: 3000 },
+            { xS: 1740, xE: 2340, y: 20, vector: 1, reloading: 3000 },
+
+            { xS: 221, xE: 540, y: 20, vector: 1, reloading: 3000 },
+            { xS: 541, xE: 1180, y: 195, vector: 1, reloading: 3000 },
+            { xS: 1930, xE: 2460, y: 195, vector: 1, reloading: 3000 },
+          ]
+        }
       ],
     },
     {
@@ -500,6 +539,154 @@ const map = {
     k6: { x: 288, y: 0, w: 32, frames: 4, delay: 10 }
   },
   elementsInfo: {
+    flameH0: {
+      x: 496,
+      y: 236,
+      w: 10,
+      h: 8,
+      frames: 2,
+      delay: 20,
+    },
+    flameH1: {
+      x: 704,
+      y: 215,
+      w: 24,
+      h: 17,
+    },
+    flameH2: {
+      x: 688,
+      y: 249,
+      w: 40,
+      h: 17,
+    },
+    flameH3: {
+      x: 680,
+      y: 266,
+      w: 48,
+      h: 17,
+    },
+    flameH4: {
+      x: 672,
+      y: 283,
+      w: 56,
+      h: 17,
+    },
+    flameH5: {
+      x: 664,
+      y: 300,
+      w: 64,
+      h: 17,
+    },
+    flameH6: {
+      x: 656,
+      y: 283,
+      w: 72,
+      h: 17,
+    },
+    flameH7: {
+      x: 648,
+      y: 317,
+      w: 80,
+      h: 17,
+    },
+    flameH8: {
+      x: 640,
+      y: 334,
+      w: 88,
+      h: 17,
+    },
+    flameH9: {
+      x: 632,
+      y: 351,
+      w: 96,
+      h: 17,
+    },
+    flameH10: {
+      x: 624,
+      y: 368,
+      w: 104,
+      h: 17,
+    },
+    flameH11: {
+      x: 616,
+      y: 385,
+      w: 112,
+      h: 17,
+    },
+    flameV0: {
+      x: 494,
+      y: 225,
+      w: 17,
+      h: 8,
+      frames: 2,
+      delay: 20,
+    },
+    flameV1: {
+      x: 539,
+      y: 410,
+      w: 17,
+      h: 24,
+    },
+    flameV2: {
+      x: 556,
+      y: 410,
+      w: 17,
+      h: 40,
+    },
+    flameV3: {
+      x: 573,
+      y: 410,
+      w: 17,
+      h: 48,
+    },
+    flameV4: {
+      x: 591,
+      y: 410,
+      w: 17,
+      h: 56,
+    },
+    flameV5: {
+      x: 609,
+      y: 410,
+      w: 17,
+      h: 64,
+    },
+    flameV6: {
+      x: 627,
+      y: 410,
+      w: 17,
+      h: 72,
+    },
+    flameV7: {
+      x: 644,
+      y: 410,
+      w: 17,
+      h: 80,
+    },
+    flameV8: {
+      x: 661,
+      y: 410,
+      w: 17,
+      h: 88,
+    },
+    flameV9: {
+      x: 679,
+      y: 410,
+      w: 17,
+      h: 96,
+    },
+    flameV10: {
+      x: 696,
+      y: 410,
+      w: 17,
+      h: 104,
+    },
+    flameV11: {
+      x: 713,
+      y: 410,
+      w: 17,
+      h: 112,
+    },
     bigBoom: {
       x: 1,
       y: 1,
@@ -581,12 +768,12 @@ const map = {
       frames: 1,
     },
     signal: {
-      x: 217,
+      x: 185,
       y: 31,
       w: 17,
       h: 3,
-      frames: 4,
-      delay: 10,
+      frames: 6,
+      delay: 8,
     },
     shadow: {
       x: 388,

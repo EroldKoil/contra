@@ -1,7 +1,6 @@
 /* eslint-disable */
 import SprObject from '../sprObject';
 import contra from '../index';
-import Sound from '../sound';
 
 export default class Bullet extends SprObject {
   constructor(x, y, dx, dy, level, bulletArray) {
@@ -35,7 +34,6 @@ export default class Bullet extends SprObject {
     this.needCheckCpllision = false;
     this.sprite = this.createSprite(this.level.elementsInfo.shootEnd, contra.res.elementS, this.sprite.x, this.sprite.y);
     contra.results.bulletsCount += 1;
-    console.log(`${contra.results.miss / contra.results.bulletsCount * 100 }%`);
     setTimeout(() => {
       this.bulletArray.splice(this.bulletArray.indexOf(this), 1);
     }, 200);

@@ -39,6 +39,8 @@ const contra = {
   lives: 3,
   hardLevel: 0,
   results: {
+    bulletsCount: 0,
+    miss: 0,
     score: 0,
     scoreForLife: 0,
     kills: 0,
@@ -63,6 +65,10 @@ contra.res = {
   boss: newImage('./assets/sprites/boss/boss.png'),
 };
 
+contra.getAccuracy = () => {
+  return (contra.results.bulletsCount - contra.results.miss) / contra.results.bulletsCount * 100;
+}
+
 // метод сохранения хайскора
 
 contra.startGame = () => {
@@ -73,7 +79,7 @@ contra.startGame = () => {
   const interval = setInterval(() => {
     if (contra.pjs.resources.isLoaded()) {
       clearInterval(interval);
-      Sound.playMusic(contra.selectedLevel.levelNumber + 1);
+      // Sound.playMusic(contra.selectedLevel.levelNumber + 1);
       pjs.camera.setPosition(pjs.vector.point(0, 0));
       if (contra.player) {
         const { player } = contra;

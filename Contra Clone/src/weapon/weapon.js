@@ -6,14 +6,14 @@ import BulletF from './bulletF';
 import BulletL from './bulletL';
 
 export default class Weapon {
-  constructor(type, sniper, reloading, speed) {
+  constructor(type, sniper, reloading = 1000, speed = 1) {
     this.level = sniper.level;
     this.sniper = sniper;
     this.reloading = reloading;
     this.speed = speed;
     this.canShoot = true;
     this.bulletArray = this.sniper instanceof Player ? this.level.playerBulletsArray : this.level.bulletsArray;
-    this.changeWeapon(type);
+    this.changeWeapon(type, true);
   }
 
   setLevel(level) {
@@ -65,33 +65,33 @@ export default class Weapon {
     this.apgreid = 1.2;
   }
 
-  changeWeapon(type) {
+  changeWeapon(type, first) {
     this.type = type;
     this.apgreid = 1;
     switch (type) {
       case 'E':
-        this.reloading = this.reloading || 1200;
-        this.speed = this.speed || 1.5;
+        this.reloading = !first ? 1000 : this.reloading;
+        this.speed = !first ? 1.5 : this.speed;
         break;
       case 'D':
-        this.reloading = this.reloading || 300;
-        this.speed = this.speed || 3;
+        this.reloading = !first ? 300 : this.reloading;
+        this.speed = !first ? 3 : this.speed;
         break;
       case 'M':
-        this.reloading = this.reloading || 200;
-        this.speed = this.speed || 3;
+        this.reloading = !first ? 150 : this.reloading;
+        this.speed = !first ? 3.5 : this.speed;
         break;
       case 'F':
-        this.speed = this.speed || 2;
-        this.reloading = this.reloading || 1200;
+        this.reloading = !first ? 2 : this.reloading;
+        this.speed = !first ? 1200 : this.speed;
         break;
       case 'S':
-        this.reloading = this.reloading || 500;
-        this.speed = this.speed || 3;
+        this.reloading = !first ? 600 : this.reloading;
+        this.speed = !first ? 3 : this.speed;
         break;
       case 'L':
-        this.reloading = this.reloading || 1000;
-        this.speed = this.speed || 4;
+        this.reloading = !first ? 800 : this.reloading;
+        this.speed = !first ? 3 : this.speed;
         break;
       default:
         break;

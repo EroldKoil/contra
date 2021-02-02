@@ -57,7 +57,7 @@ export default class Background {
   tryAction() {
     this.sprite.draw();
     this.paddons.forEach(p => {
-      this.signal.x = p.x + 26;
+      this.signal.x = p.x + 25;
       this.signal.y = p.y + 11;
       this.signal.draw();
       if (p.length > 1) {
