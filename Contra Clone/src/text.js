@@ -1,9 +1,9 @@
 import Char from './char';
 
-const FONT_INDEX = ' 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯІЎ".-,!>\'';
+const FONT_INDEX = ' 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯІЎ".-,!>\'%:';
 const CHAR_WIDTH = 8;
 const CHAR_HEIGHT = 8;
-const SPRITE_LENGTH = 632;
+const SPRITE_LENGTH = 640;
 const SCREEN_WIDTH = 32;
 
 export default class TextLayer {

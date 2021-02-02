@@ -9,6 +9,7 @@ import Options from './options';
 import Sound from './sound';
 import Joystick from './joystick';
 import gameComplite from './gameComplite';
+import endScreen from './endscreen';
 
 function resize() {
   let width = window.innerWidth;
@@ -39,20 +40,26 @@ const contra = {
   lives: 3,
   hardLevel: 0,
   results: {
-    score: 0,
-    scoreForLife: 0,
-    kills: 0,
-    killsBoss: 0,
-  }
+    score: 1234567890,
+    // scoreForLife: 0,
+    hiScore: 20000000,
+    stats: {
+      gameTime: 245,
+      killed: 123456789012,
+      shots: 2425,
+      jumps: 1500,
+      accuracy: 99,
+    },
+  },
 };
 export default contra;
 
 const { pjs } = contra;
 
-
 // Инициализация свойств, недоступных при создании объекта
 const { newImage } = contra.pjs.tiles;
 contra.res = {
+  title: newImage('../assets/main_menu/menu_bg.png'),
   playerS: newImage('./assets/sprites/player/player.png'),
   levelS: [
     newImage('./assets/sprites/levels/1/spritesheet.png'),
@@ -96,11 +103,11 @@ contra.startGame = () => {
 
 contra.addScore = (score) => {
   contra.results.score += score;
-  if (score > 900) {
-    contra.results.killsBoss += 1;
-  } else {
-    contra.results.kills += 1;
-  }
+  // if (score > 900) {
+  //   contra.results.killsBoss += 1;
+  // } else {
+    contra.results.killed += 1;
+  // }
   contra.results.scoreForLife += score;
   if (contra.results.scoreForLife > 20000) {
     contra.results.scoreForLife -= 20000;
