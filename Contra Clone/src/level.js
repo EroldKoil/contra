@@ -273,6 +273,8 @@ const map = {
 
         { name: 'flame', x: 2640, y: 14, type: 'TOP', length: 11, delay: 100, reloading: 2000 },
 
+        { name: 'boss6', x: 3265, y: 47 },
+
         {
           name: 'enemyCreator',
           type: 'thief',
@@ -1205,7 +1207,7 @@ const map = {
     thiefRun: {
       x: 206,
       y: 205,
-      w: 19,
+      w: 18,
       h: 32,
       frames: 6,
       delay: 10,
@@ -1213,10 +1215,10 @@ const map = {
     thiefShot: {
       x: 341,
       y: 137,
-      w: 25,
+      w: 26,
       h: 32,
       frames: 2,
-      delay: 10,
+      delay: 20,
     },
     dip: {
       x: 225,

@@ -243,12 +243,12 @@ export default class Player extends Person {
     this.positionX = 0;
     this.lifes = 20;
     this.assailable = false; // Уязвим ли
-    this.weapon = new Weapon('L', this, 1200, 3); //200, 5
+    this.weapon = new Weapon('D', this, 200, 3); //200, 5
     this.needCalc = true; // обновление координат и обработка кнопок;
     this.pose = 'AIR'; // air , platform , water, death
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
     this.vectorJumpX = 0; // -1 left, 1 right
-    this.moveSpeed = 1.5;
+    this.moveSpeed = 1.3;
     this.fallSpeed = 1.8;
     this.timeAfterShoot = 0;
     this.timeForAnimationShot = 15;
@@ -289,18 +289,15 @@ export default class Player extends Person {
       this.vectorMove = -1;
     }
 
-    // this.medals.forEach((el) => { el.draw(); });
-
     for (let i = 0; i < this.lifes; i += 1) {
       this.medal.x = camPos + 10 + 10 * i;
       this.medal.draw();
     }
 
-    ////
     if (!this.needCalc) {
+      this.spritesMesh.draw();
       return;
     }
-    ///
 
     const collisionSArray = contra.selectedLevel.platformActual.filter(
       (platform) => platform.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxS(2, 28, -4, this.fallSpeed - 28)),
@@ -333,10 +330,11 @@ export default class Player extends Person {
           this.vectorJumpX = 0;
           this.pose = 'PLATFORM';
           Sound.play('stomp');
-          // this.needCalc = false;
+
         } else if (waterColArray.length > 0) {
           dy = waterColArray[0].sprite.y - (this.states.run.sprite.y + this.states.run.sprite.h);
           this.startSwim();
+          //this.needCalc = false;
           return;
         } else {
           dy = this.fallSpeed * this.vectorJumpY;
@@ -674,7 +672,7 @@ export default class Player extends Person {
 
   getBox() {
     const spr = this.selectedState.sprite;
-    return spr.getStaticBox(spr.w / 10, spr.h / 10, -spr.w / 5, -spr.h / 5);
+    return spr.getStaticBox(spr.w / 10, spr.h / 10, -spr.w / 5, -spr.h / 8);
   }
 
   selectState(stateName, forDeath) {

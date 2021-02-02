@@ -25,7 +25,7 @@ export default class Sniper extends Person {
     this.score = 100;
     this.type = type; // STAY, HALF, STAYH
     this.boss = boss;
-    this.timeToHidden = 3000;
+    this.timeToHidden = 2000;
     this.reloading = 2000;
     this.maxShot = 3;
     this.canShot = true;
@@ -38,8 +38,6 @@ export default class Sniper extends Person {
       this.isHidden = false;
       super.drawShadow();
     } else {
-      //this.selectState('sniperHead');
-      //this.isHidden = true;
       this.selectState('sniperHalf');
       this.isHidden = false;
     }
@@ -58,7 +56,6 @@ export default class Sniper extends Person {
     }
 
     if (this.started && this.health > 0) {
-
       const spr = this.selectedState.sprite;
       const playerSpr = contra.player.selectedState.sprite;
       const needFlip = spr.x + spr.w / 2 < playerSpr.x + playerSpr.w / 2;
@@ -66,7 +63,6 @@ export default class Sniper extends Person {
         this.isFlip = needFlip
         this.flip(this.isFlip ? 1 : 0, 0);
       }
-
 
       if (!this.isHidden) {
         this.checkColission(spr);
@@ -151,7 +147,6 @@ export default class Sniper extends Person {
     } else if (this.health < 1 && this.selectedState.name !== 'death') {
       this.spritesMesh.move(contra.pjs.vector.point(this.isFlip ? -0.2 : 0.2, -0.3));
     }
-
   }
 
   open(needFrame) {
@@ -175,7 +170,6 @@ export default class Sniper extends Person {
       }, 200);
     }, 200);
   }
-
 
   hide(needFrame) {
     setTimeout(() => {

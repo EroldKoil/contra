@@ -44,7 +44,7 @@ export default class Background {
         this.paddons[i].x -= 16;
       }
 
-      const canFallDown = paddons[i].canFallDown ? false : true;
+      const canFallDown = paddons[i].cantFallDown ? false : true;
       level.platformActual.push(new Platform(w, 1, x, y, 'BOTTOM', canFallDown));
       if (needVertical) {
         level.platformActual.push(new Platform(w, 40, x, y + 1, 'VERTICAL', false));

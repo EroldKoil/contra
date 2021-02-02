@@ -66,15 +66,18 @@ export default class Weapon {
   }
 
   changeWeapon(type, first) {
+    if (this.type === type) {
+      return;
+    }
     this.type = type;
     this.apgreid = 1;
     switch (type) {
       case 'E':
         this.reloading = !first ? 1000 : this.reloading;
-        this.speed = !first ? 1.5 : this.speed;
+        this.speed = !first ? 2 : this.speed;
         break;
       case 'D':
-        this.reloading = !first ? 300 : this.reloading;
+        this.reloading = !first ? 200 : this.reloading;
         this.speed = !first ? 3 : this.speed;
         break;
       case 'M':
@@ -82,8 +85,8 @@ export default class Weapon {
         this.speed = !first ? 3.5 : this.speed;
         break;
       case 'F':
-        this.reloading = !first ? 2 : this.reloading;
-        this.speed = !first ? 1200 : this.speed;
+        this.reloading = !first ? 1200 : this.reloading;
+        this.speed = !first ? 3 : this.speed;
         break;
       case 'S':
         this.reloading = !first ? 600 : this.reloading;

@@ -13,7 +13,7 @@ export default class EnemyCreator {
   }
 
   tryAction() {
-    if (this.canCreate) {
+    if (this.canCreate && this.level.enemyArray.length < 10) {
       const camPos = contra.pjs.camera.getPosition().x;
       for (let i = 0; i < this.coords.length; i++) {
         const creator = this.coords[i];
