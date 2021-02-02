@@ -1,7 +1,6 @@
 /* eslint-disable */
 
 import contra from '../index';
-
 export default class Curtain {
   constructor(array) {
     this.array = array;

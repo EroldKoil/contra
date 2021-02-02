@@ -20,6 +20,7 @@ export default class Bullet extends SprObject {
     if (this.needCheckCpllision) {
       this.sprite.move(contra.pjs.vector.point(this.dx, this.dy));
       if (!this.sprite.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox())) {
+        contra.results.miss += 1;
         this.tryRemove();
       }
     }
@@ -27,12 +28,14 @@ export default class Bullet extends SprObject {
   }
 
   getBox() {
-    return this.sprite; //.getStaticBox();
+    return this.sprite;
   }
 
   tryRemove() {
     this.needCheckCpllision = false;
     this.sprite = this.createSprite(this.level.elementsInfo.shootEnd, contra.res.elementS, this.sprite.x, this.sprite.y);
+    contra.results.bulletsCount += 1;
+    console.log(`${contra.results.miss / contra.results.bulletsCount * 100 }%`);
     setTimeout(() => {
       this.bulletArray.splice(this.bulletArray.indexOf(this), 1);
     }, 200);

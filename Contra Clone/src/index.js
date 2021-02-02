@@ -42,7 +42,6 @@ const contra = {
     score: 0,
     scoreForLife: 0,
     kills: 0,
-    killsBoss: 0,
   }
 };
 export default contra;
@@ -96,14 +95,10 @@ contra.startGame = () => {
 
 contra.addScore = (score) => {
   contra.results.score += score;
-  if (score > 900) {
-    contra.results.killsBoss += 1;
-  } else {
-    contra.results.kills += 1;
-  }
+  contra.results.kills += 1;
   contra.results.scoreForLife += score;
   if (contra.results.scoreForLife > 20000) {
-    contra.results.scoreForLife -= 20000;
+    contra.results.scoreForLife = 0;
     Sound.play('plusLife');
     contra.player.lifes += 1;
   }
@@ -118,13 +113,6 @@ function buttonPress() {
   //gameComplite();
   mainMenu(contra); // Все стартует отсюда!
 }
-
-// Обработчик кнопки модального окна
-
-document.getElementById('start-button').addEventListener('click', buttonPress);
-document.getElementById('start-button').addEventListener('touchend', buttonPress);
-
-window.onresize = resizeInit;
 
 pjs.keyControl.initControl();
 
@@ -142,6 +130,7 @@ function resizeInit() {
   if (document.querySelector('canvas') === null) {
     setTimeout(resizeInit, 50);
   } else {
+    window.onresize = resize;
     resize();
   }
 }
