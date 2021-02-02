@@ -41,8 +41,8 @@ const contra = {
   hardLevel: 0,
   results: {
     score: 1234567890,
-    // scoreForLife: 0,
-    hiScore: 20000000,
+    scoreForLife: 0,
+    hiScore: 20000,
     stats: {
       gameTime: 245,
       killed: 123456789012,
@@ -70,8 +70,6 @@ contra.res = {
   enemyS: newImage('./assets/sprites/enemy.png'),
   boss: newImage('./assets/sprites/boss/boss.png'),
 };
-
-// метод сохранения хайскора
 
 contra.startGame = () => {
   if (pjs.touchControl.isTouchSupported()) {
@@ -103,6 +101,10 @@ contra.startGame = () => {
 
 contra.addScore = (score) => {
   contra.results.score += score;
+  if (contra.results.score > contra.results.hiScore) {
+    contra.results.hiScore = contra.results.score;
+    contra.options.set('highScore', contra.results.hiScore);
+  }
   // if (score > 900) {
   //   contra.results.killsBoss += 1;
   // } else {
