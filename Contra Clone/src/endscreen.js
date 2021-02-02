@@ -17,6 +17,8 @@ export default function endScreen(contra, level) {
     h: 16,
   });
 
+  Sound.stopMusic();
+
   // Очки
   textLayer.addText(2, 2, contra.lang.player1);
   blinkingTextLayer.addText(6, 2, contra.results.score.toString());
