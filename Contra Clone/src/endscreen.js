@@ -63,6 +63,21 @@ export default function endScreen(contra, level) {
     textLayer.addCenteredText(17 + index * 2, `${statName}${padding}${statValue}`);
   });
 
+  function clearStatistics() {
+    // eslint-disable-next-line no-param-reassign
+    contra.lives = 3;
+    const res = contra.results;
+    res.bulletsCount = 0;
+    res.scoreForLife = 0;
+    res.score = 0;
+    res.miss = 0;
+    res.stats.gameTime = 0;
+    res.stats.killed = 0;
+    res.stats.shots = 0;
+    res.stats.jumps = 0;
+    res.stats.accuracy = 0;
+  }
+
   let menuState = 0;
   const keyUp = contra.options.get('keyUp');
   const keyDown = contra.options.get('keyDown');
@@ -90,20 +105,7 @@ export default function endScreen(contra, level) {
     // Обработка активации пунктов меню
     if (pjs.keyControl.isPress(keyFire)) {
       Sound.stop('gameOver');
-      // eslint-disable-next-line no-param-reassign
-      contra.lives = 3;
-      const res = contra.results;
-      res.bulletsCount = 0;
-      res.scoreForLife = 0;
-      res.score = 0;
-      res.miss = 0;
-      res.stats.gameTime = 0;
-      res.stats.killed = 0;
-      res.stats.shots = 0;
-      res.stats.jumps = 0;
-      res.stats.accuracy = 0;
-      /* contra.player.pose = 'AIR';
-      contra.player.selectState('jump'); */
+      clearStatistics();
 
       if (menuState === 0) {
         // Continue
@@ -128,6 +130,7 @@ export default function endScreen(contra, level) {
         && 8 * 8 - 4 < y && y < 9 * 8 + 4) {
         // Был тач к Continue
         Sound.stop('gameOver');
+        clearStatistics();
         // eslint-disable-next-line no-param-reassign
         contra.selectedLevel = new Level(level, contra);
         contra.startGame();
@@ -135,6 +138,7 @@ export default function endScreen(contra, level) {
         && 10 * 8 - 4 < y && y < 11 * 8 + 4) {
         // Был тач к End
         Sound.stop('gameOver');
+        clearStatistics();
         setTimeout(mainMenu, 0, contra);
       }
     }
