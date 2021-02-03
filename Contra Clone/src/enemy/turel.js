@@ -14,7 +14,6 @@ export default class Turel extends Person {
     this.weapon = new Weapon('M', this, 1000, 3);
     this.score = 300;
     this.selectState('turel');
-    level.elementsArray.push(this);
   }
 
   tryAction() {

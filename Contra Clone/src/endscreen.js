@@ -10,6 +10,9 @@ export default function endScreen(contra, level) {
   const blinkingTextLayer = new TextLayer(pjs);
   let frameCounter = 0;
 
+  contra.countAccuracy();
+  contra.countTime();
+
   const selEagle = pjs.game.newImageObject({
     file: '../assets/main_menu/eagle_selector.png',
     x: 0,
@@ -40,7 +43,8 @@ export default function endScreen(contra, level) {
     const value = contra.results.stats[name];
     switch (name) {
       case 'gameTime':
-        return `${Math.floor(value / 60)}:${(value % 60).toString().padStart(2, '0')}`;
+        return value;
+        //return `${Math.floor(value / 60)}:${(value % 60).toString().padStart(2, '0')}`;
       case 'accuracy':
         return `${value}%`;
       default:
@@ -87,10 +91,23 @@ export default function endScreen(contra, level) {
     // Обработка активации пунктов меню
     if (pjs.keyControl.isPress(keyFire)) {
       Sound.stop('gameOver');
+      contra.lives = 3;
+      const res = contra.results;
+      res.bulletsCount = 0;
+      res.scoreForLife = 0;
+      res.score = 0;
+      res.miss = 0;
+      res.stats.gameTime = 0;
+      res.stats.killed = 0;
+      res.stats.shots = 0;
+      res.stats.jumps = 0;
+      res.stats.accuracy = 0;
+      contra.player.pose = 'AIR';
+      contra.player.selectState('jump');
 
       if (menuState === 0) {
         // Continue
-        contra.lives = 3;
+        contra.timeStart = new Date();
         setTimeout(startScreen, 0, contra, level, contra.startGame);
       } else {
         // End

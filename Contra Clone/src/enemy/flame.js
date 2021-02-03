@@ -49,7 +49,10 @@ export default class Flame {
     this.type = type;
 
     this.nullFrame = contra.pjs.game.newRectObject({
-      x: -1, y: -1, w: 1, h: 1,
+      x: -1,
+      y: -1,
+      w: 1,
+      h: 1,
     });
 
     switch (type) {
@@ -100,7 +103,6 @@ export default class Flame {
 
     this.noramlState = this.states[Object.keys(this.states)[0]];
     this.selectState(0);
-    level.elementsArray.push(this);
   }
 
   tryAction() {
@@ -172,9 +174,9 @@ export default class Flame {
   }
 
   getBox() {
-    return this.selectedState === this.noramlState
-      ? this.nullFrame
-      : this.selectedState.sprite;
+    return this.selectedState === this.noramlState ?
+      this.nullFrame :
+      this.selectedState.sprite;
   }
 
   tryRemove(die, camPos) {

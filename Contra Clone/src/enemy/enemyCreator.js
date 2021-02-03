@@ -2,13 +2,13 @@ import Thief from './thief';
 import contra from '../index';
 
 export default class EnemyCreator {
-  constructor(type, coords, level) {
+  constructor(type, coords, mode, level) {
     this.type = type; // STAY, HALF, STAYH
     this.coords = coords;
     this.level = level;
     this.canCreate = true;
     this.reloading = 2000;
-    level.elementsActual.push(this);
+    this.mode = mode;
   }
 
   tryAction() {
@@ -38,7 +38,7 @@ export default class EnemyCreator {
     const x = vector > 0 ? camPos - 20 : camPos + 300;
     switch (this.type) {
       case 'thief':
-        new Thief(x, y, vector, this.level, this);
+        this.level.enemyArray.push(new Thief(x, y, vector, this.level, this, this.mpde));
         break;
       default:
         break;

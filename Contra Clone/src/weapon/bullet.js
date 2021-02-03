@@ -18,7 +18,9 @@ export default class Bullet extends SprObject {
     if (this.needCheckCpllision) {
       this.sprite.move(contra.pjs.vector.point(this.dx, this.dy));
       if (!this.sprite.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox())) {
-        contra.results.miss += 1;
+        if (this.bulletArray === this.level.playerBulletsArray) {
+          contra.results.miss += 1;
+        }
         this.tryRemove();
       }
     }

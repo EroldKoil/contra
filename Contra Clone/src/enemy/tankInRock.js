@@ -31,7 +31,6 @@ export default class TankInRock extends Person {
       w: 18,
       h: 18,
     });
-    level.elementsArray.push(this);
   }
 
   tryAction() {

@@ -8,28 +8,68 @@ import BossBullet from './bossBullet';
 
 const spritesInfo = {
   firstPart: {
-    xS: 193, yS: 10, w: 112, h: 183, frames: 1, delay: 10,
+    xS: 193,
+    yS: 10,
+    w: 112,
+    h: 183,
+    frames: 1,
+    delay: 10,
   },
   secondPart: {
-    xS: 318, yS: 75, w: 31, h: 44, frames: 1, delay: 10,
+    xS: 318,
+    yS: 75,
+    w: 31,
+    h: 44,
+    frames: 1,
+    delay: 10,
   },
   tonnel: {
-    xS: 314, yS: 32, w: 109, h: 37, frames: 1, delay: 10,
+    xS: 314,
+    yS: 32,
+    w: 109,
+    h: 37,
+    frames: 1,
+    delay: 10,
   },
   gunLeft: {
-    xS: 314, yS: 24, w: 12, h: 6, frames: 1, delay: 10,
+    xS: 314,
+    yS: 24,
+    w: 12,
+    h: 6,
+    frames: 1,
+    delay: 10,
   },
   gunLeftShoot: {
-    xS: 328, yS: 24, w: 12, h: 6, frames: 1, delay: 10,
+    xS: 328,
+    yS: 24,
+    w: 12,
+    h: 6,
+    frames: 1,
+    delay: 10,
   },
   gunRight: {
-    xS: 314, yS: 12, w: 24, h: 9, frames: 1, delay: 10,
+    xS: 314,
+    yS: 12,
+    w: 24,
+    h: 9,
+    frames: 1,
+    delay: 10,
   },
   gunRightShoot: {
-    xS: 339, yS: 12, w: 24, h: 9, frames: 1, delay: 10,
+    xS: 339,
+    yS: 12,
+    w: 24,
+    h: 9,
+    frames: 1,
+    delay: 10,
   },
   aim: {
-    xS: 218, yS: 198, w: 26, h: 31, frames: 3, delay: 15,
+    xS: 218,
+    yS: 198,
+    w: 26,
+    h: 31,
+    frames: 3,
+    delay: 15,
   },
 };
 
@@ -97,7 +137,7 @@ export default class Boss1 {
     level.elementsArray.push(this);
   }
 
-  createGun(x, y, name, image, elementS, mediumBoom) {
+  static createGun(x, y, name, image, elementS, mediumBoom) {
     return {
       health: 16,
       sprite: createSprite(image, ...Object.values(spritesInfo[name]), x, y),
@@ -201,7 +241,7 @@ export default class Boss1 {
     });
   }
 
-  gunDie(gun) {
+  static gunDie(gun) {
     gun.selectState('die');
     Sound.play('enemyDeath');
     setTimeout(() => {
@@ -225,10 +265,10 @@ export default class Boss1 {
     this.bulletsActual = [];
     contra.addScore(this.score);
     this.level.isComplite = true;
+    Sound.stopMusic();
     Sound.play('boss1death');
     this.level.onKeyboard();
     setTimeout(() => {
-      Sound.stopMusic();
       Sound.play('afterBossDeath');
 
       this.sprites.booms = [];
@@ -259,9 +299,9 @@ export default class Boss1 {
 
   checkColission(aim, sprite) {
     this.level.playerBulletsArray.forEach((bullet) => {
-      if (this.health > 0 && bullet.needCheckCpllision
-        && ((bullet instanceof BulletL && sprite.isDynamicIntersect(bullet.getBox()))
-          || sprite.isStaticIntersect(bullet.getBox()))) {
+      if (this.health > 0 && bullet.needCheckCpllision &&
+        ((bullet instanceof BulletL && sprite.isDynamicIntersect(bullet.getBox())) ||
+          sprite.isStaticIntersect(bullet.getBox()))) {
         // eslint-disable-next-line no-param-reassign
         aim.health -= bullet.damage;
         Sound.play('damage');

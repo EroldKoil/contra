@@ -15,7 +15,6 @@ export default class ToothyMouth extends Person {
       w: 20,
       h: 28,
     });
-    level.elementsArray.push(this);
   }
 
   tryAction() {

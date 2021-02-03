@@ -34,16 +34,19 @@ const contra = {
   lives: 3,
   joystick: null,
   hardLevel: 0,
+  timeStart: 0,
   results: {
-    score: 1234567890,
+    miss: 0,
+    bulletsCount: 0,
+    score: 0,
     scoreForLife: 0,
     hiScore: 20000,
     stats: {
-      gameTime: 245,
-      killed: 123456789012,
-      shots: 2425,
-      jumps: 1500,
-      accuracy: 99,
+      gameTime: 0,
+      killed: 0,
+      shots: 0,
+      jumps: 0,
+      accuracy: 0,
     },
   },
 };
@@ -59,16 +62,24 @@ contra.res = {
   levelS: [
     newImage('./assets/sprites/levels/1/spritesheet.png'),
     newImage('./assets/sprites/levels/2/spritesheet.png'),
-    newImage('./assets/sprites/levels/3/level6.png'),
+    newImage('./assets/sprites/levels/3/spritesheet.png'),
   ],
   elementS: newImage('./assets/sprites/elements.png'),
   enemyS: newImage('./assets/sprites/enemy.png'),
   boss: newImage('./assets/sprites/boss/boss.png'),
 };
 
-contra.getAccuracy = () => ((contra.results.bulletsCount - contra.results.miss) /
-  contra.results.bulletsCount) * 100;
+contra.countAccuracy = () => {
+  const res = contra.results;
+  res.stats.accuracy = Math.floor(((res.bulletsCount - res.miss) / res.bulletsCount) * 100);
+};
 
+contra.countTime = () => {
+  const diff = new Date().getTime() - contra.timeStart.getTime();
+  const min = Math.floor(diff / 1000 / 60);
+  const sec = Math.floor(diff / 1000 - min * 60);
+  contra.results.stats.gameTime = `${min}:${sec}`;
+};
 // метод сохранения хайскора
 contra.startGame = () => {
   if (pjs.touchControl.isTouchSupported()) {
@@ -104,12 +115,12 @@ contra.addScore = (score) => {
     contra.results.hiScore = contra.results.score;
     contra.options.set('highScore', contra.results.hiScore);
   }
-  contra.results.killed += 1;
+  contra.results.stats.killed += 1;
   contra.results.scoreForLife += score;
   if (contra.results.scoreForLife > 20000) {
     contra.results.scoreForLife = 0;
     Sound.play('plusLife');
-    contra.player.lifes += 1;
+    contra.lives += 1;
   }
 };
 

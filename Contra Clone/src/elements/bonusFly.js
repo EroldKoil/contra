@@ -15,7 +15,6 @@ export default class BonusFly extends SprObject {
     this.health = 1;
     this.sprite = this.createSprite(contra.res.elementS,
       ...Object.values(level.elementsInfo.flyBonus), 100, x, y);
-    level.elementsArray.push(this);
   }
 
   isTimeToShow(camPos) {
@@ -38,8 +37,12 @@ export default class BonusFly extends SprObject {
 
   checkColission(aim) {
     this.level.playerBulletsArray.forEach((bullet) => {
-      if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox()))
-          || aim.isStaticIntersect(bullet.getBox()))) {
+      let isCollisionFlame = false;
+      if (bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) {
+        isCollisionFlame = true;
+      }
+
+      if (this.health > 0 && (isCollisionFlame || aim.isStaticIntersect(bullet.getBox()))) {
         this.health -= bullet.damage;
         bullet.tryRemove();
         if (this.health < 1) {

@@ -15,7 +15,6 @@ export default class TankBottom extends Person {
     this.weapon = new Weapon('E', this, 1000);
     this.score = 500;
     this.selectState('none');
-    level.elementsArray.push(this);
   }
 
   tryAction() {
@@ -32,7 +31,11 @@ export default class TankBottom extends Person {
 
       if (this.health > 0) {
         let deg = this.getDegree(30, this.selectedState.sprite);
-        deg = deg > 180 ? 180 : deg < 120 ? 120 : deg;
+        if (deg > 180) {
+          deg = 180;
+        } else if (deg < 120) {
+          deg = 120;
+        }
         if (`tankRB${deg}` !== this.selectedState.name) {
           this.selectState(`tankRB${deg}`);
         }

@@ -6,10 +6,20 @@ import gameComplite from '../gameComplite';
 
 const spritesInfo = {
   body: {
-    xS: 1, yS: 560, w: 90, h: 144, frames: 8, delay: 10,
+    xS: 1,
+    yS: 560,
+    w: 90,
+    h: 144,
+    frames: 8,
+    delay: 10,
   },
   blackHeard: {
-    xS: 303, yS: 454, w: 54, h: 59, frames: 1, delay: 10,
+    xS: 303,
+    yS: 454,
+    w: 54,
+    h: 59,
+    frames: 1,
+    delay: 10,
   },
 };
 
@@ -28,7 +38,7 @@ export default class Boss82 {
   constructor(x, y, level) {
     this.x = x;
     this.y = y;
-    this.health = 5;
+    this.health = 60;
     this.level = level;
     this.score = 500000;
     const image = contra.res.boss;
@@ -54,7 +64,10 @@ export default class Boss82 {
 
     this.wallPlatform = new Platform(10, 144, x + 21, y, 'VERTICAL', false);
     this.aim = contra.pjs.game.newRectObject({
-      x: x + 34, y: y + 39, w: 55, h: 50,
+      x: x + 34,
+      y: y + 39,
+      w: 55,
+      h: 50,
     });
 
     level.elementsArray.push(this);
@@ -99,7 +112,7 @@ export default class Boss82 {
         }, 400);
       }, boom.delay);
     });
-    Sound.play('boss2death');
+    Sound.play('boss3death');
     this.level.onKeyboard();
     setTimeout(() => {
       Sound.stopMusic();
@@ -123,8 +136,8 @@ export default class Boss82 {
   checkColission(aim) {
     this.level.playerBulletsArray.forEach((bullet) => {
       if (this.health > 0 && bullet.needCheckCpllision) {
-        if (((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox()))
-          || aim.isStaticIntersect(bullet.getBox()))) {
+        if (((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
+            aim.isStaticIntersect(bullet.getBox()))) {
           Sound.play('damage');
           this.health -= bullet.damage;
           bullet.tryRemove();

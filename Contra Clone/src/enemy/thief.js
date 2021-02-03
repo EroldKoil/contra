@@ -12,7 +12,7 @@ const keys = [
 ];
 
 export default class Thief extends Person {
-  constructor(xCenter, yBottom, vector, level) {
+  constructor(xCenter, yBottom, vector, level, mode) {
     super(xCenter, yBottom, 1, level.enemiesInfo, keys, contra.res.enemyS, level, 'enemyDeath');
     this.vectorMove = vector;
     this.score = 100;
@@ -22,6 +22,7 @@ export default class Thief extends Person {
     this.maxShoot = 2;
     this.canShoot = true;
     this.shootCount = 0;
+    this.mode = mode;
 
     this.isFlip = vector > 0;
     if (this.isFlip) {
@@ -35,7 +36,6 @@ export default class Thief extends Person {
     this.selectState('thiefLie');
 
     this.checkPosition();
-    level.enemyArray.push(this);
   }
 
   tryAction() {
@@ -64,13 +64,13 @@ export default class Thief extends Person {
             if (this.vectorJumpY < 0) {
               dy = this.fallSpeed * this.vectorJumpY;
             } else if (buttomColArray.length > 0) {
-              dy = buttomColArray[0].sprite.y
-                - (this.states.thiefRun.sprite.y + this.states.thiefRun.sprite.h);
+              dy = buttomColArray[0].sprite.y -
+                (this.states.thiefRun.sprite.y + this.states.thiefRun.sprite.h);
               this.selectState('thiefRun');
               this.pose = 'PLATFORM';
             } else if (waterColArray.length > 0) {
-              dy = waterColArray[0].sprite.y
-                - (this.states.thiefRun.sprite.y + this.states.thiefRun.sprite.h);
+              dy = waterColArray[0].sprite.y -
+                (this.states.thiefRun.sprite.y + this.states.thiefRun.sprite.h);
               this.health = 0;
               this.selectState('dip');
               setTimeout(() => {
@@ -89,22 +89,20 @@ export default class Thief extends Person {
               this.pose = 'AIR';
             } else {
               this.vectorJumpX = 0;
-              const collisionSForwardArray = contra.selectedLevel.platformActual.filter(
-                (platform) => platform.sprite.isStaticIntersect(
-                  this.states.thiefRun.sprite
-                    .getStaticBoxS(this.vectorMove > 0 ? 10 : 0, 28,
-                      10 * this.vectorMove, this.fallSpeed - 28),
-                ),
+              const spr = this.states.thiefRun.sprite;
+              const plarforms = contra.selectedLevel.platformActual;
+
+              const collisionSForwardArray = plarforms.filter(
+                (platform) => platform.sprite.isStaticIntersect(spr.getStaticBoxS(this.vectorMove > 0 ? 10 : 0, 28,
+                  10 * this.vectorMove, this.fallSpeed - 28), ),
               );
               if (collisionSForwardArray.length === 0) {
-                const collisionSTop = contra.selectedLevel.platformActual.filter(
-                  (platform) => platform.sprite.isStaticIntersect(
-                    this.states.thiefRun.sprite.getStaticBoxS(40 * this.vectorMove, -15, 0, 20),
-                  ),
+                const collisionSTop = plarforms.filter(
+                  (platform) => platform.sprite.isStaticIntersect(spr.getStaticBoxS(40 * this.vectorMove, -15, 0, 20)),
                 );
-                const collisionSBottom = contra.selectedLevel.platformActual.filter(
+                const collisionSBottom = plarforms.filter(
                   (platform) => platform.sprite.isStaticIntersect(
-                    this.states.thiefRun.sprite.getStaticBoxS(35 * this.vectorMove, 20, 0, 20),
+                    spr.getStaticBoxS(35 * this.vectorMove, 20, 0, 20),
                   ),
                 );
                 if (collisionSTop.length > 0) {
@@ -160,13 +158,13 @@ export default class Thief extends Person {
       if (dx !== 0) {
         let collV = [];
         if (dx > 0) {
-          collV = this.level.platformActual.filter((platform) => platform.collision === 'VERTICAL'
-            && platform.sprite.isStaticIntersect(
+          collV = this.level.platformActual.filter((platform) => platform.collision === 'VERTICAL' &&
+            platform.sprite.isStaticIntersect(
               this.selectedState.sprite.getStaticBoxD(14, 0, -16 + this.moveSpeed),
             ));
         } else {
-          collV = this.level.platformActual.filter((platform) => platform.collision === 'VERTICAL'
-            && platform.sprite.isStaticIntersect(
+          collV = this.level.platformActual.filter((platform) => platform.collision === 'VERTICAL' &&
+            platform.sprite.isStaticIntersect(
               this.selectedState.sprite.getStaticBoxA(4 - this.moveSpeed, 0, -12),
             ));
         }
@@ -199,8 +197,8 @@ export default class Thief extends Person {
 
   tryRemove(die) {
     if (die || !this.selectedState.sprite.isStaticIntersect(
-      this.level.levelBorder.sprite.getStaticBox(),
-    )) {
+        this.level.levelBorder.sprite.getStaticBox(),
+      )) {
       this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
     }
   }
@@ -261,8 +259,8 @@ export default class Thief extends Person {
   checkPosition() {
     const spr = this.selectedState.sprite;
     const platforms = this.level.platformActual.filter(
-      (platform) => platform.collision === 'BOTTOM'
-      && platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, 0, -2, 200)),
+      (platform) => platform.collision === 'BOTTOM' &&
+      platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, 0, -2, 200)),
     );
     if (platforms.length > 0) {
       let minY = platforms[0].sprite.y;

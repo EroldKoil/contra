@@ -14,7 +14,7 @@ export default class Options {
         keyFire: 'O',
         keyJump: 'P',
         highScore: 20000,
-        musicVolume: 0.5,
+        musicVolume: 0.2,
       };
 
       Storage.save('options', this.options);
