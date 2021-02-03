@@ -90,6 +90,7 @@ export default function endScreen(contra, level) {
     // Обработка активации пунктов меню
     if (pjs.keyControl.isPress(keyFire)) {
       Sound.stop('gameOver');
+      // eslint-disable-next-line no-param-reassign
       contra.lives = 3;
       const res = contra.results;
       res.bulletsCount = 0;
@@ -106,6 +107,7 @@ export default function endScreen(contra, level) {
 
       if (menuState === 0) {
         // Continue
+        // eslint-disable-next-line no-param-reassign
         contra.timeStart = new Date();
         setTimeout(startScreen, 0, contra, level, contra.startGame);
       } else {

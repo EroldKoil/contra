@@ -253,6 +253,7 @@ export default class Boss6 extends Person {
           player.die();
         }
         if (!spr.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox())) {
+          // eslint-disable-next-line no-param-reassign
           bullet.isActive = false;
         }
       }
@@ -298,8 +299,8 @@ export default class Boss6 extends Person {
             .isStaticIntersect(spr.getStaticBoxD(0, 0, this.moveSpeed));
           const isLeftBorderIntersect = this.level.leftBorder.sprite
             .isStaticIntersect(spr.getStaticBoxA(-this.moveSpeed));
-          if ((this.vectorMove > 0 && isPlatformIntersect) ||
-            (this.vectorMove < 0 && isLeftBorderIntersect)) {
+          if ((this.vectorMove > 0 && isPlatformIntersect)
+            || (this.vectorMove < 0 && isLeftBorderIntersect)) {
             this.pose = 1;
             this.vectorMove *= -1;
             this.flip(this.vectorMove === 1 ? 1 : 0, 0);
@@ -307,8 +308,8 @@ export default class Boss6 extends Person {
             const dx = this.vectorMove * this.moveSpeed;
             let dy = this.fallSpeed * this.vectorJump;
             if (this.vectorJump > 0) {
-              const collisionSArray = contra.selectedLevel.platformActual.filter((platform) => platform.collision === 'BOTTOM' &&
-                platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, 0, 0, this.fallSpeed)));
+              const collisionSArray = contra.selectedLevel.platformActual.filter((platform) => platform.collision === 'BOTTOM'
+                && platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, 0, 0, this.fallSpeed)));
 
               if (collisionSArray.length > 0) {
                 dy = collisionSArray[0].sprite.y - (spr.y + spr.h);
@@ -371,8 +372,10 @@ export default class Boss6 extends Person {
     Sound.play('boss2death');
     this.boomsArray.forEach((boom) => {
       setTimeout(() => {
+        // eslint-disable-next-line no-param-reassign
         boom.sprite.visible = true;
         setTimeout(() => {
+          // eslint-disable-next-line no-param-reassign
           boom.sprite.visible = false;
         }, 400);
       }, boom.delay);
@@ -424,15 +427,18 @@ export default class Boss6 extends Person {
     this.level.playerBulletsArray.forEach((bullet) => {
       if (this.health > 0 && bullet.needCheckCpllision) {
         aims.forEach((aim) => {
-          if (((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) || aim.isStaticIntersect(bullet.getBox()))) {
+          if (((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox()))
+            || aim.isStaticIntersect(bullet.getBox()))) {
             Sound.play('damage');
             this.health -= bullet.damage;
             if (this.health < 30 && this.health > 15 && health > 29) {
               this.stage = 1;
-              this.selectState(this.selectedState.name.substring(0, this.selectedState.name.length - 1));
+              this.selectState(this.selectedState.name
+                .substring(0, this.selectedState.name.length - 1));
             } else if (this.health < 16 && health > 15) {
               this.stage = 2;
-              this.selectState(this.selectedState.name.substring(0, this.selectedState.name.length - 1));
+              this.selectState(this.selectedState.name
+                .substring(0, this.selectedState.name.length - 1));
             }
             bullet.tryRemove();
           }
@@ -451,6 +457,7 @@ export default class Boss6 extends Person {
       this.door.selectedColor[i] += this.door.coef[i];
     }
     this.door.colorRect.forEach((element) => {
+      // eslint-disable-next-line no-param-reassign
       element.fillColor = contra.pjs.colors.rgb(...this.door.selectedColor);
     });
   }

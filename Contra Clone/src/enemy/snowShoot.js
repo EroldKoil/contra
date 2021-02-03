@@ -88,9 +88,9 @@ export default class SnowShoot extends Person {
   }
 
   tryRemove(die) {
-    if (die ||
-      (!this.selectedState.sprite.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox()) &&
-        this.health > 0)) {
+    if (die
+      || (!this.selectedState.sprite.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox())
+        && this.health > 0)) {
       this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
     }
   }
