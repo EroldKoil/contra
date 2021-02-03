@@ -1,5 +1,4 @@
-/* eslint-disable */
-import BulletL from '../weapon/bulletL'
+import BulletL from '../weapon/bulletL';
 import contra from '../index';
 import Bonus from './bonus';
 import Sound from '../sound';
@@ -27,8 +26,9 @@ export default class BonusRock {
       spritesArr.push(sp);
     });
 
-    const sp = this.createSprite(contra.res.elementS, ...Object.values(level.elementsInfo['mediumBoom']));
-    this.states['death'] = { name: 'death', sprite: sp };
+    const sp = this.createSprite(contra.res.elementS,
+      ...Object.values(level.elementsInfo.mediumBoom));
+    this.states.death = { name: 'death', sprite: sp };
     spritesArr.push(sp);
 
     this.spritesMesh = contra.pjs.game.newMesh({
@@ -80,9 +80,9 @@ export default class BonusRock {
   }
 
   checkColission(aim) {
-    this.level.playerBulletsArray.forEach(bullet => {
-      if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
-          aim.isStaticIntersect(bullet.getBox()))) {
+    this.level.playerBulletsArray.forEach((bullet) => {
+      if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox()))
+          || aim.isStaticIntersect(bullet.getBox()))) {
         this.health -= bullet.damage;
         bullet.tryRemove();
         if (this.health < 1) {

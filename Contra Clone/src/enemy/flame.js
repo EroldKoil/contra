@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import contra from '../index';
 import Sound from '../sound';
 
@@ -50,7 +48,9 @@ export default class Flame {
     this.reloading = reloading;
     this.type = type;
 
-    this.nullFrame = contra.pjs.game.newRectObject({ x: -1, y: -1, w: 1, h: 1 });
+    this.nullFrame = contra.pjs.game.newRectObject({
+      x: -1, y: -1, w: 1, h: 1,
+    });
 
     switch (type) {
       case 'RIGHT':
@@ -68,15 +68,17 @@ export default class Flame {
     let i = -1;
     const spritesArr = [];
     keys.forEach((key) => {
-      const sp = this.createSprite(contra.res.boss, i, type, ...Object.values(level.elementsInfo[key]));
+      const sp = this.createSprite(
+        contra.res.boss, i, type, ...Object.values(level.elementsInfo[key]),
+      );
       this.states[key] = { name: key, sprite: sp };
       spritesArr.push(sp);
       i += 1;
     });
 
     this.spritesMesh = contra.pjs.game.newMesh({
-      x: x,
-      y: y,
+      x,
+      y,
       add: spritesArr,
     });
 
@@ -87,7 +89,7 @@ export default class Flame {
         break;
       case 'BOTTOM':
         spritesArr[0].y += 8;
-        this.flip(0, 1)
+        this.flip(0, 1);
         break;
       case 'LEFT':
         this.flip(1, 0);
@@ -103,7 +105,7 @@ export default class Flame {
 
   tryAction() {
     this.spritesMesh.draw();
-    //this.selectedState.sprite.drawStaticBox();
+    // this.selectedState.sprite.drawStaticBox();
     const camPos = contra.pjs.camera.getPosition().x;
     this.tryRemove(false, camPos);
     if (this.canAction && !(this.x < camPos + 20 && this.type !== 'LEFT')) {
@@ -159,7 +161,7 @@ export default class Flame {
       } else {
         this.states[key].sprite.visible = false;
       }
-      i++;
+      i += 1;
     }
   }
 
@@ -170,7 +172,9 @@ export default class Flame {
   }
 
   getBox() {
-    return this.selectedState === this.noramlState ? this.nullFrame : this.selectedState.sprite; //.getStaticBox();
+    return this.selectedState === this.noramlState
+      ? this.nullFrame
+      : this.selectedState.sprite;
   }
 
   tryRemove(die, camPos) {

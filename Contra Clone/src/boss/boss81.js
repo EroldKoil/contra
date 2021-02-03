@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import contra from '../index';
 import GoldenAlien from '../enemy/goldenAlien';
 import Platform from '../platform';
@@ -7,10 +5,27 @@ import BulletL from '../weapon/bulletL';
 import Sound from '../sound';
 
 const spritesInfo = {
-  jawOpen: { xS: 60, yS: 444, w: 114, h: 112, frames: 1, delay: 10 },
-  jawClose: { xS: 174, yS: 444, w: 112, h: 93, frames: 1, delay: 10 },
-  wall: { xS: 1, yS: 451, w: 48, h: 80, frames: 1, delay: 10 },
+  jawOpen: {
+    xS: 60, yS: 444, w: 114, h: 112, frames: 1, delay: 10,
+  },
+  jawClose: {
+    xS: 174, yS: 444, w: 112, h: 93, frames: 1, delay: 10,
+  },
+  wall: {
+    xS: 1, yS: 451, w: 48, h: 80, frames: 1, delay: 10,
+  },
 };
+
+function createSprite(image, xS, yS, w, h, frames = 1, delay = 100, xCoef = 0, yCoef = 0) {
+  return contra.pjs.game.newAnimationObject({
+    animation: image.getAnimation(xS, yS, w, h, frames),
+    x: xCoef,
+    y: yCoef,
+    w,
+    h,
+    delay,
+  });
+}
 
 export default class Boss81 {
   constructor(x, y, level) {
@@ -22,23 +37,33 @@ export default class Boss81 {
     this.updateCount = 30;
     this.score = 5000;
     const image = contra.res.boss;
-    const boom = Object.values(level.elementsInfo['bigBoom']);
+    const boom = Object.values(level.elementsInfo.bigBoom);
 
     this.boomsArray = [];
     for (let i = 0; i < 7; i += 1) {
-      this.boomsArray.push({ delay: Math.abs(i - 3.5) * 100, sprite: createSprite(contra.res.elementS, ...boom, x - 60 + (20 * i), y + (20 * i)) });
-      this.boomsArray.push({ delay: Math.abs(i - 3.5) * 100, sprite: createSprite(contra.res.elementS, ...boom, x - 60 + 120 - (20 * i), y + (20 * i)) });
+      this.boomsArray.push({
+        delay: Math.abs(i - 3.5) * 100,
+        sprite: createSprite(contra.res.elementS, ...boom, x - 60 + (20 * i), y + (20 * i)),
+      });
+      this.boomsArray.push({
+        delay: Math.abs(i - 3.5) * 100,
+        sprite: createSprite(contra.res.elementS, ...boom, x - 60 + 120 - (20 * i), y + (20 * i)),
+      });
     }
     for (let i = 0; i < 2; i += 1) {
       for (let j = 0; j < 3; j += 1) {
-        this.boomsArray.push({ delay: i * 100, sprite: createSprite(contra.res.elementS, ...boom, x - 30 + (28 * i), y + 113 + (28 * j)) });
+        this.boomsArray.push({
+          delay: i * 100,
+          sprite: createSprite(contra.res.elementS, ...boom, x - 30 + (28 * i), y + 113 + (28 * j)),
+        });
       }
     }
-    this.boomsArray.forEach((boom) => {
-      boom.sprite.visible = false;
+    this.boomsArray.forEach((boomT) => {
+      // eslint-disable-next-line no-param-reassign
+      boomT.sprite.visible = false;
     });
 
-    this.wall = createSprite(image, ...Object.values(spritesInfo['wall']), x - 24, y + 112);
+    this.wall = createSprite(image, ...Object.values(spritesInfo.wall), x - 24, y + 112);
     this.wallPlatform = new Platform(10, 80, x - 24, y + 112, 'VERTICAL', false);
 
     this.shootReloading = 5000;
@@ -46,14 +71,14 @@ export default class Boss81 {
 
     this.canShoot = true;
 
-    const newRect = (x, y, w, h) => {
-      return contra.pjs.game.newRectObject({ x, y, w, h });
-    }
+    const newRect = (xT, yT, w, h) => contra.pjs.game.newRectObject({
+      xT, yT, w, h,
+    });
 
     this.sprites = {
-      open: createSprite(image, ...Object.values(spritesInfo['jawOpen']), x, y),
-      close: createSprite(image, ...Object.values(spritesInfo['jawClose']), x, y),
-    }
+      open: createSprite(image, ...Object.values(spritesInfo.jawOpen), x, y),
+      close: createSprite(image, ...Object.values(spritesInfo.jawClose), x, y),
+    };
     this.sprites.close.visible = false;
 
     this.aims = [
@@ -64,7 +89,7 @@ export default class Boss81 {
     this.aimsJaw = [
       newRect(x + 27, y + 81, 31, 29),
       newRect(x + 15, y + 81, 43, 14),
-    ]
+    ];
     level.elementsArray.push(this);
   }
 
@@ -103,7 +128,7 @@ export default class Boss81 {
 
   die() {
     contra.addScore(this.score);
-    this.level.enemyArray.forEach(enemy => {
+    this.level.enemyArray.forEach((enemy) => {
       if (enemy instanceof GoldenAlien) {
         enemy.die();
       }
@@ -111,8 +136,10 @@ export default class Boss81 {
     Sound.play('boss2death');
     this.boomsArray.forEach((boom) => {
       setTimeout(() => {
+        // eslint-disable-next-line no-param-reassign
         boom.sprite.visible = true;
         setTimeout(() => {
+          // eslint-disable-next-line no-param-reassign
           boom.sprite.visible = false;
         }, 400);
       }, boom.delay);
@@ -149,10 +176,11 @@ export default class Boss81 {
   }
 
   checkColission(aims) {
-    this.level.playerBulletsArray.forEach(bullet => {
+    this.level.playerBulletsArray.forEach((bullet) => {
       if (this.health > 0 && bullet.needCheckCpllision) {
-        aims.forEach(aim => {
-          if (((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) || aim.isStaticIntersect(bullet.getBox()))) {
+        aims.forEach((aim) => {
+          if (((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox()))
+            || aim.isStaticIntersect(bullet.getBox()))) {
             Sound.play('damage');
             this.health -= bullet.damage;
             bullet.tryRemove();
@@ -161,15 +189,4 @@ export default class Boss81 {
       }
     });
   }
-}
-
-function createSprite(image, xS, yS, w, h, frames = 1, delay = 100, xCoef = 0, yCoef = 0) {
-  return contra.pjs.game.newAnimationObject({
-    animation: image.getAnimation(xS, yS, w, h, frames),
-    x: xCoef,
-    y: yCoef,
-    w,
-    h,
-    delay,
-  });
 }

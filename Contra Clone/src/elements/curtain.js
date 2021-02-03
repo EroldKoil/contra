@@ -1,6 +1,5 @@
-/* eslint-disable */
-
 import contra from '../index';
+
 export default class Curtain {
   constructor(array) {
     this.array = array;
@@ -9,7 +8,7 @@ export default class Curtain {
       y: -5,
       w: 300,
       h: 250,
-      fillColor: "#000000",
+      fillColor: '#000000',
     });
   }
 

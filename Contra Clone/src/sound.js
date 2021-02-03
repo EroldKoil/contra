@@ -43,7 +43,7 @@ export default class Sound {
   // ВАЖНО!!! Если вызвать для того же звука до окончания его звучания, текущий звук прервется.
   static play(sound) {
     sounds[sound].audio.currentTime = 0;
-    sounds[sound].audio.play();
+    sounds[sound].audio.play().then((x) => (x));
   }
 
   // Остановить проигрывание звука
@@ -53,7 +53,7 @@ export default class Sound {
   }
 
   // Установить громкость звука
-  static volume(sound, volume) {
+  static setVolume(sound, volume) {
     sounds[sound].audio.volume = volume;
   }
 
@@ -73,7 +73,7 @@ export default class Sound {
     currentLevel = level;
     musicVolume = volume;
     sounds[`level${level}start`].audio.volume = musicVolume;
-    sounds[`level${level}start`].audio.play();
+    sounds[`level${level}start`].audio.play().then((x) => (x));
     sounds[`level${level}start`].audio.addEventListener('ended', this.continueMusic);
   }
 
@@ -89,6 +89,6 @@ export default class Sound {
     sounds[`level${currentLevel}start`].audio.removeEventListener('ended', this.continueMusic);
     sounds[`level${currentLevel}repeat`].audio.loop = true;
     sounds[`level${currentLevel}repeat`].audio.volume = musicVolume;
-    sounds[`level${currentLevel}repeat`].audio.play();
+    sounds[`level${currentLevel}repeat`].audio.play().then((x) => (x));
   }
 }

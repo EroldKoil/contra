@@ -1,7 +1,7 @@
-/* eslint-disable */
 import Bullet from './bullet';
 import contra from '../index';
 import Sound from '../sound';
+
 export default class BulletM extends Bullet {
   constructor(x, y, dx, dy, level, bulletArray, type) {
     super(x, y, dx, dy, level, bulletArray);

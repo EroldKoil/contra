@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import Person from '../person';
 import contra from '../index';
 import Spider from './spider';
@@ -21,7 +19,9 @@ export default class SpiderCocoon extends Person {
     this.flip(0, isFlip);
     this.canShoot = true;
     const spr = this.selectedState.sprite;
-    this.aim = contra.pjs.game.newRectObject({ x: spr.x + 4, y: spr.y + 2, w: spr.w - 8, h: spr.h - 2 });
+    this.aim = contra.pjs.game.newRectObject({
+      x: spr.x + 4, y: spr.y + 2, w: spr.w - 8, h: spr.h - 2,
+    });
     level.elementsArray.push(this);
   }
 
@@ -43,6 +43,7 @@ export default class SpiderCocoon extends Person {
       }
     }
   }
+
   die() {
     contra.addScore(this.score);
     this.selectState('kokonDie');

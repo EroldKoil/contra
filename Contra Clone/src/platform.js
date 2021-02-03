@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import SprObject from './sprObject';
 
 export default class Platform extends SprObject {

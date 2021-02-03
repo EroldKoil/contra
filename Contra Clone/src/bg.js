@@ -1,6 +1,4 @@
-/* eslint-disable */
-
-import Platform from './platform.js';
+import Platform from './platform';
 import SprObject from './sprObject';
 import contra from './index';
 
@@ -28,13 +26,13 @@ export default class Bg extends SprObject {
       case 'k4': // вертикальные правая половина + низ
         this.platforms = [
           new Platform(width / 2 - 2, 26, x + width / 2 + 2, y + 7, 'VERTICAL', false),
-          new Platform(width / 2 - 2, 2, x + width / 2 + 2, y + 6, 'BOTTOM', false)
+          new Platform(width / 2 - 2, 2, x + width / 2 + 2, y + 6, 'BOTTOM', false),
         ];
         break;
       case 'k3': // вертикальные левая половина + низ
         this.platforms = [
           new Platform(width / 2 - 2, 38, x, y - 5, 'VERTICAL', false),
-          new Platform(width / 2 - 2, 2, x, y + 6, 'BOTTOM', false)
+          new Platform(width / 2 - 2, 2, x, y + 6, 'BOTTOM', false),
         ];
         break;
       case 'p1':
@@ -51,7 +49,7 @@ export default class Bg extends SprObject {
       case 'p17': // целая ширина Верх + Вертикаль на всю ширину
         this.platforms = [
           new Platform(width - 4, 1, x + 2, y + 6, 'BOTTOM', canJumpDown),
-          new Platform(width - 4, 38, x + 2, y + 7, 'VERTICAL', false)
+          new Platform(width - 4, 38, x + 2, y + 7, 'VERTICAL', false),
         ];
         break;
       case 'p2':
@@ -103,9 +101,11 @@ export default class Bg extends SprObject {
     }
 
     if (isRoof) {
-      this.platforms.push(new Platform(width - 4, 2, x + 2, y + height - 2, 'ROOF', false))
+      this.platforms.push(new Platform(width - 4, 2, x + 2, y + height - 2, 'ROOF', false));
     }
-    this.sprite = this.createSprite(spriteInfo, contra.res.levelS[level.levelNumber], this.x, this.y);
+    this.sprite = this.createSprite(
+      spriteInfo, contra.res.levelS[level.levelNumber], this.x, this.y,
+    );
 
     level.bgArray.push(this);
     if (this.platforms) {

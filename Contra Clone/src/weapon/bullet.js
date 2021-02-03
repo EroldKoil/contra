@@ -1,4 +1,3 @@
-/* eslint-disable */
 import SprObject from '../sprObject';
 import contra from '../index';
 
@@ -32,7 +31,8 @@ export default class Bullet extends SprObject {
 
   tryRemove() {
     this.needCheckCpllision = false;
-    this.sprite = this.createSprite(this.level.elementsInfo.shootEnd, contra.res.elementS, this.sprite.x, this.sprite.y);
+    this.sprite = this.createSprite(this.level.elementsInfo.shootEnd, contra.res.elementS,
+      this.sprite.x, this.sprite.y);
     contra.results.bulletsCount += 1;
     setTimeout(() => {
       this.bulletArray.splice(this.bulletArray.indexOf(this), 1);
