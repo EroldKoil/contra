@@ -120,7 +120,7 @@ contra.addScore = (score) => {
   if (contra.results.scoreForLife > 20000) {
     contra.results.scoreForLife = 0;
     Sound.play('plusLife');
-    contra.player.lifes += 1;
+    contra.lives += 1;
   }
 };
 

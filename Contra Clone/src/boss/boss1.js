@@ -137,7 +137,7 @@ export default class Boss1 {
     level.elementsArray.push(this);
   }
 
-  createGun(x, y, name, image, elementS, mediumBoom) {
+  static createGun(x, y, name, image, elementS, mediumBoom) {
     return {
       health: 16,
       sprite: createSprite(image, ...Object.values(spritesInfo[name]), x, y),
@@ -241,7 +241,7 @@ export default class Boss1 {
     });
   }
 
-  gunDie(gun) {
+  static gunDie(gun) {
     gun.selectState('die');
     Sound.play('enemyDeath');
     setTimeout(() => {

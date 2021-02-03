@@ -27,8 +27,8 @@ const spritesInfo = {
     yS: 248,
     w: 10,
     h: 76,
-    frames: 10,
-    delay: 100,
+    frames: 15,
+    delay: 9,
   },
   doorOpened: {
     xS: 561,
@@ -161,7 +161,7 @@ function createSprite(image, xS, yS, w, h, frames = 1, delay = 100, xCoef = 0, y
 export default class Boss6 extends Person {
   constructor(x, y, level) {
     const image = contra.res.boss;
-    super(x - 34, y + 116, 10, bossInfo, Object.keys(bossInfo), image, level, 'bigBoom');
+    super(x - 34, y + 116, 50, bossInfo, Object.keys(bossInfo), image, level, 'bigBoom');
     this.x = x;
     this.y = y;
     this.level = level;
@@ -172,23 +172,12 @@ export default class Boss6 extends Person {
     this.isFlip = false;
     this.vectorMove = -1;
     this.start = false;
-    this.pose = 9; // 0- run, 1 - wall, return, jump, shoot
+    this.pose = 9;
     this.vectorJump = 1;
     this.isJump = true;
-
-    const boom = Object.values(level.elementsInfo.bigBoom);
+    this.boom = Object.values(level.elementsInfo.bigBoom);
 
     this.boomsArray = [];
-    for (let i = 0; i < 3; i += 1) {
-      this.boomsArray.push({
-        delay: Math.abs(i - 3.5) * 100,
-        sprite: createSprite(contra.res.elementS, ...boom, x - 60 + (20 * i), y + (20 * i)),
-      });
-      this.boomsArray.push({
-        delay: Math.abs(i - 3.5) * 100,
-        sprite: createSprite(contra.res.elementS, ...boom, x - 60 + 120 - (20 * i), y + (20 * i)),
-      });
-    }
 
     const newRect = (xT, yT, w, h) => contra.pjs.game.newRectObject({
       x: xT,
@@ -218,11 +207,6 @@ export default class Boss6 extends Person {
       selectedColor: [0, 130, 254],
       coef: [2, 2, -2],
     };
-
-    this.boomsArray.forEach((boomT) => {
-      // eslint-disable-next-line no-param-reassign
-      boomT.sprite.visible = false;
-    });
 
     this.shootReloading = 5000;
     this.canShoot = true;
@@ -259,8 +243,6 @@ export default class Boss6 extends Person {
     this.door.colorRect[0].draw();
     this.door.sprites.door1.draw();
 
-    //this.aims.forEach((el) => { el.drawStaticBox(); });
-
     this.bullets.forEach((bullet) => {
       if (bullet.isActive) {
         const spr = bullet.sprite;
@@ -280,8 +262,6 @@ export default class Boss6 extends Person {
 
     if (this.start) {
       if (this.health > 0) {
-        this.spritesMesh.draw();
-        this.drawShadow();
         this.checkColission(this.aims);
         if (this.health < 1) {
           this.die();
@@ -294,10 +274,9 @@ export default class Boss6 extends Person {
             this.moveSpeed = 0;
             this.selectState('stay');
             const n = Math.random();
-
-            if (n < 0.5) { // jump and attack
+            if (n < 0.5) {
               this.pose = 2;
-            } else { // attack and attack
+            } else {
               this.pose = 3;
             }
           }
@@ -350,22 +329,42 @@ export default class Boss6 extends Person {
           boom.sprite.draw();
         });
         if (!this.aims) {
+          this.door.sprites.doorOpen.draw();
           contra.player.calculateMoves([false, true, false, false, false, false]);
           const endSprite = this.door.endPlatform.sprite;
           const playerSpr = contra.player.selectedState.sprite;
           if (endSprite.isStaticIntersect(playerSpr.getStaticBox())) {
             startScreen(contra, 3, contra.startGame);
           }
+        } else {
+          contra.player.calculateMoves([false, false, false, false, false, false]);
         }
-        this.door.sprites.doorOpened.draw();
-        this.door.sprites.doorOpen.draw();
-        this.door.colorRect[1].draw();
-        this.door.sprites.door2.draw();
       }
+    }
+    this.door.colorRect[1].draw();
+    this.door.sprites.door2.draw();
+
+    if (this.spritesMesh) {
+      this.spritesMesh.draw();
+      this.drawShadow();
     }
   }
 
   die() {
+    const xB = this.spritesMesh.x;
+    const yB = this.spritesMesh.y;
+    const bSpr = contra.res.elementS;
+    for (let i = 0; i < 5; i += 1) {
+      this.boomsArray.push({
+        delay: Math.abs(i - 2.5) * 100,
+        sprite: createSprite(bSpr, ...this.boom, xB - 60 + (20 * i), yB - (20 * i)),
+      });
+      this.boomsArray.push({
+        delay: Math.abs(i - 2.5) * 100,
+        sprite: createSprite(bSpr, ...this.boom, xB + 40 - (20 * i), yB - (20 * i)),
+      });
+    }
+    this.spritesMesh = null;
     contra.addScore(this.score);
     this.level.enemyArray.forEach((enemy) => {
       enemy.die();
@@ -386,12 +385,8 @@ export default class Boss6 extends Person {
       Sound.play('afterBossDeath');
       setTimeout(() => {
         this.aims = null;
-      }, 1000);
+      }, 2000);
     }, 2500);
-
-    setTimeout(() => {
-      this.door.sprites.doorOpen.visible = false;
-    }, 1000);
   }
 
   jump() {

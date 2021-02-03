@@ -19,7 +19,6 @@ export default class Bridge extends Element {
       this.platforms.push(p);
       level.platformActual.push(p);
     }
-    level.elementsArray.push(this);
   }
 
   tryAction() {
@@ -45,33 +44,33 @@ export default class Bridge extends Element {
   }
 
   boom(i) {
-    Sound.play('explosion');
-    const addBoom = (x, y) => {
-      this.boomSprites.push(this.createSprite(
-        this.level.elementsInfo.bigBoom, contra.res.elementS, x, y,
-      ));
-    };
+      Sound.play('explosion');
+      const addBoom = (x, y) => {
+        this.boomSprites.push(this.createSprite(
+          this.level.elementsInfo.bigBoom, contra.res.elementS, x, y,
+        ));
+      };
 
-    addBoom(this.x - 16 + 32 * i, this.y);
-    setTimeout(() => { addBoom(this.x + 16 + 32 * i, this.y); }, 150);
-    setTimeout(() => { addBoom(this.x + 32 * i, this.y - 16); }, 300);
-    setTimeout(() => {
-      addBoom(this.x + 32 * i, this.y);
-      let booms = 0;
-      const interval = setInterval(() => {
-        this.boomSprites.splice(0, 1);
-        booms += 1;
-        if (booms === 3) {
-          if (i === this.blockCount - 1) {
-            this.level.elementsActual.splice(this.level.elementsActual.indexOf(this), 1);
+      addBoom(this.x - 16 + 32 * i, this.y);
+      setTimeout(() => { addBoom(this.x + 16 + 32 * i, this.y); }, 150);
+      setTimeout(() => { addBoom(this.x + 32 * i, this.y - 16); }, 300);
+      setTimeout(() => {
+        addBoom(this.x + 32 * i, this.y);
+        let booms = 0;
+        const interval = setInterval(() => {
+          this.boomSprites.splice(0, 1);
+          booms += 1;
+          if (booms === 3) {
+            if (i === this.blockCount - 1) {
+              this.level.elementsActual.splice(this.level.elementsActual.indexOf(this), 1);
+            }
+            clearInterval(interval);
           }
-          clearInterval(interval);
-        }
-      }, 200);
-    }, 450);
+        }, 200);
+      }, 450);
 
-    this.level.platformActual.splice(this.level.platformActual.indexOf(this.platforms[i]), 1);
-    this.sprites.splice(0, 1);
-  }
-  // eslint-disable-next-line eol-last
+      this.level.platformActual.splice(this.level.platformActual.indexOf(this.platforms[i]), 1);
+      this.sprites.splice(0, 1);
+    }
+    // eslint-disable-next-line eol-last
 }

@@ -194,10 +194,6 @@ export default class Boss81 {
   }
 
   checkColission(aims) {
-    console.log('chexk');
-    if (this.level.playerBulletsArray.length > 0) {
-      console.log(this.level.playerBulletsArray.length);
-    }
     this.level.playerBulletsArray.forEach((bullet) => {
       if (this.health > 0 && bullet.needCheckCpllision) {
         aims.forEach((aim) => {

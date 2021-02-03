@@ -45,7 +45,6 @@ export default class BonusRock {
       w: 22,
       h: 22,
     });
-    level.elementsArray.push(this);
   }
 
   createSprite(image, xS, yS, w, h, frames = 1, delay = 100, xCoef = 0, yCoef = 0) {
@@ -81,8 +80,8 @@ export default class BonusRock {
 
   checkColission(aim) {
     this.level.playerBulletsArray.forEach((bullet) => {
-      if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox()))
-          || aim.isStaticIntersect(bullet.getBox()))) {
+      if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
+          aim.isStaticIntersect(bullet.getBox()))) {
         this.health -= bullet.damage;
         bullet.tryRemove();
         if (this.health < 1) {

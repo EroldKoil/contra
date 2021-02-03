@@ -22,7 +22,7 @@ function changeLanguage(contra, textLayer, touchSupported) {
 
 function startGame(contra) {
   contra.timeStart = new Date();
-  setTimeout(startScreen, 0, contra, 3 /*1*/ , contra.startGame);
+  setTimeout(startScreen, 0, contra, 1, contra.startGame);
 }
 
 export default function mainMenu(contra) {
