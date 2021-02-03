@@ -1,4 +1,3 @@
-/* eslint-disable */
 import Player from './player';
 import PointJS from './pointjs_0.2.0.9';
 import mainMenu from './mainmenu';
@@ -67,12 +66,10 @@ contra.res = {
   boss: newImage('./assets/sprites/boss/boss.png'),
 };
 
-contra.getAccuracy = () => {
-  return (contra.results.bulletsCount - contra.results.miss) / contra.results.bulletsCount * 100;
-}
+contra.getAccuracy = () => ((contra.results.bulletsCount - contra.results.miss)
+  / contra.results.bulletsCount) * 100;
 
 // метод сохранения хайскора
-
 contra.startGame = () => {
   if (pjs.touchControl.isTouchSupported()) {
     contra.joystick.displayJoystick(true);
@@ -81,7 +78,7 @@ contra.startGame = () => {
   const interval = setInterval(() => {
     if (contra.pjs.resources.isLoaded()) {
       clearInterval(interval);
-      // Sound.playMusic(contra.selectedLevel.levelNumber + 1);
+      Sound.playMusic(contra.selectedLevel.levelNumber + 1, contra.options.get('musicVolume'));
       pjs.camera.setPosition(pjs.vector.point(0, 0));
       if (contra.player) {
         const { player } = contra;
@@ -107,7 +104,7 @@ contra.addScore = (score) => {
     contra.results.hiScore = contra.results.score;
     contra.options.set('highScore', contra.results.hiScore);
   }
-    contra.results.killed += 1;
+  contra.results.killed += 1;
   contra.results.scoreForLife += score;
   if (contra.results.scoreForLife > 20000) {
     contra.results.scoreForLife = 0;
@@ -120,9 +117,9 @@ contra.lang = getLanguageObject(contra.options.get('language'));
 
 let dialogText = contra.lang.dialog;
 if (pjs.touchControl.isTouchSupported()) {
-  dialogText = dialogText.replace(/{{.*}}/,'');
+  dialogText = dialogText.replace(/{{.*}}/, '');
 } else {
-  dialogText = dialogText.replace(/{{|}}/g,'')
+  dialogText = dialogText.replace(/{{|}}/g, '')
     .replace(/{up}/, contra.options.get('keyUp'))
     .replace(/{down}/, contra.options.get('keyDown'))
     .replace(/{left}/, contra.options.get('keyLeft'))
@@ -145,6 +142,15 @@ const startButtonEl = document.getElementById('start-button');
 startButtonEl.addEventListener('click', buttonPress);
 startButtonEl.addEventListener('touchend', buttonPress);
 
+function resizeInit() {
+  if (document.querySelector('canvas') === null) {
+    setTimeout(resizeInit, 50);
+  } else {
+    window.onresize = resize;
+    resize();
+  }
+}
+
 window.onresize = resizeInit;
 
 // Обработчик кнопки модального окна
@@ -157,15 +163,6 @@ if (pjs.touchControl.isTouchSupported()) {
   pjs.touchControl.initControl();
   contra.joystick = new Joystick();
   contra.joystick.displayJoystick(false);
-}
-
-function resizeInit() {
-  if (document.querySelector('canvas') === null) {
-    setTimeout(resizeInit, 50);
-  } else {
-    window.onresize = resize;
-    resize();
-  }
 }
 
 resizeInit();

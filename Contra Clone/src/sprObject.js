@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import contra from './index';
 
 export default class SprObject {
@@ -28,6 +26,8 @@ export default class SprObject {
   }
 
   newRect(x, y, w, h) {
-    return contra.pjs.game.newRectObject({ x, y, w, h });
+    return contra.pjs.game.newRectObject({
+      x, y, w, h,
+    });
   }
 }

@@ -1,9 +1,6 @@
-/* eslint-disable */
-
 import Weapon from '../weapon/weapon';
 import Person from '../person';
 import contra from '../index';
-import Sound from '../sound';
 
 const keys = [
   'tankRB180',
@@ -39,15 +36,13 @@ export default class TankBottom extends Person {
         if (`tankRB${deg}` !== this.selectedState.name) {
           this.selectState(`tankRB${deg}`);
         }
-        deg = Math.PI / 180 * deg;
+        deg *= Math.PI / 180;
         if (this.weapon.canShoot) {
-          this.weapon.shoot(deg, this.xCenter + Math.cos(deg) * 16, this.yBottom - 16 - Math.sin(deg) * 16);
+          this.weapon.shoot(deg,
+            this.xCenter + Math.cos(deg) * 16, this.yBottom - 16 - Math.sin(deg) * 16);
         }
       }
     }
-  }
-  getSprites() {
-    //  return [...this.sprites, ...this.boomSprites];
   }
 
   open() {

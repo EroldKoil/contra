@@ -1,9 +1,5 @@
-/* eslint-disable */
-
-import Weapon from '../weapon/weapon';
 import Person from '../person';
 import contra from '../index';
-import Sound from '../sound';
 
 const keys = [
   'lichinka',
@@ -48,10 +44,9 @@ export default class Spider extends Person {
     }
 
     if (this.health > 0) {
-      let dx = this.vectorMove * this.moveSpeed;
+      const dx = this.vectorMove * this.moveSpeed;
       let dy = 0;
       this.tryRemove(false, contra.pjs.camera.getPosition().x);
-
 
       const spr = this.states.spider.sprite;
       const player = contra.player.selectedState.sprite;
@@ -60,16 +55,11 @@ export default class Spider extends Person {
         this.mayFallDown(spr, player);
       }
 
-
       let collisionArray;
       if (this.vectorJumpY === 1) {
-        collisionArray = contra.selectedLevel.platformActual.filter((platform) =>
-          platform.collision === 'BOTTOM' && platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, this.fallSpeed, 0, 0))
-        );
+        collisionArray = contra.selectedLevel.platformActual.filter((platform) => platform.collision === 'BOTTOM' && platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, this.fallSpeed, 0, 0)));
       } else {
-        collisionArray = contra.selectedLevel.platformActual.filter((platform) =>
-          platform.collision === 'ROOF' && platform.sprite.isStaticIntersect(spr.getStaticBoxW(0, -this.fallSpeed, 0, 0))
-        );
+        collisionArray = contra.selectedLevel.platformActual.filter((platform) => platform.collision === 'ROOF' && platform.sprite.isStaticIntersect(spr.getStaticBoxW(0, -this.fallSpeed, 0, 0)));
       }
 
       switch (this.pose) {
@@ -84,7 +74,8 @@ export default class Spider extends Person {
             this.pose = 'PLATFORM';
             this.selectState('spider');
             this.moveSpeed = 1.2;
-            if (this.isFlipY === 0 && (spr.x + spr.w / 2) < (player.x + player.w / 2) && Math.random() < 0.1) {
+            if (this.isFlipY === 0
+              && (spr.x + spr.w / 2) < (player.x + player.w / 2) && Math.random() < 0.1) {
               this.flip(1, 0);
               this.vectorMove = 1;
             }

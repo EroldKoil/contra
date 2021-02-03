@@ -1,5 +1,3 @@
-/* eslint-disable*/
-
 import Bullet from './bullet';
 import contra from '../index';
 import Sound from '../sound';
@@ -23,7 +21,6 @@ export default class BulletF extends Bullet {
       if (this.sprite.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox())) {
         const xy = this.getDxy(this.deg + (Math.PI / 3), this.d);
         this.sprite.setPosition(p(this.x + xy[0], this.y + xy[1]));
-
       } else {
         this.tryRemove();
       }

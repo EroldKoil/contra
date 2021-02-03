@@ -1,4 +1,3 @@
-/* eslint-disable */
 import Bullet from './bullet';
 import contra from '../index';
 import Sound from '../sound';
@@ -35,7 +34,8 @@ export default class BulletL extends Bullet {
       dDeg = 0;
       xCor = -10;
     }
-    this.sprite = this.createSprite(level.elementsInfo.shootL, contra.res.elementS, x + xCor, y + yCor);
+    this.sprite = this.createSprite(level.elementsInfo.shootL,
+      contra.res.elementS, x + xCor, y + yCor);
     this.sprite.setAngle(dDeg);
     Sound.play('fireL');
   }
@@ -43,6 +43,7 @@ export default class BulletL extends Bullet {
   getBox() {
     return this.sprite.getDynamicBox();
   }
+
   tryRemove() {
     this.needCheckCpllision = false;
     this.bulletArray.splice(this.bulletArray.indexOf(this), 1);

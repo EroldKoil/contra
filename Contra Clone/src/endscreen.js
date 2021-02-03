@@ -90,6 +90,7 @@ export default function endScreen(contra, level) {
 
       if (menuState === 0) {
         // Continue
+        // eslint-disable-next-line no-param-reassign
         contra.selectedLevel = new Level(level, contra);
         contra.player.lifes = 2;
         contra.startGame();
@@ -111,6 +112,7 @@ export default function endScreen(contra, level) {
         8 * 8 - 4 < y && y < 9 * 8 + 4) {
         // Был тач к Continue
         Sound.stop('gameOver');
+        // eslint-disable-next-line no-param-reassign
         contra.selectedLevel = new Level(level, contra);
         contra.startGame();
       } else if (13 * 8 < x && x < (13 + contra.lang.language.length) * 8 &&

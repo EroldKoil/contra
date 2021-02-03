@@ -1,12 +1,10 @@
-/* eslint-disable */
-
 import Weapon from '../weapon/weapon';
 import Person from '../person';
 import contra from '../index';
 
 const keys = [
   'turel',
-  'turelShoot'
+  'turelShoot',
 ];
 
 export default class Turel extends Person {
@@ -24,7 +22,6 @@ export default class Turel extends Person {
     this.spritesMesh.draw();
     const camPos = contra.pjs.camera.getPosition().x;
     this.tryRemove(false, camPos);
-
 
     if (this.health > 0) {
       this.checkColission(this.selectedState.sprite);

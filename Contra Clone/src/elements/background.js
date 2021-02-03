@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import Platform from '../platform';
 import contra from '../index';
 
@@ -25,15 +23,19 @@ export default class Background {
     });
 
     for (let i = 0; i < platforms.length; i += 1) {
-      const { x, y, w, h, collision } = platforms[i];
-      const canFallDown = platforms[i].canFallDown ? true : false;
+      const {
+        x, y, w, h, collision,
+      } = platforms[i];
+      const canFallDown = !!platforms[i].canFallDown;
       level.platformActual.push(new Platform(w, h, x, y, collision, canFallDown));
     }
 
     this.paddons = paddons;
 
     for (let i = 0; i < paddons.length; i += 1) {
-      const { x, y, length, needVertical } = paddons[i];
+      const {
+        x, y, length, needVertical,
+      } = paddons[i];
 
       let w = 48;
       if (length > 1) {
@@ -44,7 +46,7 @@ export default class Background {
         this.paddons[i].x -= 16;
       }
 
-      const canFallDown = paddons[i].cantFallDown ? false : true;
+      const canFallDown = !paddons[i].cantFallDown;
       level.platformActual.push(new Platform(w, 1, x, y, 'BOTTOM', canFallDown));
       if (needVertical) {
         level.platformActual.push(new Platform(w, 40, x, y + 1, 'VERTICAL', false));
@@ -56,7 +58,7 @@ export default class Background {
 
   tryAction() {
     this.sprite.draw();
-    this.paddons.forEach(p => {
+    this.paddons.forEach((p) => {
       this.signal.x = p.x + 25;
       this.signal.y = p.y + 11;
       this.signal.draw();
@@ -66,7 +68,6 @@ export default class Background {
           this.signal.draw();
         }
       }
-
     });
   }
 }

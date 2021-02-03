@@ -1,10 +1,6 @@
-/* eslint-disable */
-
 import Person from '../person';
 import contra from '../index';
 import SnowShoot from './snowShoot';
-import Sound from '../sound';
-
 
 export default class ToothyMouth extends Person {
   constructor(xCenter, yBottom, level) {

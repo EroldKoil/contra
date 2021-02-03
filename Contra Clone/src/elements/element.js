@@ -1,5 +1,3 @@
-/* eslint-disable eol-last */
-/* eslint-disable import/no-cycle */
 import SprObject from '../sprObject';
 
 export default class Element extends SprObject {

@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import Weapon from '../weapon/weapon';
 import Person from '../person';
 import contra from '../index';
@@ -60,7 +58,7 @@ export default class Sniper extends Person {
       const playerSpr = contra.player.selectedState.sprite;
       const needFlip = spr.x + spr.w / 2 < playerSpr.x + playerSpr.w / 2;
       if (needFlip !== this.isFlip) {
-        this.isFlip = needFlip
+        this.isFlip = needFlip;
         this.flip(this.isFlip ? 1 : 0, 0);
       }
 
@@ -69,7 +67,8 @@ export default class Sniper extends Person {
         if (this.health > 0) {
           if (this.type === 'HALF') {
             if (this.weapon.canShoot && this.canShot) {
-              this.weapon.shoot(this.isFlip ? 0 : Math.PI, this.xCenter + (this.isFlip ? 13 : -13), this.yBottom - 12);
+              this.weapon.shoot(this.isFlip ? 0 : Math.PI,
+                this.xCenter + (this.isFlip ? 13 : -13), this.yBottom - 12);
               this.canShot = false;
               this.hide(false);
             }
@@ -84,7 +83,7 @@ export default class Sniper extends Person {
               }
             }
             deg = deg === 360 ? 0 : deg;
-            deg = deg === 90 ? 135 : deg === 270 ? 225 : deg;
+            deg = deg === 90 ? 135 : (deg === 270 ? 225 : deg);
 
             if (this.isFlip) {
               switch (deg) {
@@ -105,7 +104,7 @@ export default class Sniper extends Person {
               this.selectState(`sniper${deg}`);
             }
 
-            degReal = Math.PI / 180 * degReal;
+            degReal *= Math.PI / 180;
             if (this.weapon.canShoot && this.canShot) {
               let yCoef = 0;
               switch (deg) {
@@ -124,8 +123,9 @@ export default class Sniper extends Person {
                 default:
                   break;
               }
-              this.weapon.shoot(degReal, this.xCenter + (this.isFlip ? spr.w / 2 : -10), this.yBottom + yCoef);
-              this.selectState(`${this.selectedState.name}Shot`)
+              this.weapon.shoot(degReal,
+                this.xCenter + (this.isFlip ? spr.w / 2 : -10), this.yBottom + yCoef);
+              this.selectState(`${this.selectedState.name}Shot`);
               this.shotCount += 1;
               if (this.shotCount > 2) {
                 if (this.type === 'STAYH') {

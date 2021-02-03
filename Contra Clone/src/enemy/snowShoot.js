@@ -1,8 +1,5 @@
-/* eslint-disable */
-
 import Person from '../person';
 import contra from '../index';
-import Sound from '../sound';
 
 export default class SnowShoot extends Person {
   constructor(xCenter, yBottom, level) {
@@ -10,7 +7,7 @@ export default class SnowShoot extends Person {
     this.touchDemage = true;
     this.selectState('snowShoot');
     this.score = 300;
-    this.vector = Math.PI / 180 * this.getDegree(1, this.selectedState.sprite);
+    this.vector = (Math.PI / 180) * this.getDegree(1, this.selectedState.sprite);
     this.dV = Math.PI;
     this.speed = 0.3;
     this.level.enemyArray.push(this);
@@ -24,7 +21,7 @@ export default class SnowShoot extends Person {
       const spr = this.selectedState.sprite;
       this.checkColission(spr);
       this.tryRemove(false);
-      this.count--;
+      this.count -= 1;
       const pi = Math.PI;
 
       if (this.count < 0) {
@@ -57,17 +54,15 @@ export default class SnowShoot extends Person {
 
       if (this.mode === 4) {
         this.speed = 0.3 + this.count / 40;
-        this.dV = pi / 200 * (1 + this.count);
+        this.dV = (pi / 200) * (1 + this.count);
       }
 
-
       if (this.health > 0) {
-
         let deg = (pi / 180) * this.getDegree(45, this.selectedState.sprite, 4);
 
         if (Math.abs(this.vector - deg) >= pi) {
           deg = deg > pi ? deg - pi : deg + pi;
-          let diff = this.vector - deg;
+          const diff = this.vector - deg;
           this.vector += diff > 0 ? -this.dV : this.dV;
         } else {
           let diff = this.vector - deg;
@@ -80,11 +75,11 @@ export default class SnowShoot extends Person {
         }
 
         if (this.vector > (2 * pi)) {
-          this.vector = this.vector - (2 * pi);
+          this.vector -= (2 * pi);
         } else if (this.vector < 0) {
           this.vector = 2 * pi + this.vector;
         }
-        //this.vector = deg;
+        // this.vector = deg;
       }
       const dx = +(this.speed * Math.cos(this.vector)).toFixed(2);
       const dy = +(-this.speed * Math.sin(this.vector)).toFixed(2);
@@ -94,8 +89,9 @@ export default class SnowShoot extends Person {
   }
 
   tryRemove(die) {
-    if (die || (!this.selectedState.sprite.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox()) &&
-        this.health > 0)) {
+    if (die
+      || (!this.selectedState.sprite.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox())
+        && this.health > 0)) {
       this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
     }
   }

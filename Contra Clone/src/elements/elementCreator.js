@@ -1,5 +1,3 @@
-// /* eslint-disable */
-
 import Bridge from './bridge';
 import BonusRock from './bonusRock';
 import BonusFly from './bonusFly';

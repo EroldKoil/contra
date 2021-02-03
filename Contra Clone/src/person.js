@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import contra from './index';
 import Player from './player';
 import BulletL from './weapon/bulletL';
@@ -10,7 +8,8 @@ export default class Person {
     this.level = level;
     this.xCenter = xCenter;
     this.yBottom = yBottom;
-    this.shadow = this.createSprite(contra.res.elementS, ...Object.values(level.elementsInfo['shadow']));
+    this.shadow = this.createSprite(contra.res.elementS,
+      ...Object.values(level.elementsInfo.shadow));
 
     this.states = {};
     this.dontShoot = true; // flag to understand? am I shoot now
@@ -22,8 +21,9 @@ export default class Person {
     });
 
     if (!(this instanceof Player)) {
-      const sp = this.createSprite(contra.res.elementS, ...Object.values(level.elementsInfo[typeOfDeath]));
-      this.states['death'] = { name: 'death', sprite: sp };
+      const sp = this.createSprite(contra.res.elementS,
+        ...Object.values(level.elementsInfo[typeOfDeath]));
+      this.states.death = { name: 'death', sprite: sp };
       spritesArr.push(sp);
     }
 
@@ -70,7 +70,7 @@ export default class Person {
   getDegree(round, spr, dy = 0, dx = 0) {
     const player = contra.player.selectedState.sprite;
     const plX = player.x + player.w / 2;
-    const plY = player.y + (player.h / 2)
+    const plY = player.y + (player.h / 2);
     const aimX = spr.x + spr.w / 2 + dx;
     const aimY = spr.y + spr.h / 2 + dy;
     let deg = Math.atan(-(aimY - plY) / (aimX - plX));
@@ -82,15 +82,16 @@ export default class Person {
     } else {
       deg = Math.PI + deg;
     }
-    deg = Math.round(180 / Math.PI * deg / round) * round;
+    deg = Math.round((180 / Math.PI / round) * deg) * round;
     return deg === 360 ? 0 : deg;
   }
 
   // Проверка объекта на столкновение с пулей
   checkColission(aim) {
-    this.level.playerBulletsArray.forEach(bullet => {
-      if (this.health > 0 && bullet.needCheckCpllision &&
-        ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) || aim.isStaticIntersect(bullet.getBox()))) {
+    this.level.playerBulletsArray.forEach((bullet) => {
+      if (this.health > 0 && bullet.needCheckCpllision
+        && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox()))
+          || aim.isStaticIntersect(bullet.getBox()))) {
         this.health -= bullet.damage;
         bullet.tryRemove();
         if (this.health < 1) {
@@ -115,7 +116,7 @@ export default class Person {
   }
 
   getBox() {
-    return this.selectedState.sprite; //.getStaticBox();
+    return this.selectedState.sprite; // .getStaticBox();
   }
 
   die() {
@@ -130,11 +131,11 @@ export default class Person {
   drawShadow() {
     const sh = this.shadow;
     const spr = this.selectedState.sprite;
-    sh.x = spr.x + 1
+    sh.x = spr.x + 1;
     sh.w = spr.w - 2;
     const platforms = this.level.platformActual.filter(
-      (platform) => platform.collision === 'BOTTOM' &&
-      platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, spr.h * 0.8, -2, 40))
+      (platform) => platform.collision === 'BOTTOM'
+      && platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, spr.h * 0.8, -2, 40)),
     );
     if (platforms.length > 0) {
       let minY = platforms[0].sprite.y;

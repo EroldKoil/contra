@@ -1,5 +1,3 @@
-/* eslint-disable*/
-
 import Person from './person';
 import Weapon from './weapon/weapon';
 import contra from './index';
@@ -230,10 +228,16 @@ const playerSprites = {
   },
 };
 const gameOverSpr = [
-  { x: 234, y: 31, w: 46, h: 18 },
-  { x: 175, y: 31, w: 46, h: 10 },
-  { x: 291, y: 31, w: 71, h: 10 },
-]
+  {
+    x: 234, y: 31, w: 46, h: 18,
+  },
+  {
+    x: 175, y: 31, w: 46, h: 10,
+  },
+  {
+    x: 291, y: 31, w: 71, h: 10,
+  },
+];
 
 const xCenter = 80;
 const yBottom = 60;
@@ -241,11 +245,12 @@ const health = 1;
 
 export default class Player extends Person {
   constructor(level) {
-    super(xCenter, yBottom, health, playerSprites, Object.keys(playerSprites), contra.res.playerS, level);
+    super(xCenter, yBottom, health, playerSprites,
+      Object.keys(playerSprites), contra.res.playerS, level);
     this.positionX = 0;
     this.lifes = 2;
     this.assailable = false; // Уязвим ли
-    this.weapon = new Weapon('D', this, 200, 3); //200, 5
+    this.weapon = new Weapon('D', this, 200, 3); // 200, 5
     this.needCalc = true; // обновление координат и обработка кнопок;
     this.pose = 'AIR'; // air , platform , water, death
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
@@ -262,7 +267,8 @@ export default class Player extends Person {
     this.selectState('jump');
 
     this.medal = this.createSprite(contra.res.elementS, ...Object.values(level.elementsInfo.medal));
-    this.gameOverspr = this.createSprite(contra.res.playerS, ...Object.values(gameOverSpr[contra.options.options.language]));
+    this.gameOverspr = this.createSprite(contra.res.playerS,
+      ...Object.values(gameOverSpr[contra.options.options.language]));
     this.medal.y = 2;
     this.reBurn();
   }
@@ -275,6 +281,7 @@ export default class Player extends Person {
   // buttons = [UP, Right, Bottom, Left,   Jump, Shot]
   calculateMoves(buttons) {
     if (this.health < 1) {
+      // eslint-disable-next-line no-param-reassign
       buttons = [false, false, false, false, false, false];
       this.gameOverspr.draw();
     }
@@ -304,23 +311,29 @@ export default class Player extends Person {
     }
 
     const collisionSArray = contra.selectedLevel.platformActual.filter(
-      (platform) => platform.sprite.isStaticIntersect(this.states.run.sprite.getStaticBoxS(2, 28, -4, this.fallSpeed - 28)),
+      (platform) => platform.sprite.isStaticIntersect(
+        this.states.run.sprite.getStaticBoxS(2, 28, -4, this.fallSpeed - 28),
+      ),
     );
 
     const collisionDArray = contra.selectedLevel.platformActual.filter(
-      (platform) => platform.sprite.isStaticIntersect(this.selectedState.sprite.getStaticBoxD(14, 0, -16 + this.moveSpeed)),
+      (platform) => platform.sprite.isStaticIntersect(
+        this.selectedState.sprite.getStaticBoxD(14, 0, -16 + this.moveSpeed),
+      ),
     );
 
     const collisionAArray = contra.selectedLevel.platformActual.filter(
-      (platform) => platform.sprite.isStaticIntersect(this.selectedState.sprite.getStaticBoxA(4 - this.moveSpeed, 0, -12)),
+      (platform) => platform.sprite.isStaticIntersect(
+        this.selectedState.sprite.getStaticBoxA(4 - this.moveSpeed, 0, -12),
+      ),
     );
 
-    //this.selectedState.sprite.drawStaticBoxA(4 - this.moveSpeed, 0, -12);
-    //this.selectedState.sprite.drawStaticBoxD(14, 0, -16 + this.moveSpeed);
+    // this.selectedState.sprite.drawStaticBoxA(4 - this.moveSpeed, 0, -12);
+    // this.selectedState.sprite.drawStaticBoxD(14, 0, -16 + this.moveSpeed);
     /*
         [...collisionSArray, ...collisionDArray].forEach(element => {
           element.sprite.drawStaticBox();
-        });*/
+        }); */
     const buttomColArray = collisionSArray.filter((platform) => platform.collision === 'BOTTOM');
     const waterColArray = buttomColArray.length > 0 ? [] : collisionSArray.filter((platform) => platform.collision === 'WATER');
 
@@ -334,11 +347,10 @@ export default class Player extends Person {
           this.vectorJumpX = 0;
           this.pose = 'PLATFORM';
           Sound.play('stomp');
-
         } else if (waterColArray.length > 0) {
           dy = waterColArray[0].sprite.y - (this.states.run.sprite.y + this.states.run.sprite.h);
           this.startSwim();
-          //this.needCalc = false;
+          // this.needCalc = false;
           return;
         } else {
           dy = this.fallSpeed * this.vectorJumpY;
@@ -369,10 +381,8 @@ export default class Player extends Person {
               this.selectState('run_Top');
             } else if (buttons[2]) {
               this.selectState('run_Bottom');
-            } else {
-              if (this.selectedState.name !== 'runAndFire' || this.timeAfterShoot > this.timeForAnimationShot) {
-                this.selectState('run');
-              }
+            } else if (this.selectedState.name !== 'runAndFire' || this.timeAfterShoot > this.timeForAnimationShot) {
+              this.selectState('run');
             }
           } else if (buttons[0]) {
             this.vectorJumpX = 0;
@@ -424,15 +434,17 @@ export default class Player extends Person {
       const collV = array.filter((platform) => platform.collision === 'VERTICAL');
       if (collV.length > 0) {
         const spr = this.selectedState.sprite;
-        dx = dx > 0 ? (collV[0].sprite.x - (spr.x + spr.w) + 2) : (collV[0].sprite.x + collV[0].width - spr.x - 4);
+        dx = dx > 0
+          ? (collV[0].sprite.x - (spr.x + spr.w) + 2)
+          : (collV[0].sprite.x + collV[0].width - spr.x - 4);
       }
     }
 
     if (dy < 0) {
       const spr = this.selectedState.sprite;
       const collisionWArray = contra.selectedLevel.platformActual.filter(
-        (platform) => platform.collision === 'ROOF' &&
-        platform.sprite.isStaticIntersect(spr.getStaticBoxW(0, dy, 0, 0)),
+        (platform) => platform.collision === 'ROOF'
+        && platform.sprite.isStaticIntersect(spr.getStaticBoxW(0, dy, 0, 0)),
       );
       if (collisionWArray.length > 0) {
         dy = collisionWArray[0].sprite.y - collisionWArray[0].sprite.h - spr.y + 1;
@@ -440,10 +452,10 @@ export default class Player extends Person {
       }
     }
 
-    /////
+    /// //
 
     if (contra.pjs.keyControl.isDown('SHIFT')) {
-      dx = dx * 10;
+      dx *= 10;
     }
 
     if (this.debag) {
@@ -458,15 +470,14 @@ export default class Player extends Person {
     }
 
     if (contra.pjs.keyControl.isDown('C')) {
-      let lastX = this.spritesMesh.x;
+      const lastX = this.spritesMesh.x;
       this.spritesMesh.x = this.level.length - 256;
-      this.level.moveCamera(this.spritesMesh.x - lastX)
+      this.level.moveCamera(this.spritesMesh.x - lastX);
       this.spritesMesh.y = 40;
       this.positionX = this.spritesMesh.x;
     }
 
-    /////////
-
+    /// //////
 
     this.positionX += dx;
     if (Number.isNaN(this.positionX)) {
@@ -478,7 +489,8 @@ export default class Player extends Person {
     this.spritesMesh.draw();
     this.drawShadow();
 
-    if (dx > 0 && this.spritesMesh.x > camPos + 32 * 4 && camPos <= contra.selectedLevel.length && this.level.canMoveCamera) {
+    if (dx > 0 && this.spritesMesh.x > camPos + 32 * 4
+      && camPos <= contra.selectedLevel.length && this.level.canMoveCamera) {
       contra.selectedLevel.moveCamera(dx);
     }
   }
@@ -635,8 +647,8 @@ export default class Player extends Person {
           break;
       }
 
-      if (name !== 'jump' && name !== 'fall' &&
-        !name.includes('swim') && !name.includes('AndFire')) {
+      if (name !== 'jump' && name !== 'fall'
+        && !name.includes('swim') && !name.includes('AndFire')) {
         this.selectState(`${name}AndFire`);
       }
 
@@ -677,8 +689,10 @@ export default class Player extends Person {
   }
 
   checkColission() {
-    const dengerousEnemy = contra.selectedLevel.enemyArray.filter((enemy) => enemy.touchDemage && enemy.health > 0);
-    [...dengerousEnemy, ...this.level.bulletsArray].forEach(el => {
+    const dengerousEnemy = contra.selectedLevel.enemyArray.filter(
+      (enemy) => enemy.touchDemage && enemy.health > 0,
+    );
+    [...dengerousEnemy, ...this.level.bulletsArray].forEach((el) => {
       if (this.health > 0 && el.getBox().isStaticIntersect(this.getBox())) {
         this.die();
       }
@@ -692,14 +706,14 @@ export default class Player extends Person {
 
   selectState(stateName, forDeath) {
     if (this.health > 0 || forDeath) {
-      for (const key in this.states) {
+      Object.keys(this.states).forEach((key) => {
         if (key === stateName) {
           this.states[key].sprite.visible = true;
           this.selectedState = this.states[key];
         } else {
           this.states[key].sprite.visible = false;
         }
-      }
+      });
     }
   }
 
@@ -710,7 +724,7 @@ export default class Player extends Person {
     this.pose = 'AIR';
     this.vectorJumpY = -0.3; // Направление силы притяжения. 1 - вниз. -1 - вверх
     setTimeout(() => {
-      this.vectorJumpY = 0.3
+      this.vectorJumpY = 0.3;
     }, 300);
 
     this.vectorJumpX = -this.vectorMove;
@@ -721,7 +735,7 @@ export default class Player extends Person {
       this.lifes -= 1;
     }
     this.weapon.changeWeapon('D');
-    //this.level.onKeyboard();
+    // this.level.onKeyboard();
     setTimeout(() => {
       this.selectState('died', true);
       if (this.lifes > 0) {
@@ -734,13 +748,17 @@ export default class Player extends Person {
         }, 2000);
         this.gameOverspr.x = contra.pjs.camera.getPosition().x + 20;
         this.gameOverspr.y = 10;
+<<<<<<< HEAD
+=======
+        this.gameOverspr.draw();
+>>>>>>> 4194587e2dcdb66597b905e5219419394252d2cc
       }
     }, 500);
   }
 
   reBurn() {
     this.spritesMesh.y = 10;
-    this.positionX = contra.pjs.camera.getPosition().x + 40
+    this.positionX = contra.pjs.camera.getPosition().x + 40;
     this.spritesMesh.x = this.positionX;
     this.vectorJumpX = 0;
     this.selectState('jump', true);
@@ -766,9 +784,9 @@ export default class Player extends Person {
     setTimeout(() => {
       clearInterval(interval);
       this.assailable = true;
-      for (const key in this.states) {
+      Object.keys(this.states).forEach((key) => {
         this.states[key].sprite.setAlpha(1);
-      }
+      });
     }, time); // time
   }
 }

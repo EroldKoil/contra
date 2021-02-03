@@ -8,6 +8,7 @@ export default function startScreen(contra, level, callback) {
   let frameCounter = 0;
   const lastFrame = 208;
 
+  // eslint-disable-next-line no-param-reassign
   contra.selectedLevel = new Level(level, contra);
 
   // Очки
