@@ -4,6 +4,8 @@ import Person from './person';
 import Weapon from './weapon/weapon';
 import contra from './index';
 import Sound from './sound';
+import endScreen from './endScreen';
+
 
 const playerSprites = {
   stay: {
@@ -727,10 +729,11 @@ export default class Player extends Person {
           this.reBurn();
         }, 1000);
       } else {
-        Sound.play('gameOver');
+        setTimeout(() => {
+          endScreen(contra, this.level.levelNumber + 1);
+        }, 2000);
         this.gameOverspr.x = contra.pjs.camera.getPosition().x + 20;
         this.gameOverspr.y = 10;
-        this.gameOverspr.draw()
       }
     }, 500);
   }

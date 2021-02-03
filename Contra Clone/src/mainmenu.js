@@ -21,7 +21,7 @@ function changeLanguage(contra, textLayer, touchSupported) {
 }
 
 function startGame(contra) {
-  setTimeout(startScreen, 0, contra, 2 /*1*/ , contra.startGame);
+  setTimeout(startScreen, 0, contra, 1, contra.startGame);
 }
 
 export default function mainMenu(contra) {
