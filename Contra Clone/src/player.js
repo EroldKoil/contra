@@ -233,18 +233,8 @@ const gameOverSpr = [{
     w: 46,
     h: 18,
   },
-  {
-    x: 175,
-    y: 31,
-    w: 46,
-    h: 10,
-  },
-  {
-    x: 291,
-    y: 31,
-    w: 71,
-    h: 10,
-  },
+  { x: 175, y: 31, w: 46, h: 10 },
+  { x: 291, y: 31, w: 71, h: 10 }
 ];
 
 const xCenter = 80;
@@ -256,7 +246,7 @@ export default class Player extends Person {
     super(xCenter, yBottom, health, playerSprites,
       Object.keys(playerSprites), contra.res.playerS, level);
     this.positionX = 0;
-    this.lifes = 2;
+    //  this.lifes = 3;
     this.assailable = false; // Уязвим ли
     this.weapon = new Weapon('D', this, 200, 3); // 200, 5
     this.needCalc = true; // обновление координат и обработка кнопок;
@@ -308,7 +298,7 @@ export default class Player extends Person {
       this.vectorMove = -1;
     }
 
-    for (let i = 0; i < this.lifes; i += 1) {
+    for (let i = 0; i < contra.lives - 1; i += 1) {
       this.medal.x = camPos + 10 + 10 * i;
       this.medal.draw();
     }
@@ -497,8 +487,10 @@ export default class Player extends Person {
     this.spritesMesh.draw();
     this.drawShadow();
 
-    if (dx > 0 && this.spritesMesh.x > camPos + 32 * 4 &&
-      camPos <= contra.selectedLevel.length && this.level.canMoveCamera) {
+    if (dx > 0 &&
+      (this.spritesMesh.x > (camPos + 32 * 4)) &&
+      camPos <= contra.selectedLevel.length &&
+      this.level.canMoveCamera) {
       contra.selectedLevel.moveCamera(dx);
     }
   }
@@ -740,13 +732,13 @@ export default class Player extends Person {
     this.selectState('die', true);
     this.health = 0;
     if (!this.isGodMode) {
-      this.lifes -= 1;
+      contra.lives -= 1;
     }
     this.weapon.changeWeapon('D');
     // this.level.onKeyboard();
     setTimeout(() => {
       this.selectState('died', true);
-      if (this.lifes > 0) {
+      if (contra.lives > 0) {
         setTimeout(() => {
           this.reBurn();
         }, 1000);

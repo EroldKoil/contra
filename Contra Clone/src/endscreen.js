@@ -2,6 +2,7 @@ import TextLayer from './text';
 import Sound from './sound';
 import Level from './level';
 import mainMenu from './mainmenu';
+import startScreen from './startscreen';
 
 export default function endScreen(contra, level) {
   const { pjs } = contra;
@@ -91,9 +92,10 @@ export default function endScreen(contra, level) {
       if (menuState === 0) {
         // Continue
         // eslint-disable-next-line no-param-reassign
-        contra.selectedLevel = new Level(level, contra);
-        contra.player.lifes = 2;
-        contra.startGame();
+        // contra.selectedLevel = new Level(level, contra);
+        contra.lives = 3;
+        setTimeout(startScreen, 0, contra, level, contra.startGame);
+        //contra.startGame();
       } else {
         // End
         setTimeout(mainMenu, 0, contra);
