@@ -1,6 +1,4 @@
 /* eslint-disable */
-
-// import Level from './level';
 import Player from './player';
 import PointJS from './pointjs_0.2.0.9';
 import mainMenu from './mainmenu';
@@ -8,7 +6,6 @@ import getLanguageObject from './multilang';
 import Options from './options';
 import Sound from './sound';
 import Joystick from './joystick';
-import gameComplite from './gameComplite';
 
 function resize() {
   let width = window.innerWidth;
@@ -39,21 +36,26 @@ const contra = {
   lives: 3,
   hardLevel: 0,
   results: {
-    bulletsCount: 0,
-    miss: 0,
-    score: 0,
+    score: 1234567890,
     scoreForLife: 0,
-    kills: 0,
-  }
+    hiScore: 20000,
+    stats: {
+      gameTime: 245,
+      killed: 123456789012,
+      shots: 2425,
+      jumps: 1500,
+      accuracy: 99,
+    },
+  },
 };
 export default contra;
 
 const { pjs } = contra;
 
-
 // Инициализация свойств, недоступных при создании объекта
 const { newImage } = contra.pjs.tiles;
 contra.res = {
+  title: newImage('../assets/main_menu/menu_bg.png'),
   playerS: newImage('./assets/sprites/player/player.png'),
   levelS: [
     newImage('./assets/sprites/levels/1/spritesheet.png'),
@@ -101,7 +103,11 @@ contra.startGame = () => {
 
 contra.addScore = (score) => {
   contra.results.score += score;
-  contra.results.kills += 1;
+  if (contra.results.score > contra.results.hiScore) {
+    contra.results.hiScore = contra.results.score;
+    contra.options.set('highScore', contra.results.hiScore);
+  }
+    contra.results.killed += 1;
   contra.results.scoreForLife += score;
   if (contra.results.scoreForLife > 20000) {
     contra.results.scoreForLife = 0;
@@ -112,21 +118,42 @@ contra.addScore = (score) => {
 
 contra.lang = getLanguageObject(contra.options.get('language'));
 
-document.querySelector('dialog').showModal(); // Показать модальное окно
+let dialogText = contra.lang.dialog;
+if (pjs.touchControl.isTouchSupported()) {
+  dialogText = dialogText.replace(/{{.*}}/,'');
+} else {
+  dialogText = dialogText.replace(/{{|}}/g,'')
+    .replace(/{up}/, contra.options.get('keyUp'))
+    .replace(/{down}/, contra.options.get('keyDown'))
+    .replace(/{left}/, contra.options.get('keyLeft'))
+    .replace(/{right}/, contra.options.get('keyRight'))
+    .replace(/{fire}/, contra.options.get('keyFire'))
+    .replace(/{jump}/, contra.options.get('keyJump'));
+}
+
+const dialogEl = document.querySelector('dialog');
+dialogEl.innerHTML = dialogText;
+dialogEl.showModal(); // Показать модальное окно
 
 function buttonPress() {
-  document.querySelector('dialog').close();
-  //gameComplite();
+  dialogEl.close();
   mainMenu(contra); // Все стартует отсюда!
 }
 
-pjs.keyControl.initControl();
+// Обработчик кнопки модального окна
+const startButtonEl = document.getElementById('start-button');
+startButtonEl.addEventListener('click', buttonPress);
+startButtonEl.addEventListener('touchend', buttonPress);
+
+window.onresize = resizeInit;
 
 // Обработчик кнопки модального окна
-document.getElementById('start-button').addEventListener('click', buttonPress);
+startButtonEl.addEventListener('click', buttonPress);
+
+pjs.keyControl.initControl();
 
 if (pjs.touchControl.isTouchSupported()) {
-  document.getElementById('start-button').addEventListener('touchend', buttonPress);
+  startButtonEl.addEventListener('touchend', buttonPress);
   pjs.touchControl.initControl();
   contra.joystick = new Joystick();
   contra.joystick.displayJoystick(false);
