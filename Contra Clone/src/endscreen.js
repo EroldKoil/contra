@@ -10,7 +10,6 @@ export default function endScreen(contra, level) {
   const blinkingTextLayer = new TextLayer(pjs);
   let frameCounter = 0;
 
-
   const selEagle = pjs.game.newImageObject({
     file: '../assets/main_menu/eagle_selector.png',
     x: 0,
@@ -91,11 +90,8 @@ export default function endScreen(contra, level) {
 
       if (menuState === 0) {
         // Continue
-        // eslint-disable-next-line no-param-reassign
-        // contra.selectedLevel = new Level(level, contra);
         contra.lives = 3;
         setTimeout(startScreen, 0, contra, level, contra.startGame);
-        //contra.startGame();
       } else {
         // End
         setTimeout(mainMenu, 0, contra);

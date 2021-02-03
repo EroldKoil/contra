@@ -31,8 +31,8 @@ const contra = {
   player: null,
   startGame: null,
   lang: null,
-  joystick: null,
   lives: 3,
+  joystick: null,
   hardLevel: 0,
   results: {
     score: 1234567890,
@@ -66,8 +66,8 @@ contra.res = {
   boss: newImage('./assets/sprites/boss/boss.png'),
 };
 
-contra.getAccuracy = () => ((contra.results.bulletsCount - contra.results.miss)
-  / contra.results.bulletsCount) * 100;
+contra.getAccuracy = () => ((contra.results.bulletsCount - contra.results.miss) /
+  contra.results.bulletsCount) * 100;
 
 // метод сохранения хайскора
 contra.startGame = () => {

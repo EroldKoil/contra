@@ -2,8 +2,7 @@ import Person from './person';
 import Weapon from './weapon/weapon';
 import contra from './index';
 import Sound from './sound';
-import endScreen from './endScreen';
-
+import endScreen from './endscreen';
 
 const playerSprites = {
   stay: {
@@ -233,8 +232,18 @@ const gameOverSpr = [{
     w: 46,
     h: 18,
   },
-  { x: 175, y: 31, w: 46, h: 10 },
-  { x: 291, y: 31, w: 71, h: 10 }
+  {
+    x: 175,
+    y: 31,
+    w: 46,
+    h: 10,
+  },
+  {
+    x: 291,
+    y: 31,
+    w: 71,
+    h: 10,
+  },
 ];
 
 const xCenter = 80;
@@ -246,7 +255,6 @@ export default class Player extends Person {
     super(xCenter, yBottom, health, playerSprites,
       Object.keys(playerSprites), contra.res.playerS, level);
     this.positionX = 0;
-    //  this.lifes = 3;
     this.assailable = false; // Уязвим ли
     this.weapon = new Weapon('D', this, 200, 3); // 200, 5
     this.needCalc = true; // обновление координат и обработка кнопок;
@@ -487,10 +495,8 @@ export default class Player extends Person {
     this.spritesMesh.draw();
     this.drawShadow();
 
-    if (dx > 0 &&
-      (this.spritesMesh.x > (camPos + 32 * 4)) &&
-      camPos <= contra.selectedLevel.length &&
-      this.level.canMoveCamera) {
+    if (dx > 0 && this.spritesMesh.x > camPos + 32 * 4 &&
+      camPos <= contra.selectedLevel.length && this.level.canMoveCamera) {
       contra.selectedLevel.moveCamera(dx);
     }
   }
