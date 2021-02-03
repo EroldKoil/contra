@@ -2,22 +2,9 @@
 
 import Bg from './bg';
 import Platform from './platform';
-import ElementCreator from './elements/elementCreator';
 import Curtain from './elements/curtain';
 import contra from './index';
 import elementCreator from './elements/elementCreator';
-import Bridge from './elements/bridge';
-import BonusRock from './elements/bonusRock';
-import BonusFly from './elements/bonusFly';
-import EnemyCreator from './enemy/enemyCreator';
-import TankInRock from './enemy/tankInRock';
-import TankBottom from './enemy/tankBottom';
-import Sniper from './enemy/sniper';
-import ToothyMouth from './enemy/toothyMouth';
-import SpiderCocoon from './enemy/spiderCocoon';
-import Boss1 from './boss/boss1';
-import Boss81 from './boss/boss81';
-import Boss82 from './boss/boss82';
 
 // import EnemyCreator from './enemy/enemyCreator';
 // import Sound from './sound';
@@ -25,121 +12,120 @@ import Boss82 from './boss/boss82';
 const map = {
   blockSize: 32,
   levels: [{
-    length: 3071, // 3071, // 250
-    bg: [
-      ['s1', 's2', 0, 0, 'w', 'w1', 'w'],
-      ['s2', 0, 'g1', 'p1', 'r1', 'rw1', 'w'],
-      ['s1', 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
-      ['m1', 'm2', 'g2', 'p1', 'r1', 'rw1', 'w'],
-      ['m3', 'm4', 'g2', 'p1', 'r1', 'rw4', 'w2'],
-      ['m5', 'm6', 'g2', 'p1', 'p1', 'r1', 'w3'],
-      ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'], //
-      ['m7', 'm8', 'g2', 'p1', 'p1', 'r1', 'w3'],
-      ['s1', 0, 'g2', 'p1', 'r1', 'p1', 'w4'],
-      ['s2', 0, 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
-      ['m1', 'm2', 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
-      ['m3', 'm4', 'g2', 'p1', 'r1', 'p1', 'w5'],
-      ['m5', 'm6', 'g2', 'p1', 'r1', 'rw2', 'w8'],
-      ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'],
-      ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'],
-      ['m5', 'm6', 'g2', 'p1', 'r1', 'rw3', 'w6'],
-      ['m3', 'm4', 'g2', 'p1', 'r1', 'rw1', 'w'],
-      ['m5', 'm6', 'g2', 'p1', 'r1', 'rw4', 'w2'],
-      ['m3', 'm4', 'g2', 'p1', 'r1', 'r1', 'w4'],
-      ['m5', 'm6', 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
-      ['m7', 'm8', 'g2', 'p1', 'p2', 'r1', 'pw1-n'],
-      [0, 's1', 'g2', 'p1', 'p2', 'r1', 'w5'],
-      ['s1', 's2', 'g2', 'p1', 'p2', 'r1', 'w3'],
-      [0, 0, 'g3', 'p1', 'r1', 'rw3', 'w6'],
-      ['s1', 0, 0, 'b4', 'w', 'w7', 'w'],
-      ['s2', 0, 's2', 0, 'w', 'w', 'w'],
-      [0, 's1', 0, 0, 'w', 'w', 'w'],
-      ['s3', 's2', 0, 'b5', 'w', 'w1', 'w'],
-      ['s2', 's1', 'g1', 'p1', 'r1', 'rw1', 'w'],
-      ['s2', 's1', 'g2', 'p1', 'r1', 'rw1', 'w'],
-      [0, 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
-      ['s1', 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
-      [0, 's2', 'g3', 'p1', 'r1', 'rw1', 'w'],
-      [0, 's2', 0, 'b4', 'w', 'w7', 'w'],
-      [0, 0, 0, 0, 'w', 'w', 'w'],
-      ['s2', 's1', 0, 0, 'w', 'w', 'w'],
-      ['s1', 0, 0, 'b5', 'w', 'w1', 'w'],
-      [0, 0, 'g1', 'p1', 'r1', 'rw1', 'w'],
-      ['s2', 0, 'g2', 'p1', 'r1', 'rw4', 'w2'],
-      ['m1', 'm2', 'g2', 'p1', 'r1', 'r1', 'w3'],
-      ['m3', 'm4', 'g2', 'p1', 'r1', 'r1', 'w3'],
-      ['m7', 'm8', 'g2', 'p1', 'r1', 'r1', 'w3'],
-      ['s2', 's1', 'g3', 'p1', 'r1', 'r1', 'w3'],
-      ['g4', 'g6', 'p1', 'p1', 'r1', 'r1', 'w4'],
-      ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'pw1-n'],
-      ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'pw1-n'],
-      ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'pw1-n'],
-      ['g5', 'g6', 'p1', 'p1', 'p2', 'r1', 'w5'],
-      ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'w3'],
-      ['g5', 'g6', 'p1', 'r1', 'r1', 'rw2', 'w8'],
-      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
-      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
-      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
-      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w4'],
-      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'pw1-n'],
-      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'pw2-n'],
-      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'p1-n'],
-      ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'p1-n'],
-      ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'p1-n'],
-      ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'p1-n'],
-      ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
-      ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
-      ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
-      ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
-      ['g5', 'g6', 'p1', 'p1', 'r1', 'p1', 'r1'],
-      ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'r1'],
-      ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'r1'],
-      ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'r1'],
-      ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'r1'],
-      ['g5', 'g7', 'g7', 'g6', 'p1', 'r1', 'r1'],
-      ['g5', 'g7', 'g6', 'p1', 'p1', 'r1', 'r1'],
-      ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
-      ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
-      ['g5', 'g7', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
-      ['g5', 'g7', 'g7', 'g6', 'p1', 'p1', 'r1'],
-      ['g5', 'g7', 'g7', 'g7', 'g6', 'p1', 'r1'],
-      ['g5', 'g7', 'g7', 'g7', 'g6', 'p1', 'r1'],
-      ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
-      ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'p1-n'],
-      ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'r1'],
-      ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
-      ['g8', 'g9', 'g6', 'p1', 'r1', 'r1', 'r1'],
-      ['g8', 'g5', 'g6', 'p1', 'p1', 'r1', 'r1'],
-      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
-      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
-      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
-      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
-      ['g8', 'g5', 'g7', 'g7', 'g7', 'g6', 'p1-n'],
-      ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
-      ['g8', 'g5', 'g7', 'g7', 'g6', 'p1', 'r1'],
-      ['g8', 'g5', 'g7', 'g7', 'g6', 'p1', 'r1'],
-      ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
-      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
-      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'], //
-      ['g8', 'g5', 'g6', 'p1', 'r1', 'r1', 'p1-n'],
-      ['g8', 'g5', 'g6', 'p1', 'p2', 'r1', 'p1-n'],
-      ['g8', 'g5', 'g6', 'p1', 'p2', 'r1', 'p1-n'],
-      ['g8', 'g5', 'g6', 'p1', 'p2', 'r1', 'p1-n'],
-      ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
-      ['g10', 'g5', 'g7', 'g7', 'g6', 'p1', 'p1-n'],
-      [0, 'g10', 'g7', 'g7', 'g7', 'g7', 'p1-n'],
-      [0, 0, 0, 0, 0, 0, 'p1'],
-    ],
-    elements: [
+      length: 3071, // 3071, // 250
+      bg: [
+        ['s1', 's2', 0, 0, 'w', 'w1', 'w'],
+        ['s2', 0, 'g1', 'p1', 'r1', 'rw1', 'w'],
+        ['s1', 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
+        ['m1', 'm2', 'g2', 'p1', 'r1', 'rw1', 'w'],
+        ['m3', 'm4', 'g2', 'p1', 'r1', 'rw4', 'w2'],
+        ['m5', 'm6', 'g2', 'p1', 'p1', 'r1', 'w3'],
+        ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'], //
+        ['m7', 'm8', 'g2', 'p1', 'p1', 'r1', 'w3'],
+        ['s1', 0, 'g2', 'p1', 'r1', 'p1', 'w4'],
+        ['s2', 0, 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
+        ['m1', 'm2', 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
+        ['m3', 'm4', 'g2', 'p1', 'r1', 'p1', 'w5'],
+        ['m5', 'm6', 'g2', 'p1', 'r1', 'rw2', 'w8'],
+        ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'],
+        ['m3', 'm4', 'g2', 'p1', 'p1', 'r1', 'w3'],
+        ['m5', 'm6', 'g2', 'p1', 'r1', 'rw3', 'w6'],
+        ['m3', 'm4', 'g2', 'p1', 'r1', 'rw1', 'w'],
+        ['m5', 'm6', 'g2', 'p1', 'r1', 'rw4', 'w2'],
+        ['m3', 'm4', 'g2', 'p1', 'r1', 'r1', 'w4'],
+        ['m5', 'm6', 'g2', 'p1', 'r1', 'r1', 'pw1-n'],
+        ['m7', 'm8', 'g2', 'p1', 'p2', 'r1', 'pw1-n'],
+        [0, 's1', 'g2', 'p1', 'p2', 'r1', 'w5'],
+        ['s1', 's2', 'g2', 'p1', 'p2', 'r1', 'w3'],
+        [0, 0, 'g3', 'p1', 'r1', 'rw3', 'w6'],
+        ['s1', 0, 0, 'b4', 'w', 'w7', 'w'],
+        ['s2', 0, 's2', 0, 'w', 'w', 'w'],
+        [0, 's1', 0, 0, 'w', 'w', 'w'],
+        ['s3', 's2', 0, 'b5', 'w', 'w1', 'w'],
+        ['s2', 's1', 'g1', 'p1', 'r1', 'rw1', 'w'],
+        ['s2', 's1', 'g2', 'p1', 'r1', 'rw1', 'w'],
+        [0, 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
+        ['s1', 0, 'g2', 'p1', 'r1', 'rw1', 'w'],
+        [0, 's2', 'g3', 'p1', 'r1', 'rw1', 'w'],
+        [0, 's2', 0, 'b4', 'w', 'w7', 'w'],
+        [0, 0, 0, 0, 'w', 'w', 'w'],
+        ['s2', 's1', 0, 0, 'w', 'w', 'w'],
+        ['s1', 0, 0, 'b5', 'w', 'w1', 'w'],
+        [0, 0, 'g1', 'p1', 'r1', 'rw1', 'w'],
+        ['s2', 0, 'g2', 'p1', 'r1', 'rw4', 'w2'],
+        ['m1', 'm2', 'g2', 'p1', 'r1', 'r1', 'w3'],
+        ['m3', 'm4', 'g2', 'p1', 'r1', 'r1', 'w3'],
+        ['m7', 'm8', 'g2', 'p1', 'r1', 'r1', 'w3'],
+        ['s2', 's1', 'g3', 'p1', 'r1', 'r1', 'w3'],
+        ['g4', 'g6', 'p1', 'p1', 'r1', 'r1', 'w4'],
+        ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'pw1-n'],
+        ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'pw1-n'],
+        ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'pw1-n'],
+        ['g5', 'g6', 'p1', 'p1', 'p2', 'r1', 'w5'],
+        ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'w3'],
+        ['g5', 'g6', 'p1', 'r1', 'r1', 'rw2', 'w8'],
+        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
+        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
+        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w3'],
+        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'w4'],
+        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'pw1-n'],
+        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'pw2-n'],
+        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'p1-n'],
+        ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'p1-n'],
+        ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'p1-n'],
+        ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'p1-n'],
+        ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
+        ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
+        ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
+        ['g5', 'g7', 'g6', 'p1', 'r1', 'p1', 'r1'],
+        ['g5', 'g6', 'p1', 'p1', 'r1', 'p1', 'r1'],
+        ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'r1'],
+        ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'r1'],
+        ['g5', 'g6', 'p1', 'r1', 'r1', 'r1', 'r1'],
+        ['g5', 'g6', 'p1', 'r1', 'p1', 'r1', 'r1'],
+        ['g5', 'g7', 'g7', 'g6', 'p1', 'r1', 'r1'],
+        ['g5', 'g7', 'g6', 'p1', 'p1', 'r1', 'r1'],
+        ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
+        ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
+        ['g5', 'g7', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
+        ['g5', 'g7', 'g7', 'g6', 'p1', 'p1', 'r1'],
+        ['g5', 'g7', 'g7', 'g7', 'g6', 'p1', 'r1'],
+        ['g5', 'g7', 'g7', 'g7', 'g6', 'p1', 'r1'],
+        ['g5', 'g7', 'g6', 'p1', 'r1', 'r1', 'r1'],
+        ['g5', 'g6', 'p1', 'p1', 'r1', 'r1', 'p1-n'],
+        ['g5', 'g6', 'p1', 'r1', 'p2', 'r1', 'r1'],
+        ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
+        ['g8', 'g9', 'g6', 'p1', 'r1', 'r1', 'r1'],
+        ['g8', 'g5', 'g6', 'p1', 'p1', 'r1', 'r1'],
+        ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
+        ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
+        ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
+        ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
+        ['g8', 'g5', 'g7', 'g7', 'g7', 'g6', 'p1-n'],
+        ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
+        ['g8', 'g5', 'g7', 'g7', 'g6', 'p1', 'r1'],
+        ['g8', 'g5', 'g7', 'g7', 'g6', 'p1', 'r1'],
+        ['g5', 'g7', 'g7', 'g7', 'g7', 'g7', 'g7'],
+        ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'],
+        ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'r1'], //
+        ['g8', 'g5', 'g6', 'p1', 'r1', 'r1', 'p1-n'],
+        ['g8', 'g5', 'g6', 'p1', 'p2', 'r1', 'p1-n'],
+        ['g8', 'g5', 'g6', 'p1', 'p2', 'r1', 'p1-n'],
+        ['g8', 'g5', 'g6', 'p1', 'p2', 'r1', 'p1-n'],
+        ['g8', 'g5', 'g7', 'g6', 'p1', 'r1', 'p1-n'],
+        ['g10', 'g5', 'g7', 'g7', 'g6', 'p1', 'p1-n'],
+        [0, 'g10', 'g7', 'g7', 'g7', 'g7', 'p1-n'],
+        [0, 0, 0, 0, 0, 0, 'p1'],
+      ],
+      elements: [
+        { name: 'bonusRock', x: 336, y: 160, type: 'M' },
+        { name: 'bonusRock', x: 1584, y: 160, type: 'F' },
+        { name: 'bonusRock', x: 2288, y: 190, type: 'S' },
 
-      { name: 'bonusRock', x: 336, y: 160, type: 'M' },
-      { name: 'bonusRock', x: 1584, y: 160, type: 'F' },
-      { name: 'bonusRock', x: 2288, y: 190, type: 'S' },
-
-      { name: 'bonusFly', x: 220, y: 75, type: 'R' },
-      { name: 'bonusFly', x: 1120, y: 75, type: 'S' },
-      { name: 'bonusFly', x: 2324, y: 60, type: 'R' },
-      { name: 'bonusFly', x: 2324, y: 180, type: 'L' },
+        { name: 'bonusFly', x: 220, y: 75, type: 'R' },
+        { name: 'bonusFly', x: 1120, y: 75, type: 'S' },
+        { name: 'bonusFly', x: 2324, y: 60, type: 'R' },
+        { name: 'bonusFly', x: 2324, y: 180, type: 'L' },
 
         { name: 'sniper', x: 317, y: 198, type: 'STAY' },
         { name: 'sniper', x: 639, y: 198, type: 'STAY' },
@@ -148,28 +134,28 @@ const map = {
         { name: 'sniper', x: 1554, y: 56, type: 'HALF' },
         { name: 'sniper', x: 2360, y: 134, type: 'STAY' },
 
-      { name: 'tankBottom', x: 2065, y: 160 },
-      { name: 'tankBottom', x: 2192, y: 64 },
-      { name: 'tankBottom', x: 2769, y: 128 },
-      { name: 'tankInRock', x: 1264, y: 160 },
-      { name: 'tankInRock', x: 1650, y: 128 },
-      { name: 'tankInRock', x: 1841, y: 128 },
-      { name: 'tankInRock', x: 2993, y: 192 },
-      { name: 'tankInRock', x: 3121, y: 192 },
-      { name: 'bridge', x: 768, y: 96, blockCount: 4 },
-      { name: 'bridge', x: 1056, y: 96, blockCount: 4 },
+        { name: 'tankBottom', x: 2065, y: 160 },
+        { name: 'tankBottom', x: 2192, y: 64 },
+        { name: 'tankBottom', x: 2769, y: 128 },
+        { name: 'tankInRock', x: 1264, y: 160 },
+        { name: 'tankInRock', x: 1650, y: 128 },
+        { name: 'tankInRock', x: 1841, y: 128 },
+        { name: 'tankInRock', x: 2993, y: 192 },
+        { name: 'tankInRock', x: 3121, y: 192 },
+        { name: 'bridge', x: 768, y: 96, blockCount: 4 },
+        { name: 'bridge', x: 1056, y: 96, blockCount: 4 },
 
-      { name: 'boss1', x: 3216, y: 41 },
+        { name: 'boss1', x: 3216, y: 41 },
 
-      {
-        name: 'enemyCreator',
-        type: 'thief',
-        coords: [
-          { xS: 150, xE: 1114, y: 95, vector: -1, reloading: 3000 },
-          { xS: 1115, xE: 1664, y: 126, vector: -1, reloading: 3000 },
-          { xS: 1665, xE: 2304, y: 137, vector: -1, reloading: 3000 },
-          { xS: 2305, xE: 2650, y: 124, vector: -1, reloading: 3000 },
-        ]
+        {
+          name: 'enemyCreator',
+          type: 'thief',
+          coords: [
+            { xS: 150, xE: 1114, y: 95, vector: -1, reloading: 3000 },
+            { xS: 1115, xE: 1664, y: 126, vector: -1, reloading: 3000 },
+            { xS: 1665, xE: 2304, y: 137, vector: -1, reloading: 3000 },
+            { xS: 2305, xE: 2650, y: 124, vector: -1, reloading: 3000 },
+          ]
         }
       ],
     },
@@ -185,6 +171,7 @@ const map = {
             { x: 1126, y: 198, w: 1001, h: 1, collision: 'BOTTOM' },
             { x: 2182, y: 198, w: 345, h: 1, collision: 'BOTTOM' },
             { x: 2598, y: 198, w: 181, h: 1, collision: 'BOTTOM' },
+            { x: 3293, y: 166, w: 35, h: 1, collision: 'BOTTOM' },
 
             // конец ступенек
             { x: 526, y: 103, w: 2, h: 96, collision: 'VERTICAL' },
@@ -243,9 +230,6 @@ const map = {
         { name: 'bonusRock', x: 1072, y: 161, type: 'L' },
         { name: 'bonusRock', x: 1682, y: 161, type: 'B' },
 
-        { name: 'bonusFly', x: 220, y: 180, type: 'B' },
-        { name: 'bonusFly', x: 990, y: 180, type: 'S' },
-
         { name: 'sniper', x: 459, y: 100, type: 'STAY' },
         { name: 'sniper', x: 912, y: 149, type: 'STAY' },
         { name: 'sniper', x: 1736, y: 53, type: 'STAY' },
@@ -261,10 +245,54 @@ const map = {
         { name: 'turel', x: 2378, y: 197 },
         { name: 'turel', x: 2506, y: 148 },
 
+        { name: 'flame', x: 1073, y: 14, type: 'TOP', length: 11, delay: 100, reloading: 3000 },
+        { name: 'flame', x: 1201, y: 14, type: 'TOP', length: 8, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 1297, y: 14, type: 'TOP', length: 11, delay: 100, reloading: 2000 },
+
+        { name: 'flame', x: 1457, y: 167, type: 'RIGHT', length: 11, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 1457, y: 119, type: 'RIGHT', length: 4, delay: 800, reloading: 2000 },
+        { name: 'flame', x: 1457, y: 71, type: 'RIGHT', length: 4, delay: 1600, reloading: 2000 },
+
+        { name: 'flame', x: 1617, y: 135, type: 'RIGHT', length: 8, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 1617, y: 87, type: 'RIGHT', length: 4, delay: 900, reloading: 2000 },
+        { name: 'flame', x: 1681, y: 14, type: 'TOP', length: 11, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 1777, y: 183, type: 'RIGHT', length: 11, delay: 1600, reloading: 3000 },
+
+        { name: 'flame', x: 1873, y: 39, type: 'RIGHT', length: 8, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 1873, y: 87, type: 'RIGHT', length: 4, delay: 900, reloading: 2000 },
+
+        { name: 'flame', x: 2129, y: 14, type: 'TOP', length: 8, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 1933, y: 81, type: 'LEFT', length: 11, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 2095, y: 129, type: 'LEFT', length: 7, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 2189, y: 176, type: 'LEFT', length: 5, delay: 100, reloading: 2000 },
+
+        { name: 'flame', x: 2256, y: 14, type: 'TOP', length: 8, delay: 100, reloading: 2000 },
+
+        { name: 'flame', x: 2383, y: 81, type: 'LEFT', length: 11, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 2383, y: 176, type: 'LEFT', length: 11, delay: 100, reloading: 2000 },
+        { name: 'flame', x: 2510, y: 81, type: 'LEFT', length: 9, delay: 100, reloading: 2000 },
+
+        { name: 'flame', x: 2640, y: 14, type: 'TOP', length: 11, delay: 100, reloading: 2000 },
+
+        { name: 'boss6', x: 3265, y: 47 },
+
+        {
+          name: 'enemyCreator',
+          type: 'thief',
+          coords: [
+            { xS: 150, xE: 270, y: 20, vector: -1, reloading: 3000 },
+            { xS: 271, xE: 1020, y: 195, vector: -1, reloading: 3000 },
+            { xS: 1740, xE: 2340, y: 20, vector: 1, reloading: 3000 },
+
+            { xS: 221, xE: 540, y: 20, vector: 1, reloading: 3000 },
+            { xS: 541, xE: 1180, y: 195, vector: 1, reloading: 3000 },
+            { xS: 1930, xE: 2460, y: 195, vector: 1, reloading: 3000 },
+          ]
+        }
       ],
     },
     {
-      length: 2559, // 2559, //2559,
+      length: 2559,
       bg: [
         [0, 0, 0, 0, 0, 0, 'p22-n'],
         [0, 0, 0, 0, 0, 0, 'p22-n'],
@@ -514,6 +542,154 @@ const map = {
     k6: { x: 288, y: 0, w: 32, frames: 4, delay: 10 }
   },
   elementsInfo: {
+    flameH0: {
+      x: 496,
+      y: 236,
+      w: 10,
+      h: 8,
+      frames: 2,
+      delay: 20,
+    },
+    flameH1: {
+      x: 704,
+      y: 215,
+      w: 24,
+      h: 17,
+    },
+    flameH2: {
+      x: 688,
+      y: 249,
+      w: 40,
+      h: 17,
+    },
+    flameH3: {
+      x: 680,
+      y: 266,
+      w: 48,
+      h: 17,
+    },
+    flameH4: {
+      x: 672,
+      y: 283,
+      w: 56,
+      h: 17,
+    },
+    flameH5: {
+      x: 664,
+      y: 300,
+      w: 64,
+      h: 17,
+    },
+    flameH6: {
+      x: 656,
+      y: 283,
+      w: 72,
+      h: 17,
+    },
+    flameH7: {
+      x: 648,
+      y: 317,
+      w: 80,
+      h: 17,
+    },
+    flameH8: {
+      x: 640,
+      y: 334,
+      w: 88,
+      h: 17,
+    },
+    flameH9: {
+      x: 632,
+      y: 351,
+      w: 96,
+      h: 17,
+    },
+    flameH10: {
+      x: 624,
+      y: 368,
+      w: 104,
+      h: 17,
+    },
+    flameH11: {
+      x: 616,
+      y: 385,
+      w: 112,
+      h: 17,
+    },
+    flameV0: {
+      x: 494,
+      y: 225,
+      w: 17,
+      h: 8,
+      frames: 2,
+      delay: 20,
+    },
+    flameV1: {
+      x: 539,
+      y: 410,
+      w: 17,
+      h: 24,
+    },
+    flameV2: {
+      x: 556,
+      y: 410,
+      w: 17,
+      h: 40,
+    },
+    flameV3: {
+      x: 573,
+      y: 410,
+      w: 17,
+      h: 48,
+    },
+    flameV4: {
+      x: 591,
+      y: 410,
+      w: 17,
+      h: 56,
+    },
+    flameV5: {
+      x: 609,
+      y: 410,
+      w: 17,
+      h: 64,
+    },
+    flameV6: {
+      x: 627,
+      y: 410,
+      w: 17,
+      h: 72,
+    },
+    flameV7: {
+      x: 644,
+      y: 410,
+      w: 17,
+      h: 80,
+    },
+    flameV8: {
+      x: 661,
+      y: 410,
+      w: 17,
+      h: 88,
+    },
+    flameV9: {
+      x: 679,
+      y: 410,
+      w: 17,
+      h: 96,
+    },
+    flameV10: {
+      x: 696,
+      y: 410,
+      w: 17,
+      h: 104,
+    },
+    flameV11: {
+      x: 713,
+      y: 410,
+      w: 17,
+      h: 112,
+    },
     bigBoom: {
       x: 1,
       y: 1,
@@ -595,12 +771,12 @@ const map = {
       frames: 1,
     },
     signal: {
-      x: 217,
+      x: 185,
       y: 31,
       w: 17,
       h: 3,
-      frames: 4,
-      delay: 10,
+      frames: 6,
+      delay: 8,
     },
     shadow: {
       x: 388,
@@ -1032,7 +1208,7 @@ const map = {
     thiefRun: {
       x: 206,
       y: 205,
-      w: 19,
+      w: 18,
       h: 32,
       frames: 6,
       delay: 10,
@@ -1040,10 +1216,10 @@ const map = {
     thiefShot: {
       x: 341,
       y: 137,
-      w: 25,
+      w: 26,
       h: 32,
       frames: 2,
-      delay: 10,
+      delay: 20,
     },
     dip: {
       x: 225,
@@ -1061,8 +1237,6 @@ export default class Level {
   constructor(number) {
     this.levelNumber = number - 1;
     this.length = map.levels[number - 1].length;
-    //this.cameraX = 0;
-    //this.pausePress = false;
     this.bgArray = [];
     this.elementsArray = [];
     this.canMoveCamera = true;
@@ -1079,7 +1253,7 @@ export default class Level {
     this.playerBulletsArray = [];
 
     this.deathPlatform = new Platform(map.blockSize * 9, 2, -map.blockSize * 0.5, map.blockSize * 7 - 2, 'DEATH', false);
-    this.leftBorder = new Platform(2, map.blockSize * 8, -1, -map.blockSize * 0.5, 'VERTICAL', false); //LEFTBORDER
+    this.leftBorder = new Platform(2, map.blockSize * 8, -1, -map.blockSize * 0.5, 'VERTICAL', false);
     this.levelBorder = new Platform(map.blockSize * 12, map.blockSize * 11, -map.blockSize * 2, -map.blockSize * 2, 'LEVELBORDER', false);
 
     this.platformActual.push(this.deathPlatform);
@@ -1134,7 +1308,6 @@ export default class Level {
     createElement(map.levels[this.levelNumber].elements, 'ELEMENT');
 
     this.elementsActual.push(new Curtain(this.elementsActual));
-    //  this.startLevel(this);
   }
 
   moveCamera(dx) {
@@ -1169,10 +1342,10 @@ export default class Level {
       });
 
       // draw elements
-      [...level.bosses, ...level.elementsActual, ...level.enemyArray, ...level.bonuses]
-        .forEach((el) => {
-          el.tryAction(camPos);
-        });
+      [...level.elementsActual, ...level.bosses, ...level.enemyArray, ...level.bonuses]
+      .forEach((el) => {
+        el.tryAction(camPos);
+      });
 
       // draw bullets
       [...level.bulletsArray, ...level.playerBulletsArray].forEach((el) => {

@@ -44,7 +44,7 @@ export default class Background {
         this.paddons[i].x -= 16;
       }
 
-      const canFallDown = paddons[i].canFallDown ? false : true;
+      const canFallDown = paddons[i].cantFallDown ? false : true;
       level.platformActual.push(new Platform(w, 1, x, y, 'BOTTOM', canFallDown));
       if (needVertical) {
         level.platformActual.push(new Platform(w, 40, x, y + 1, 'VERTICAL', false));
@@ -57,7 +57,7 @@ export default class Background {
   tryAction() {
     this.sprite.draw();
     this.paddons.forEach(p => {
-      this.signal.x = p.x + 26;
+      this.signal.x = p.x + 25;
       this.signal.y = p.y + 11;
       this.signal.draw();
       if (p.length > 1) {

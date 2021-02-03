@@ -67,6 +67,12 @@ contra.res = {
   boss: newImage('./assets/sprites/boss/boss.png'),
 };
 
+contra.getAccuracy = () => {
+  return (contra.results.bulletsCount - contra.results.miss) / contra.results.bulletsCount * 100;
+}
+
+// метод сохранения хайскора
+
 contra.startGame = () => {
   if (pjs.touchControl.isTouchSupported()) {
     contra.joystick.displayJoystick(true);
@@ -75,7 +81,7 @@ contra.startGame = () => {
   const interval = setInterval(() => {
     if (contra.pjs.resources.isLoaded()) {
       clearInterval(interval);
-      Sound.playMusic(contra.selectedLevel.levelNumber + 1);
+      // Sound.playMusic(contra.selectedLevel.levelNumber + 1);
       pjs.camera.setPosition(pjs.vector.point(0, 0));
       if (contra.player) {
         const { player } = contra;
@@ -101,14 +107,10 @@ contra.addScore = (score) => {
     contra.results.hiScore = contra.results.score;
     contra.options.set('highScore', contra.results.hiScore);
   }
-  // if (score > 900) {
-  //   contra.results.killsBoss += 1;
-  // } else {
     contra.results.killed += 1;
-  // }
   contra.results.scoreForLife += score;
   if (contra.results.scoreForLife > 20000) {
-    contra.results.scoreForLife -= 20000;
+    contra.results.scoreForLife = 0;
     Sound.play('plusLife');
     contra.player.lifes += 1;
   }
@@ -161,6 +163,7 @@ function resizeInit() {
   if (document.querySelector('canvas') === null) {
     setTimeout(resizeInit, 50);
   } else {
+    window.onresize = resize;
     resize();
   }
 }

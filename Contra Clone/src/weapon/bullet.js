@@ -1,7 +1,6 @@
 /* eslint-disable */
 import SprObject from '../sprObject';
 import contra from '../index';
-import Sound from '../sound';
 
 export default class Bullet extends SprObject {
   constructor(x, y, dx, dy, level, bulletArray) {
@@ -20,6 +19,7 @@ export default class Bullet extends SprObject {
     if (this.needCheckCpllision) {
       this.sprite.move(contra.pjs.vector.point(this.dx, this.dy));
       if (!this.sprite.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox())) {
+        contra.results.miss += 1;
         this.tryRemove();
       }
     }
@@ -27,12 +27,13 @@ export default class Bullet extends SprObject {
   }
 
   getBox() {
-    return this.sprite; //.getStaticBox();
+    return this.sprite;
   }
 
   tryRemove() {
     this.needCheckCpllision = false;
     this.sprite = this.createSprite(this.level.elementsInfo.shootEnd, contra.res.elementS, this.sprite.x, this.sprite.y);
+    contra.results.bulletsCount += 1;
     setTimeout(() => {
       this.bulletArray.splice(this.bulletArray.indexOf(this), 1);
     }, 200);

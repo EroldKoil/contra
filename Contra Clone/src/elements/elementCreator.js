@@ -10,7 +10,9 @@ import Sniper from '../enemy/sniper';
 import ToothyMouth from '../enemy/toothyMouth';
 import SpiderCocoon from '../enemy/spiderCocoon';
 import Turel from '../enemy/turel';
+import Flame from '../enemy/flame';
 import Boss1 from '../boss/boss1';
+import Boss6 from '../boss/boss6';
 import Boss81 from '../boss/boss81';
 import Boss82 from '../boss/boss82';
 import Background from './background';
@@ -47,8 +49,14 @@ export default function elementCreator(el, level) {
     case 'turel':
       new Turel(el.x, el.y, level);
       break;
+    case 'flame':
+      new Flame(el.x, el.y, el.length, el.type, el.delay, el.reloading, level);
+      break;
     case 'boss1':
       new Boss1(el.x, el.y, level);
+      break;
+    case 'boss6':
+      new Boss6(el.x, el.y, level);
       break;
     case 'boss81':
       new Boss81(el.x, el.y, level);

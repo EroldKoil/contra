@@ -32,7 +32,6 @@ export default function gameComplite(callback) {
     if (videoContainer.video.paused) {
       contra.pjs.game.resume();
       startScreen(contra, 1, contra.startGame);
-      console.log('end video');
     } else {
       requestAnimationFrame(updateCanvas);
     }

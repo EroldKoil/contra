@@ -13,7 +13,7 @@ export default class EnemyCreator {
   }
 
   tryAction() {
-    if (this.canCreate) {
+    if (this.canCreate && this.level.enemyArray.length < 10) {
       const camPos = contra.pjs.camera.getPosition().x;
       for (let i = 0; i < this.coords.length; i++) {
         const creator = this.coords[i];
@@ -26,7 +26,7 @@ export default class EnemyCreator {
         } else if (camPos > creator.xS) {
           const randY = creator.y - (Math.random() * (creator.y - 50));
           const reloadRand = (Math.random() * 4000) + 500;
-          this.create(randY, creator.vector, reloadRand, camPos);
+          this.create(randY, creator.vector, this.reloading, camPos);
         }
       }
     }
@@ -41,7 +41,9 @@ export default class EnemyCreator {
     switch (this.type) {
       case 'thief':
         let x = vector > 0 ? camPos - 20 : camPos + 300;
-        new Thief(x, y, vector, this.level);
+        //let x = vector > 0 ? camPos + 20 : camPos + 200;
+
+        new Thief(x, y, vector, this.level, this);
         break;
       default:
         break;
