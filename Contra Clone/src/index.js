@@ -32,7 +32,6 @@ const contra = {
   startGame: null,
   lang: null,
   joystick: null,
-  lives: 3,
   hardLevel: 0,
   results: {
     score: 1234567890,

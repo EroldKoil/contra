@@ -16,7 +16,7 @@ export default function startScreen(contra, level, callback) {
   blinkingTextLayer.addText(11, 3, contra.results.score.toString());
   // Жизни
   textLayer.addText(2, 5, contra.lang.lives);
-  textLayer.addText(8, 5, contra.lives.toString());
+  textLayer.addText(8, 5, contra.player.lifes.toString());
   // Рекорд
   textLayer.addText(10, 8, contra.lang.hiScore);
   blinkingTextLayer.addText(15, 8, contra.options.get('highScore').toString());

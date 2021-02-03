@@ -2,8 +2,7 @@ import Person from './person';
 import Weapon from './weapon/weapon';
 import contra from './index';
 import Sound from './sound';
-import endScreen from './endScreen';
-
+import endScreen from './endscreen';
 
 const playerSprites = {
   stay: {
@@ -228,23 +227,23 @@ const playerSprites = {
   },
 };
 const gameOverSpr = [{
-    x: 234,
-    y: 31,
-    w: 46,
-    h: 18,
-  },
-  {
-    x: 175,
-    y: 31,
-    w: 46,
-    h: 10,
-  },
-  {
-    x: 291,
-    y: 31,
-    w: 71,
-    h: 10,
-  },
+  x: 234,
+  y: 31,
+  w: 46,
+  h: 18,
+},
+{
+  x: 175,
+  y: 31,
+  w: 46,
+  h: 10,
+},
+{
+  x: 291,
+  y: 31,
+  w: 71,
+  h: 10,
+},
 ];
 
 const xCenter = 80;
@@ -442,17 +441,17 @@ export default class Player extends Person {
       const collV = array.filter((platform) => platform.collision === 'VERTICAL');
       if (collV.length > 0) {
         const spr = this.selectedState.sprite;
-        dx = dx > 0 ?
-          (collV[0].sprite.x - (spr.x + spr.w) + 2) :
-          (collV[0].sprite.x + collV[0].width - spr.x - 4);
+        dx = dx > 0
+          ? (collV[0].sprite.x - (spr.x + spr.w) + 2)
+          : (collV[0].sprite.x + collV[0].width - spr.x - 4);
       }
     }
 
     if (dy < 0) {
       const spr = this.selectedState.sprite;
       const collisionWArray = contra.selectedLevel.platformActual.filter(
-        (platform) => platform.collision === 'ROOF' &&
-        platform.sprite.isStaticIntersect(spr.getStaticBoxW(0, dy, 0, 0)),
+        (platform) => platform.collision === 'ROOF'
+          && platform.sprite.isStaticIntersect(spr.getStaticBoxW(0, dy, 0, 0)),
       );
       if (collisionWArray.length > 0) {
         dy = collisionWArray[0].sprite.y - collisionWArray[0].sprite.h - spr.y + 1;
@@ -497,8 +496,8 @@ export default class Player extends Person {
     this.spritesMesh.draw();
     this.drawShadow();
 
-    if (dx > 0 && this.spritesMesh.x > camPos + 32 * 4 &&
-      camPos <= contra.selectedLevel.length && this.level.canMoveCamera) {
+    if (dx > 0 && this.spritesMesh.x > camPos + 32 * 4
+      && camPos <= contra.selectedLevel.length && this.level.canMoveCamera) {
       contra.selectedLevel.moveCamera(dx);
     }
   }
@@ -655,8 +654,8 @@ export default class Player extends Person {
           break;
       }
 
-      if (name !== 'jump' && name !== 'fall' &&
-        !name.includes('swim') && !name.includes('AndFire')) {
+      if (name !== 'jump' && name !== 'fall'
+        && !name.includes('swim') && !name.includes('AndFire')) {
         this.selectState(`${name}AndFire`);
       }
 
