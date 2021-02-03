@@ -6,13 +6,28 @@ import Sound from '../sound';
 
 const spritesInfo = {
   jawOpen: {
-    xS: 60, yS: 444, w: 114, h: 112, frames: 1, delay: 10,
+    xS: 60,
+    yS: 444,
+    w: 114,
+    h: 112,
+    frames: 1,
+    delay: 10,
   },
   jawClose: {
-    xS: 174, yS: 444, w: 112, h: 93, frames: 1, delay: 10,
+    xS: 174,
+    yS: 444,
+    w: 112,
+    h: 93,
+    frames: 1,
+    delay: 10,
   },
   wall: {
-    xS: 1, yS: 451, w: 48, h: 80, frames: 1, delay: 10,
+    xS: 1,
+    yS: 451,
+    w: 48,
+    h: 80,
+    frames: 1,
+    delay: 10,
   },
 };
 
@@ -72,7 +87,10 @@ export default class Boss81 {
     this.canShoot = true;
 
     const newRect = (xT, yT, w, h) => contra.pjs.game.newRectObject({
-      xT, yT, w, h,
+      x: xT,
+      y: yT,
+      w,
+      h,
     });
 
     this.sprites = {
@@ -176,11 +194,15 @@ export default class Boss81 {
   }
 
   checkColission(aims) {
+    console.log('chexk');
+    if (this.level.playerBulletsArray.length > 0) {
+      console.log(this.level.playerBulletsArray.length);
+    }
     this.level.playerBulletsArray.forEach((bullet) => {
       if (this.health > 0 && bullet.needCheckCpllision) {
         aims.forEach((aim) => {
-          if (((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox()))
-            || aim.isStaticIntersect(bullet.getBox()))) {
+          if (((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
+              aim.isStaticIntersect(bullet.getBox()))) {
             Sound.play('damage');
             this.health -= bullet.damage;
             bullet.tryRemove();

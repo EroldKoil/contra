@@ -3,61 +3,147 @@ import Platform from '../platform';
 import BulletL from '../weapon/bulletL';
 import Sound from '../sound';
 import Person from '../person';
+import startScreen from '../startscreen';
 
 const spritesInfo = {
   door1: {
-    xS: 136, yS: 234, w: 33, h: 122, frames: 1, delay: 10,
+    xS: 136,
+    yS: 234,
+    w: 33,
+    h: 122,
+    frames: 1,
+    delay: 10,
   },
   door2: {
-    xS: 171, yS: 234, w: 32, h: 158, frames: 1, delay: 10,
+    xS: 171,
+    yS: 234,
+    w: 32,
+    h: 158,
+    frames: 1,
+    delay: 10,
   },
   doorOpen: {
-    xS: 471, yS: 248, w: 10, h: 76, frames: 10, delay: 100,
+    xS: 471,
+    yS: 248,
+    w: 10,
+    h: 76,
+    frames: 10,
+    delay: 100,
   },
   doorOpened: {
-    xS: 561, yS: 248, w: 10, h: 76, frames: 1, delay: 10,
+    xS: 561,
+    yS: 248,
+    w: 10,
+    h: 76,
+    frames: 1,
+    delay: 10,
   },
   bullet: {
-    xS: 44, yS: 306, w: 20, h: 11, frames: 2, delay: 20,
+    xS: 44,
+    yS: 306,
+    w: 20,
+    h: 11,
+    frames: 2,
+    delay: 20,
   },
 };
 
 const bossInfo = {
   stay0: {
-    xS: 346, yS: 238, w: 54, h: 62, frames: 1, delay: 30,
+    xS: 346,
+    yS: 238,
+    w: 54,
+    h: 62,
+    frames: 1,
+    delay: 30,
   },
   run0: {
-    xS: 346, yS: 238, w: 54, h: 62, frames: 2, delay: 30,
+    xS: 346,
+    yS: 238,
+    w: 54,
+    h: 62,
+    frames: 2,
+    delay: 15,
   },
   jump0: {
-    xS: 279, yS: 242, w: 64, h: 58, frames: 1, delay: 30,
+    xS: 279,
+    yS: 242,
+    w: 64,
+    h: 58,
+    frames: 1,
+    delay: 30,
   },
   attack0: {
-    xS: 215, yS: 240, w: 60, h: 60, frames: 1, delay: 30,
+    xS: 215,
+    yS: 240,
+    w: 60,
+    h: 60,
+    frames: 1,
+    delay: 30,
   },
   stay1: {
-    xS: 346, yS: 302, w: 54, h: 62, frames: 1, delay: 30,
+    xS: 346,
+    yS: 302,
+    w: 54,
+    h: 62,
+    frames: 1,
+    delay: 30,
   },
   run1: {
-    xS: 346, yS: 302, w: 54, h: 62, frames: 2, delay: 30,
+    xS: 346,
+    yS: 302,
+    w: 54,
+    h: 62,
+    frames: 2,
+    delay: 15,
   },
   jump1: {
-    xS: 279, yS: 306, w: 64, h: 58, frames: 1, delay: 30,
+    xS: 279,
+    yS: 306,
+    w: 64,
+    h: 58,
+    frames: 1,
+    delay: 30,
   },
   attack1: {
-    xS: 215, yS: 368, w: 60, h: 60, frames: 1, delay: 30,
+    xS: 215,
+    yS: 304,
+    w: 60,
+    h: 60,
+    frames: 1,
+    delay: 30,
   },
   stay2: {
-    xS: 346, yS: 368, w: 54, h: 62, frames: 1, delay: 30,
+    xS: 346,
+    yS: 368,
+    w: 54,
+    h: 62,
+    frames: 1,
+    delay: 30,
   },
   run2: {
-    xS: 346, yS: 368, w: 54, h: 62, frames: 2, delay: 30,
+    xS: 346,
+    yS: 368,
+    w: 54,
+    h: 62,
+    frames: 2,
+    delay: 15,
   },
   jump2: {
-    xS: 279, yS: 372, w: 64, h: 58, frames: 1, delay: 30,
+    xS: 279,
+    yS: 372,
+    w: 64,
+    h: 58,
+    frames: 1,
+    delay: 30,
   },
   attack2: {
-    xS: 215, yS: 370, w: 60, h: 60, frames: 1, delay: 30,
+    xS: 215,
+    yS: 370,
+    w: 60,
+    h: 60,
+    frames: 1,
+    delay: 30,
   },
 };
 
@@ -75,19 +161,20 @@ function createSprite(image, xS, yS, w, h, frames = 1, delay = 100, xCoef = 0, y
 export default class Boss6 extends Person {
   constructor(x, y, level) {
     const image = contra.res.boss;
-    super(x - 34, y + 116, 50, bossInfo, Object.keys(bossInfo), image, level, 'bigBoom');
+    super(x - 34, y + 116, 10, bossInfo, Object.keys(bossInfo), image, level, 'bigBoom');
     this.x = x;
     this.y = y;
     this.level = level;
     this.score = 30000;
-    this.moveSpeed = 1.5;
+    this.moveSpeed = 1;
     this.fallSpeed = 2.5;
     this.stage = 0;
     this.isFlip = false;
     this.vectorMove = -1;
     this.start = false;
-    this.pose = 0; // 0- run, 1 - wall, return, jump, shoot
+    this.pose = 9; // 0- run, 1 - wall, return, jump, shoot
     this.vectorJump = 1;
+    this.isJump = true;
 
     const boom = Object.values(level.elementsInfo.bigBoom);
 
@@ -104,11 +191,14 @@ export default class Boss6 extends Person {
     }
 
     const newRect = (xT, yT, w, h) => contra.pjs.game.newRectObject({
-      x: xT, y: yT, w, h,
+      x: xT,
+      y: yT,
+      w,
+      h,
     });
 
     this.aims = [
-      newRect(this.spritesMesh.x - 7, this.spritesMesh.y - 50, 15, 50),
+      newRect(this.spritesMesh.x - 7, this.spritesMesh.y - 50, 20, 50),
       newRect(this.spritesMesh.x - 1, this.spritesMesh.y - 59, 10, 9),
     ];
 
@@ -138,13 +228,18 @@ export default class Boss6 extends Person {
     this.canShoot = true;
     this.selectState('stay');
 
-    this.bullet = {
-      vectorMove: 0,
-      sprite: createSprite(image, ...Object.values(spritesInfo.bullet), 0, 0),
-      moveSpeed: 3,
-      fallSpeed: 2,
-      isActive: false,
+    const createBullet = () => {
+      const bullet = {
+        vectorMove: 0,
+        sprite: createSprite(image, ...Object.values(spritesInfo.bullet), 0, 0),
+        moveSpeed: 2.5,
+        fallSpeed: 2,
+        isActive: false,
+      };
+      return bullet;
     };
+
+    this.bullets = [createBullet(), createBullet()];
 
     level.elementsArray.push(this);
   }
@@ -163,85 +258,119 @@ export default class Boss6 extends Person {
 
     this.door.colorRect[0].draw();
     this.door.sprites.door1.draw();
-    this.spritesMesh.draw();
-    this.drawShadow();
 
-    this.aims.forEach((el) => { el.drawStaticBox(); });
+    //this.aims.forEach((el) => { el.drawStaticBox(); });
 
-    if (this.bullet.isActive) {
-      const spr = this.bullet.sprite;
-      const dx = this.bullet.vectorMove * this.bullet.moveSpeed;
-      const dy = spr.y > 165 - spr.h ? 0 : this.bullet.fallSpeed;
-      spr.move(contra.pjs.vector.point(dx, dy));
-      spr.draw();
-      const { player } = contra;
-      if (spr.isStaticIntersect(player.getBox()) && player.assailable) {
-        player.die();
-      }
-      if (!spr.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox())) {
-        this.bullet.isActive = false;
-      }
-    }
-
-    if (this.health > 0 && this.start) {
-      this.checkColission(this.aims);
-      if (this.health < 1) {
-        this.die();
-      } else {
-        if (contra.player.assailable && this.aims[0].isStaticIntersect(contra.player.getBox())) {
-          contra.player.die();
+    this.bullets.forEach((bullet) => {
+      if (bullet.isActive) {
+        const spr = bullet.sprite;
+        const dx = bullet.vectorMove * bullet.moveSpeed;
+        const dy = spr.y > 165 - spr.h ? 0 : bullet.fallSpeed;
+        spr.move(contra.pjs.vector.point(dx, dy));
+        spr.draw();
+        const { player } = contra;
+        if (spr.isStaticIntersect(player.getBox()) && player.assailable) {
+          player.die();
         }
-        const spr = this.selectedState.sprite;
-        if (this.pose === 0) {
+        if (!spr.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox())) {
+          bullet.isActive = false;
+        }
+      }
+    });
+
+    if (this.start) {
+      if (this.health > 0) {
+        this.spritesMesh.draw();
+        this.drawShadow();
+        this.checkColission(this.aims);
+        if (this.health < 1) {
+          this.die();
+        } else {
+          if (contra.player.assailable && this.aims[0].isStaticIntersect(contra.player.getBox())) {
+            contra.player.die();
+          }
+          const spr = this.selectedState.sprite;
+          if (this.pose === 1) {
+            this.moveSpeed = 0;
+            this.selectState('stay');
+            const n = Math.random();
+
+            if (n < 0.5) { // jump and attack
+              this.pose = 2;
+            } else { // attack and attack
+              this.pose = 3;
+            }
+          }
+
+          if (this.pose === 2 || this.pose === 3) {
+            this.pose = 0;
+            if (this.pose === 2) {
+              this.shoot('stay');
+            } else {
+              this.jump();
+            }
+            setTimeout(() => {
+              this.shoot('run');
+              setTimeout(() => {
+                this.moveSpeed = 1;
+              }, 300);
+            }, 900);
+          }
+
           const isPlatformIntersect = this.door.doorPlatform.sprite
             .isStaticIntersect(spr.getStaticBoxD(0, 0, this.moveSpeed));
           const isLeftBorderIntersect = this.level.leftBorder.sprite
             .isStaticIntersect(spr.getStaticBoxA(-this.moveSpeed));
-          if ((this.vectorMove > 0 && isPlatformIntersect)
-            || (this.vectorMove < 0 && isLeftBorderIntersect)) {
-            // this.pose = 1;
+          if ((this.vectorMove > 0 && isPlatformIntersect) ||
+            (this.vectorMove < 0 && isLeftBorderIntersect)) {
+            this.pose = 1;
             this.vectorMove *= -1;
             this.flip(this.vectorMove === 1 ? 1 : 0, 0);
           } else {
             const dx = this.vectorMove * this.moveSpeed;
             let dy = this.fallSpeed * this.vectorJump;
-            const collisionSArray = contra.selectedLevel.platformActual.filter((platform) => platform.collision === 'BOTTOM'
-              && platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, 0, 0, this.fallSpeed)));
+            if (this.vectorJump > 0) {
+              const collisionSArray = contra.selectedLevel.platformActual.filter((platform) => platform.collision === 'BOTTOM' &&
+                platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, 0, 0, this.fallSpeed)));
 
-            if (collisionSArray.length > 0) {
-              dy = collisionSArray[0].sprite.y - (spr.y + spr.h);
+              if (collisionSArray.length > 0) {
+                dy = collisionSArray[0].sprite.y - (spr.y + spr.h);
+                this.vectorJump = 0;
+              }
             }
+
             this.spritesMesh.move(contra.pjs.vector.point(dx, dy));
             this.aims.forEach((aim) => {
               aim.move(contra.pjs.vector.point(dx, dy));
             });
           }
-
-          // let dx =
-        } else if (this.pose === 1) {
-
         }
+      } else {
+        this.boomsArray.forEach((boom) => {
+          boom.sprite.draw();
+        });
+        if (!this.aims) {
+          contra.player.calculateMoves([false, true, false, false, false, false]);
+          const endSprite = this.door.endPlatform.sprite;
+          const playerSpr = contra.player.selectedState.sprite;
+          if (endSprite.isStaticIntersect(playerSpr.getStaticBox())) {
+            startScreen(contra, 3, contra.startGame);
+          }
+        }
+        this.door.sprites.doorOpened.draw();
+        this.door.sprites.doorOpen.draw();
+        this.door.colorRect[1].draw();
+        this.door.sprites.door2.draw();
       }
-
-      if (!this.bullet.isActive) {
-        // this.shoot();
-      }
-    } else {
-      this.boomsArray.forEach((boom) => {
-        boom.sprite.draw();
-      });
     }
-    this.door.colorRect[1].draw();
-    this.door.sprites.door2.draw();
   }
 
   die() {
     contra.addScore(this.score);
     this.level.enemyArray.forEach((enemy) => {
-      if (enemy instanceof GoldenAlien) {
-        enemy.die();
-      }
+      enemy.die();
     });
+    Sound.stopMusic();
     Sound.play('boss2death');
     this.boomsArray.forEach((boom) => {
       setTimeout(() => {
@@ -251,22 +380,42 @@ export default class Boss6 extends Person {
         }, 400);
       }, boom.delay);
     });
-    this.level.platformActual.splice(this.level.platformActual.indexOf(this.wallPlatform), 1);
+    this.level.onKeyboard();
+    this.level.platformActual.splice(this.level.platformActual.indexOf(this.door.doorPlatform), 1);
     setTimeout(() => {
-      this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
+      Sound.play('afterBossDeath');
+      setTimeout(() => {
+        this.aims = null;
+      }, 1000);
+    }, 2500);
+
+    setTimeout(() => {
+      this.door.sprites.doorOpen.visible = false;
     }, 1000);
   }
 
-  shoot() {
+  jump() {
+    this.vectorJump = -1;
+    setTimeout(() => {
+      this.shoot('jump');
+    }, Math.random() * 300 + 150);
+    setTimeout(() => {
+      this.vectorJump = 1;
+    }, 500);
+  }
+
+  shoot(stay) {
     this.selectState('attack');
     setTimeout(() => {
-      this.selectState('stay');
-    }, 200);
-    this.bullet.isActive = true;
-    this.bullet.vectorMove = this.vectorMove;
+      this.selectState(stay);
+    }, 400);
+    const i = this.bullets[0].isActive ? 1 : 0;
+    const bullet = this.bullets[i];
+    bullet.isActive = true;
+    bullet.vectorMove = this.vectorMove;
     const spr = this.selectedState.sprite;
-    this.bullet.sprite.x = this.isFlip ? spr.x + spr.w : spr.x;
-    this.bullet.sprite.y = spr.y + 22;
+    bullet.sprite.x = this.isFlip ? spr.x + spr.w : spr.x;
+    bullet.sprite.y = spr.y + 22;
   }
 
   isTimeToShow(camPos) {
@@ -314,10 +463,9 @@ export default class Boss6 extends Person {
   }
 
   selectState(stateName, selectByTime) {
-    stateName += this.stage;
     if (!selectByTime || this.health > 0) {
       for (const key in this.states) {
-        if (key === stateName) {
+        if (key === stateName + this.stage) {
           this.states[key].sprite.visible = true;
           this.selectedState = this.states[key];
         } else {

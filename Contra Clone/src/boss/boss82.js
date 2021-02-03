@@ -99,7 +99,7 @@ export default class Boss82 {
         }, 400);
       }, boom.delay);
     });
-    Sound.play('boss2death');
+    Sound.play('boss3death');
     this.level.onKeyboard();
     setTimeout(() => {
       Sound.stopMusic();

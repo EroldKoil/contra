@@ -37,6 +37,5 @@ export default function startScreen(contra, level, callback) {
     }
     frameCounter += 1;
   });
-
   contra.pjs.game.setLoop('start_screen');
 }

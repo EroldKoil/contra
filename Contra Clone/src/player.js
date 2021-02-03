@@ -256,7 +256,7 @@ export default class Player extends Person {
       Object.keys(playerSprites), contra.res.playerS, level);
     this.positionX = 0;
     this.assailable = false; // Уязвим ли
-    this.weapon = new Weapon('D', this, 200, 3); // 200, 5
+    this.weapon = new Weapon('S', this, 200, 3); // 200, 5
     this.needCalc = true; // обновление координат и обработка кнопок;
     this.pose = 'AIR'; // air , platform , water, death
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
@@ -286,7 +286,7 @@ export default class Player extends Person {
 
   // buttons = [UP, Right, Bottom, Left,   Jump, Shot]
   calculateMoves(buttons) {
-    if (this.health < 1) {
+    if (contra.lives < 1) {
       // eslint-disable-next-line no-param-reassign
       buttons = [false, false, false, false, false, false];
       this.gameOverspr.draw();
@@ -486,9 +486,7 @@ export default class Player extends Person {
     /// //////
 
     this.positionX += dx;
-    if (Number.isNaN(this.positionX)) {
-      console.log(dx);
-    }
+
     dx = Math.floor(this.positionX - this.spritesMesh.x);
 
     this.spritesMesh.move(p(dx, dy));
@@ -659,6 +657,7 @@ export default class Player extends Person {
       }
 
       if (shootCoord) {
+        contra.results.stats.shots += 1;
         this.weapon.shoot((Math.PI / 180) * shotVector, shootCoord.x, shootCoord.y);
         if (this.pose !== 'AIR') {
           this.timeAfterShoot = 0;
@@ -668,6 +667,7 @@ export default class Player extends Person {
   }
 
   jump() {
+    contra.results.stats.jumps += 1;
     this.pose = 'AIR';
     this.vectorJumpY = -1;
     this.selectState('jump');
@@ -727,6 +727,8 @@ export default class Player extends Person {
     if (this.health < 1) {
       return;
     }
+    this.gameOverspr.x = contra.pjs.camera.getPosition().x + 20;
+    this.gameOverspr.y = 10;
     this.pose = 'AIR';
     this.vectorJumpY = -0.3; // Направление силы притяжения. 1 - вниз. -1 - вверх
     setTimeout(() => {
@@ -752,8 +754,7 @@ export default class Player extends Person {
         setTimeout(() => {
           endScreen(contra, this.level.levelNumber + 1);
         }, 2000);
-        this.gameOverspr.x = contra.pjs.camera.getPosition().x + 20;
-        this.gameOverspr.y = 10;
+
       }
     }, 500);
   }
