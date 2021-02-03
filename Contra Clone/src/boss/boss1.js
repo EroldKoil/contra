@@ -299,9 +299,9 @@ export default class Boss1 {
 
   checkColission(aim, sprite) {
     this.level.playerBulletsArray.forEach((bullet) => {
-      if (this.health > 0 && bullet.needCheckCpllision &&
-        ((bullet instanceof BulletL && sprite.isDynamicIntersect(bullet.getBox())) ||
-          sprite.isStaticIntersect(bullet.getBox()))) {
+      if (this.health > 0 && bullet.needCheckCpllision
+        && ((bullet instanceof BulletL && sprite.isDynamicIntersect(bullet.getBox()))
+          || sprite.isStaticIntersect(bullet.getBox()))) {
         // eslint-disable-next-line no-param-reassign
         aim.health -= bullet.damage;
         Sound.play('damage');

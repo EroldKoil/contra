@@ -174,9 +174,9 @@ export default class Flame {
   }
 
   getBox() {
-    return this.selectedState === this.noramlState ?
-      this.nullFrame :
-      this.selectedState.sprite;
+    return this.selectedState === this.noramlState
+      ? this.nullFrame
+      : this.selectedState.sprite;
   }
 
   tryRemove(die, camPos) {

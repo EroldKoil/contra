@@ -43,8 +43,7 @@ export default function endScreen(contra, level) {
     const value = contra.results.stats[name];
     switch (name) {
       case 'gameTime':
-        return value;
-        //return `${Math.floor(value / 60)}:${(value % 60).toString().padStart(2, '0')}`;
+        return `${Math.floor(value / 60)}:${(value % 60).toString().padStart(2, '0')}`;
       case 'accuracy':
         return `${value}%`;
       default:
@@ -102,8 +101,8 @@ export default function endScreen(contra, level) {
       res.stats.shots = 0;
       res.stats.jumps = 0;
       res.stats.accuracy = 0;
-      contra.player.pose = 'AIR';
-      contra.player.selectState('jump');
+      /* contra.player.pose = 'AIR';
+      contra.player.selectState('jump'); */
 
       if (menuState === 0) {
         // Continue
@@ -123,15 +122,15 @@ export default function endScreen(contra, level) {
       x = (x - canvas.offsetLeft) / ratio;
       y = (y - canvas.offsetTop) / ratio;
 
-      if (13 * 8 < x && x < (13 + contra.lang.startGame.length) * 8 &&
-        8 * 8 - 4 < y && y < 9 * 8 + 4) {
+      if (13 * 8 < x && x < (13 + contra.lang.startGame.length) * 8
+        && 8 * 8 - 4 < y && y < 9 * 8 + 4) {
         // Был тач к Continue
         Sound.stop('gameOver');
         // eslint-disable-next-line no-param-reassign
         contra.selectedLevel = new Level(level, contra);
         contra.startGame();
-      } else if (13 * 8 < x && x < (13 + contra.lang.language.length) * 8 &&
-        10 * 8 - 4 < y && y < 11 * 8 + 4) {
+      } else if (13 * 8 < x && x < (13 + contra.lang.language.length) * 8
+        && 10 * 8 - 4 < y && y < 11 * 8 + 4) {
         // Был тач к End
         Sound.stop('gameOver');
         setTimeout(mainMenu, 0, contra);

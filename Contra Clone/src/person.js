@@ -36,7 +36,7 @@ export default class Person {
     this.health = health;
   }
 
-  createSprite(image, xS, yS, w, h, frames = 1, delay = 100, xCoef = 0, yCoef = 0) {
+  static createSprite(image, xS, yS, w, h, frames = 1, delay = 100, xCoef = 0, yCoef = 0) {
     return contra.pjs.game.newAnimationObject({
       animation: image.getAnimation(xS, yS, w, h, frames),
       x: -(w / 2) + xCoef,
@@ -56,18 +56,18 @@ export default class Person {
 
   selectState(stateName, selectByTime) {
     if (!selectByTime || this.health > 0) {
-      for (const key in this.states) {
+      Object.keys(this.states).forEach((key) => {
         if (key === stateName) {
           this.states[key].sprite.visible = true;
           this.selectedState = this.states[key];
         } else {
           this.states[key].sprite.visible = false;
         }
-      }
+      });
     }
   }
 
-  getDegree(round, spr, dy = 0, dx = 0) {
+  static getDegree(round, spr, dy = 0, dx = 0) {
     const player = contra.player.selectedState.sprite;
     const plX = player.x + player.w / 2;
     const plY = player.y + (player.h / 2);
@@ -104,9 +104,9 @@ export default class Person {
   }
 
   flip(x, y) {
-    for (const key in this.states) {
+    Object.keys(this.states).forEach((key) => {
       this.states[key].sprite.setFlip(x, y);
-    }
+    });
   }
 
   tryRemove(die, camPos) {

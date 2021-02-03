@@ -197,8 +197,8 @@ export default class Boss81 {
     this.level.playerBulletsArray.forEach((bullet) => {
       if (this.health > 0 && bullet.needCheckCpllision) {
         aims.forEach((aim) => {
-          if (((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
-              aim.isStaticIntersect(bullet.getBox()))) {
+          if (((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox()))
+              || aim.isStaticIntersect(bullet.getBox()))) {
             Sound.play('damage');
             this.health -= bullet.damage;
             bullet.tryRemove();

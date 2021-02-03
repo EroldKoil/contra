@@ -76,9 +76,7 @@ contra.countAccuracy = () => {
 
 contra.countTime = () => {
   const diff = new Date().getTime() - contra.timeStart.getTime();
-  const min = Math.floor(diff / 1000 / 60);
-  const sec = Math.floor(diff / 1000 - min * 60);
-  contra.results.stats.gameTime = `${min}:${sec}`;
+  contra.results.stats.gameTime = Math.floor(diff / 1000);
 };
 // метод сохранения хайскора
 contra.startGame = () => {
