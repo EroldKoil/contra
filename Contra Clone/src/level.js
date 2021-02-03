@@ -171,6 +171,7 @@ const map = {
             { x: 1126, y: 198, w: 1001, h: 1, collision: 'BOTTOM' },
             { x: 2182, y: 198, w: 345, h: 1, collision: 'BOTTOM' },
             { x: 2598, y: 198, w: 181, h: 1, collision: 'BOTTOM' },
+            { x: 3293, y: 166, w: 35, h: 1, collision: 'BOTTOM' },
 
             // конец ступенек
             { x: 526, y: 103, w: 2, h: 96, collision: 'VERTICAL' },
@@ -1341,7 +1342,7 @@ export default class Level {
       });
 
       // draw elements
-      [...level.bosses, ...level.elementsActual, ...level.enemyArray, ...level.bonuses]
+      [...level.elementsActual, ...level.bosses, ...level.enemyArray, ...level.bonuses]
       .forEach((el) => {
         el.tryAction(camPos);
       });

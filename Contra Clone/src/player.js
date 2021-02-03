@@ -241,7 +241,7 @@ export default class Player extends Person {
   constructor(level) {
     super(xCenter, yBottom, health, playerSprites, Object.keys(playerSprites), contra.res.playerS, level);
     this.positionX = 0;
-    this.lifes = 20;
+    this.lifes = 2;
     this.assailable = false; // Уязвим ли
     this.weapon = new Weapon('D', this, 200, 3); //200, 5
     this.needCalc = true; // обновление координат и обработка кнопок;
@@ -249,11 +249,13 @@ export default class Player extends Person {
     this.vectorJumpY = 1; // Направление силы притяжения. 1 - вниз. -1 - вверх
     this.vectorJumpX = 0; // -1 left, 1 right
     this.moveSpeed = 1.3;
-    this.fallSpeed = 1.8;
+    this.fallSpeed = 2;
     this.timeAfterShoot = 0;
     this.timeForAnimationShot = 15;
     this.vectorMove = 1;
     this.canShoot = true;
+    this.isGodMode = false;
+    this.debag = true;
 
     this.selectState('jump');
 
@@ -403,8 +405,6 @@ export default class Player extends Person {
         break;
     }
 
-
-
     if (buttons[5] && this.selectedState.name !== 'dive' && this.selectedState.name !== 'dip') {
       this.shoot(buttons);
     }
@@ -444,10 +444,23 @@ export default class Player extends Person {
       dx = dx * 10;
     }
 
+    if (this.debag) {
+      if (contra.pjs.keyControl.isDown('BACKSPACE')) {
+        Sound.play('plusLife');
+        this.isGodMode = !this.isGodMode;
+        this.debag = false;
+        setTimeout(() => {
+          this.debag = true;
+        }, 700);
+      }
+    }
+
     if (contra.pjs.keyControl.isDown('C')) {
-      this.spritesMesh.x = contra.pjs.camera.getPosition().x + 100;
-      this.positionX = contra.pjs.camera.getPosition().x + 100;
-      this.spritesMesh.y = contra.pjs.camera.getPosition().y + 10;
+      let lastX = this.spritesMesh.x;
+      this.spritesMesh.x = this.level.length - 256;
+      this.level.moveCamera(this.spritesMesh.x - lastX)
+      this.spritesMesh.y = 40;
+      this.positionX = this.spritesMesh.x;
     }
 
     /////////
@@ -689,6 +702,9 @@ export default class Player extends Person {
   }
 
   die() {
+    if (this.health < 1) {
+      return;
+    }
     this.pose = 'AIR';
     this.vectorJumpY = -0.3; // Направление силы притяжения. 1 - вниз. -1 - вверх
     setTimeout(() => {
@@ -699,7 +715,9 @@ export default class Player extends Person {
     Sound.play('playerDeath');
     this.selectState('die', true);
     this.health = 0;
-    this.lifes -= 1;
+    if (!this.isGodMode) {
+      this.lifes -= 1;
+    }
     this.weapon.changeWeapon('D');
     //this.level.onKeyboard();
     setTimeout(() => {
