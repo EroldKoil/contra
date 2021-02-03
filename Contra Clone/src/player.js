@@ -226,7 +226,8 @@ const playerSprites = {
     yCoef: 0,
   },
 };
-const gameOverSpr = [{
+const gameOverSpr = [
+  {
     x: 234,
     y: 31,
     w: 46,
