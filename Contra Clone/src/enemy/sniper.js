@@ -73,7 +73,7 @@ export default class Sniper extends Person {
               this.hide(false);
             }
           } else {
-            let degReal = this.getDegree(15, spr, -11);
+            let degReal = Sniper.getDegree(15, spr, -11);
             let deg = degReal;
             if (deg % 45 !== 0) {
               if ((deg + 15) % 45 === 0) {
@@ -82,8 +82,19 @@ export default class Sniper extends Person {
                 deg -= 15;
               }
             }
-            deg = deg === 360 ? 0 : deg;
-            deg = deg === 90 ? 135 : (deg === 270 ? 225 : deg);
+            switch (deg) {
+              case 360:
+                deg = 0;
+                break;
+              case 90:
+                deg = 135;
+                break;
+              case 270:
+                deg = 225;
+                break;
+              default:
+                break;
+            }
 
             if (this.isFlip) {
               switch (deg) {

@@ -4,6 +4,17 @@ import Bonus from './bonus';
 import BulletL from '../weapon/bulletL';
 import Sound from '../sound';
 
+function createSprite(image, xS, yS, w, h, frames = 1, delay = 100, x, y) {
+  return contra.pjs.game.newAnimationObject({
+    animation: image.getAnimation(xS, yS, w, h, frames),
+    x,
+    y,
+    w,
+    h,
+    delay,
+  });
+}
+
 export default class BonusFly extends SprObject {
   constructor(x, y, type, level) {
     super(x, y, 0, 0);
@@ -13,7 +24,7 @@ export default class BonusFly extends SprObject {
     this.vectorX = 2;
     this.vectorY = 2;
     this.health = 1;
-    this.sprite = this.createSprite(contra.res.elementS,
+    this.sprite = createSprite(contra.res.elementS,
       ...Object.values(level.elementsInfo.flyBonus), 100, x, y);
   }
 
@@ -22,17 +33,6 @@ export default class BonusFly extends SprObject {
       this.level.enemyArray.push(this);
       this.level.elementsArray.splice(this.level.elementsArray.indexOf(this), 1);
     }
-  }
-
-  createSprite(image, xS, yS, w, h, frames = 1, delay = 100, x, y) {
-    return contra.pjs.game.newAnimationObject({
-      animation: image.getAnimation(xS, yS, w, h, frames),
-      x,
-      y,
-      w,
-      h,
-      delay,
-    });
   }
 
   checkColission(aim) {
@@ -82,7 +82,7 @@ export default class BonusFly extends SprObject {
     const spr = this.sprite;
     Sound.play('enemyDeath');
     contra.addScore(this.score);
-    this.sprite = this.createSprite(contra.res.elementS,
+    this.sprite = createSprite(contra.res.elementS,
       ...Object.values(this.level.elementsInfo.mediumBoom), spr.x, spr.y);
     this.level.bonuses.push(new Bonus(spr.x, spr.y, this.type, this.level));
     setTimeout(() => {

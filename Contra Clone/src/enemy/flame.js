@@ -156,7 +156,7 @@ export default class Flame {
 
   selectState(n) {
     let i = 0;
-    for (const key in this.states) {
+    Object.keys(this.states).forEach((key) => {
       if (i === n) {
         this.states[key].sprite.visible = true;
         this.selectedState = this.states[key];
@@ -164,19 +164,23 @@ export default class Flame {
         this.states[key].sprite.visible = false;
       }
       i += 1;
-    }
+    });
   }
 
   flip(x, y) {
-    for (const key in this.states) {
+    Object.keys(this.states).forEach((key) => {
       this.states[key].sprite.setFlip(x, y);
-    }
+    });
   }
 
   getBox() {
-    return this.selectedState === this.noramlState
-      ? this.nullFrame
-      : this.selectedState.sprite;
+    let resp;
+    if (this.selectedState === this.noramlState) {
+      resp = this.nullFrame;
+    } else {
+      resp = this.selectedState.sprite;
+    }
+    return resp;
   }
 
   tryRemove(die, camPos) {

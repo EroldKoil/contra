@@ -64,7 +64,7 @@ export default function elementCreator(el, level) {
       level.elementsArray.push(new Boss82(el.x, el.y, level));
       break;
     case 'background':
-      level.elementsArray.push(new Background(el.img, el.platforms, el.paddons, level));
+      level.elementsActual.push(new Background(el.img, el.platforms, el.paddons, level));
       break;
     default:
       break;

@@ -224,8 +224,6 @@ export default class Boss6 extends Person {
     };
 
     this.bullets = [createBullet(), createBullet()];
-
-    level.elementsArray.push(this);
   }
 
   tryAction(camPos) {
@@ -300,8 +298,8 @@ export default class Boss6 extends Person {
             .isStaticIntersect(spr.getStaticBoxD(0, 0, this.moveSpeed));
           const isLeftBorderIntersect = this.level.leftBorder.sprite
             .isStaticIntersect(spr.getStaticBoxA(-this.moveSpeed));
-          if ((this.vectorMove > 0 && isPlatformIntersect)
-            || (this.vectorMove < 0 && isLeftBorderIntersect)) {
+          if ((this.vectorMove > 0 && isPlatformIntersect) ||
+            (this.vectorMove < 0 && isLeftBorderIntersect)) {
             this.pose = 1;
             this.vectorMove *= -1;
             this.flip(this.vectorMove === 1 ? 1 : 0, 0);
@@ -309,8 +307,8 @@ export default class Boss6 extends Person {
             const dx = this.vectorMove * this.moveSpeed;
             let dy = this.fallSpeed * this.vectorJump;
             if (this.vectorJump > 0) {
-              const collisionSArray = contra.selectedLevel.platformActual.filter((platform) => platform.collision === 'BOTTOM'
-                && platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, 0, 0, this.fallSpeed)));
+              const collisionSArray = contra.selectedLevel.platformActual.filter((platform) => platform.collision === 'BOTTOM' &&
+                platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, 0, 0, this.fallSpeed)));
 
               if (collisionSArray.length > 0) {
                 dy = collisionSArray[0].sprite.y - (spr.y + spr.h);
@@ -459,14 +457,14 @@ export default class Boss6 extends Person {
 
   selectState(stateName, selectByTime) {
     if (!selectByTime || this.health > 0) {
-      for (const key in this.states) {
+      Object.keys(this.states).forEach((key) => {
         if (key === stateName + this.stage) {
           this.states[key].sprite.visible = true;
           this.selectedState = this.states[key];
         } else {
           this.states[key].sprite.visible = false;
         }
-      }
+      });
     }
   }
 }

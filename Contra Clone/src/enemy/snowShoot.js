@@ -7,10 +7,9 @@ export default class SnowShoot extends Person {
     this.touchDemage = true;
     this.selectState('snowShoot');
     this.score = 300;
-    this.vector = (Math.PI / 180) * this.getDegree(1, this.selectedState.sprite);
+    this.vector = (Math.PI / 180) * SnowShoot.getDegree(1, this.selectedState.sprite);
     this.dV = Math.PI;
     this.speed = 0.3;
-    this.level.enemyArray.push(this);
     this.count = 180;
     this.mode = 0;
   }
@@ -58,7 +57,7 @@ export default class SnowShoot extends Person {
       }
 
       if (this.health > 0) {
-        let deg = (pi / 180) * this.getDegree(45, this.selectedState.sprite, 4);
+        let deg = (pi / 180) * SnowShoot.getDegree(45, this.selectedState.sprite, 4);
 
         if (Math.abs(this.vector - deg) >= pi) {
           deg = deg > pi ? deg - pi : deg + pi;
@@ -89,9 +88,9 @@ export default class SnowShoot extends Person {
   }
 
   tryRemove(die) {
-    if (die
-      || (!this.selectedState.sprite.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox())
-        && this.health > 0)) {
+    if (die ||
+      (!this.selectedState.sprite.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox()) &&
+        this.health > 0)) {
       this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
     }
   }

@@ -84,6 +84,15 @@ function createSprite(image, xS, yS, w, h, frames = 1, delay = 100, xCoef = 0, y
   });
 }
 
+function gunDie(gun) {
+  gun.selectState('die');
+  Sound.play('enemyDeath');
+  setTimeout(() => {
+    // eslint-disable-next-line no-param-reassign
+    gun.needShow = false;
+  }, 400);
+}
+
 export default class Boss1 {
   constructor(x, y, level) {
     this.x = x;
@@ -96,8 +105,8 @@ export default class Boss1 {
     const { elementS } = contra.res;
     const mediumBoom = Object.values(level.elementsInfo.mediumBoom);
 
-    this.leftGun = this.createGun(x + 4, y + 72, 'gunLeft', image, elementS, mediumBoom);
-    this.rightGun = this.createGun(x + 25, y + 71, 'gunRight', image, elementS, mediumBoom);
+    this.leftGun = Boss1.createGun(x + 4, y + 72, 'gunLeft', image, elementS, mediumBoom);
+    this.rightGun = Boss1.createGun(x + 25, y + 71, 'gunRight', image, elementS, mediumBoom);
     this.sniper = new Sniper(this.x + 16, y + 30, 'STAYH', level, this);
     this.aim = createSprite(image, ...Object.values(spritesInfo.aim), x + 7, y + 103);
 
@@ -133,8 +142,6 @@ export default class Boss1 {
     for (let i = 0; i < 6; i += 1) {
       this.bulletsArray.push(new BossBullet(this.bulletsArray, this.bulletsActual, level));
     }
-
-    level.elementsArray.push(this);
   }
 
   static createGun(x, y, name, image, elementS, mediumBoom) {
@@ -177,9 +184,6 @@ export default class Boss1 {
     }
     this.sprites.second.draw();
 
-    /* this.platforms.forEach((p) => {
-       p.sprite.drawStaticBox();
-     }); */
     [this.leftGun, this.rightGun].forEach((gun) => {
       if (gun.needShow) {
         gun.selectedState.draw();
@@ -201,7 +205,7 @@ export default class Boss1 {
             }
           } else {
             contra.addScore(this.gunScore);
-            this.gunDie(gun);
+            gunDie(gun);
           }
         }
       }
@@ -231,7 +235,6 @@ export default class Boss1 {
       );
       contra.player.calculateMoves([false, true, false, false, needJump, false]);
       if (needJump) {
-        // gameComplite();
         setTimeout(startScreen, 2000, contra, 2, contra.startGame);
       }
     }
@@ -241,20 +244,11 @@ export default class Boss1 {
     });
   }
 
-  static gunDie(gun) {
-    gun.selectState('die');
-    Sound.play('enemyDeath');
-    setTimeout(() => {
-      // eslint-disable-next-line no-param-reassign
-      gun.needShow = false;
-    }, 400);
-  }
-
   die() {
     [this.leftGun, this.rightGun].forEach((gun) => {
       // eslint-disable-next-line no-param-reassign
       gun.health = 0;
-      this.gunDie(gun);
+      gunDie(gun);
     });
     if (this.sniper) {
       this.sniper.die();
@@ -299,9 +293,9 @@ export default class Boss1 {
 
   checkColission(aim, sprite) {
     this.level.playerBulletsArray.forEach((bullet) => {
-      if (this.health > 0 && bullet.needCheckCpllision
-        && ((bullet instanceof BulletL && sprite.isDynamicIntersect(bullet.getBox()))
-          || sprite.isStaticIntersect(bullet.getBox()))) {
+      if (this.health > 0 && bullet.needCheckCpllision &&
+        ((bullet instanceof BulletL && sprite.isDynamicIntersect(bullet.getBox())) ||
+          sprite.isStaticIntersect(bullet.getBox()))) {
         // eslint-disable-next-line no-param-reassign
         aim.health -= bullet.damage;
         Sound.play('damage');

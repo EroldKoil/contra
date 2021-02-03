@@ -43,7 +43,6 @@ export default class BossBullet {
     this.spritesArr[0].visible = true;
     this.spritesArr[1].visible = false;
     this.selectedState = 0;
-    // this.time = 0;
     this.vector = [-1, -2];
     this.vector[0] = Math.random() * -1.5 - 0.5;
 
@@ -63,8 +62,8 @@ export default class BossBullet {
     this.drawShadow();
     spr.draw();
     if (this.selectedState === 0) {
-      if (contra.player.assailable
-        && spr.isStaticIntersect(contra.player.selectedState.sprite.getStaticBox())) {
+      if (contra.player.assailable &&
+        spr.isStaticIntersect(contra.player.selectedState.sprite.getStaticBox())) {
         this.die();
         contra.player.die();
       } else if (spr.y + spr.h > 196) {
@@ -81,8 +80,8 @@ export default class BossBullet {
     sh.x = spr.x + 1;
     sh.w = spr.w - 2;
     const platforms = contra.selectedLevel.platformActual.filter(
-      (platform) => platform.collision === 'BOTTOM'
-      && platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, spr.h * 0.8, -2, 40)),
+      (platform) => platform.collision === 'BOTTOM' &&
+      platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, spr.h * 0.8, -2, 40)),
     );
     if (platforms.length > 0) {
       sh.y = platforms[0].sprite.y - 2;

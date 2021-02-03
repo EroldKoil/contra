@@ -30,7 +30,7 @@ export default class TankBottom extends Person {
       this.checkColission(this.selectedState.sprite);
 
       if (this.health > 0) {
-        let deg = this.getDegree(30, this.selectedState.sprite);
+        let deg = TankBottom.getDegree(30, this.selectedState.sprite);
         if (deg > 180) {
           deg = 180;
         } else if (deg < 120) {

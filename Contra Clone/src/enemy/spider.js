@@ -24,7 +24,6 @@ export default class Spider extends Person {
     this.fallSpeed = 1.8;
     this.selectState('lichinka');
 
-    level.enemyArray.push(this);
     setTimeout(() => {
       this.fallSpeed *= 0.33;
       setTimeout(() => {
@@ -74,8 +73,8 @@ export default class Spider extends Person {
             this.pose = 'PLATFORM';
             this.selectState('spider');
             this.moveSpeed = 1.2;
-            if (this.isFlipY === 0
-              && (spr.x + spr.w / 2) < (player.x + player.w / 2) && Math.random() < 0.1) {
+            if (this.isFlipY === 0 &&
+              (spr.x + spr.w / 2) < (player.x + player.w / 2) && Math.random() < 0.1) {
               this.flip(1, 0);
               this.vectorMove = 1;
             }

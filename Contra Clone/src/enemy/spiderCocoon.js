@@ -20,9 +20,11 @@ export default class SpiderCocoon extends Person {
     this.canShoot = true;
     const spr = this.selectedState.sprite;
     this.aim = contra.pjs.game.newRectObject({
-      x: spr.x + 4, y: spr.y + 2, w: spr.w - 8, h: spr.h - 2,
+      x: spr.x + 4,
+      y: spr.y + 2,
+      w: spr.w - 8,
+      h: spr.h - 2,
     });
-    level.elementsArray.push(this);
   }
 
   tryAction() {
@@ -35,7 +37,7 @@ export default class SpiderCocoon extends Person {
     } else if (this.health > 0 && state === 'kokon') {
       this.checkColission(this.aim);
       if (this.health > 0 && this.canShoot) {
-        new Spider(this.xCenter, this.yBottom, this.isFlip, this.level);
+        this.level.enemyArray.push(new Spider(this.xCenter, this.yBottom, this.isFlip, this.level));
         this.canShoot = false;
         setTimeout(() => {
           this.canShoot = true;

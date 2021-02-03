@@ -9,6 +9,16 @@ const keys = [
   'bonusROpen',
 ];
 
+function createSprite(image, xS, yS, w, h, frames = 1, delay = 100, xCoef = 0, yCoef = 0) {
+  return contra.pjs.game.newAnimationObject({
+    animation: image.getAnimation(xS, yS, w, h, frames),
+    x: -(w / 2) + xCoef,
+    y: -h + yCoef,
+    w,
+    h,
+    delay,
+  });
+}
 export default class BonusRock {
   constructor(xCenter, yBottom, type, level) {
     this.score = 500;
@@ -21,12 +31,12 @@ export default class BonusRock {
 
     const spritesArr = [];
     keys.forEach((key) => {
-      const sp = this.createSprite(contra.res.enemyS, ...Object.values(level.enemiesInfo[key]));
+      const sp = createSprite(contra.res.enemyS, ...Object.values(level.enemiesInfo[key]));
       this.states[key] = { name: key, sprite: sp };
       spritesArr.push(sp);
     });
 
-    const sp = this.createSprite(contra.res.elementS,
+    const sp = createSprite(contra.res.elementS,
       ...Object.values(level.elementsInfo.mediumBoom));
     this.states.death = { name: 'death', sprite: sp };
     spritesArr.push(sp);
@@ -47,17 +57,6 @@ export default class BonusRock {
     });
   }
 
-  createSprite(image, xS, yS, w, h, frames = 1, delay = 100, xCoef = 0, yCoef = 0) {
-    return contra.pjs.game.newAnimationObject({
-      animation: image.getAnimation(xS, yS, w, h, frames),
-      x: -(w / 2) + xCoef,
-      y: -h + yCoef,
-      w,
-      h,
-      delay,
-    });
-  }
-
   isTimeToShow(camPos) {
     if (camPos > this.xCenter - 300) {
       this.level.enemyArray.push(this);
@@ -67,21 +66,21 @@ export default class BonusRock {
 
   selectState(stateName, selectByTime) {
     if (!selectByTime || this.health > 0) {
-      for (const key in this.states) {
+      Object.keys(this.states).forEach((key) => {
         if (key === stateName) {
           this.states[key].sprite.visible = true;
           this.selectedState = this.states[key];
         } else {
           this.states[key].sprite.visible = false;
         }
-      }
+      });
     }
   }
 
   checkColission(aim) {
     this.level.playerBulletsArray.forEach((bullet) => {
-      if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox()))
-          || aim.isStaticIntersect(bullet.getBox()))) {
+      if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
+          aim.isStaticIntersect(bullet.getBox()))) {
         this.health -= bullet.damage;
         bullet.tryRemove();
         if (this.health < 1) {

@@ -84,6 +84,12 @@ export default class Sound {
     sounds[`level${currentLevel}start`].audio.removeEventListener('ended', this.continueMusic);
   }
 
+  // Установить громкость музыки текущего уровня
+  static setMusicVolume(volume) {
+    sounds[`level${currentLevel}start`].audio.volume = volume;
+    sounds[`level${currentLevel}repeat`].audio.volume = volume;
+  }
+
   // Служебный метод слушатель события окончания проигрывания музыки
   static continueMusic() {
     sounds[`level${currentLevel}start`].audio.removeEventListener('ended', this.continueMusic);

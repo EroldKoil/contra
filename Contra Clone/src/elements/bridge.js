@@ -13,7 +13,18 @@ export default class Bridge extends Element {
     this.blockCount = blockCount;
     this.started = false;
     for (let i = 0; i < blockCount; i += 1) {
-      const bridgeNumber = (i === 0) ? 1 : (i === blockCount - 1 ? 3 : 2);
+      let bridgeNumber = 1;
+      switch (i) {
+        case 0:
+          bridgeNumber = 1;
+          break;
+        case blockCount - 1:
+          bridgeNumber = 3;
+          break;
+        default:
+          bridgeNumber = 2;
+          break;
+      }
       this.sprites.push(this.createSprite(level.spritesInfo[`b${bridgeNumber}`], contra.res.levelS[0], this.x + 32 * i, this.y));
       const p = new Platform(this.width - 4, 1, x + 32 * i, y + 6, 'BOTTOM', true);
       this.platforms.push(p);
@@ -37,9 +48,7 @@ export default class Bridge extends Element {
     [...this.sprites, ...this.boomSprites].forEach((sp) => {
       try {
         sp.draw();
-      } catch (error) {
-        console.log('error');
-      }
+      } catch (error) {}
     });
   }
 
@@ -72,5 +81,4 @@ export default class Bridge extends Element {
     this.level.platformActual.splice(this.level.platformActual.indexOf(this.platforms[i]), 1);
     this.sprites.splice(0, 1);
   }
-  // eslint-disable-next-line eol-last
 }

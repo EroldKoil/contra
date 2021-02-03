@@ -46,7 +46,7 @@ export default class TankInRock extends Person {
       this.checkColission(this.aim);
 
       if (this.health > 0) {
-        let deg = this.getDegree(30, this.selectedState.sprite);
+        let deg = TankInRock.getDegree(30, this.selectedState.sprite);
         if (`tankR${deg}` !== this.selectedState.name) {
           this.selectState(`tankR${deg}`);
         }

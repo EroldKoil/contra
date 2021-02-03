@@ -8,20 +8,20 @@ export default class Person {
     this.level = level;
     this.xCenter = xCenter;
     this.yBottom = yBottom;
-    this.shadow = this.createSprite(contra.res.elementS,
+    this.shadow = Person.createSprite(contra.res.elementS,
       ...Object.values(level.elementsInfo.shadow));
 
     this.states = {};
     this.dontShoot = true; // flag to understand? am I shoot now
     const spritesArr = [];
     keys.forEach((key) => {
-      const sp = this.createSprite(image, ...Object.values(sprites[key]));
+      const sp = Person.createSprite(image, ...Object.values(sprites[key]));
       this.states[key] = { name: key, sprite: sp };
       spritesArr.push(sp);
     });
 
     if (!(this instanceof Player)) {
-      const sp = this.createSprite(contra.res.elementS,
+      const sp = Person.createSprite(contra.res.elementS,
         ...Object.values(level.elementsInfo[typeOfDeath]));
       this.states.death = { name: 'death', sprite: sp };
       spritesArr.push(sp);

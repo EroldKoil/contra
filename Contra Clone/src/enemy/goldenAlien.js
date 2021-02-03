@@ -9,7 +9,7 @@ export default class GoldAlien extends Person {
     this.selectState('goldAlien');
 
     this.vector = (Math.PI / 180) * (
-      this.getDegree(1, this.selectedState.sprite, 4) + 60 - (Math.random() * 120));
+      GoldAlien.getDegree(1, this.selectedState.sprite, 4) + 60 - (Math.random() * 120));
     this.dV = (Math.PI / 16) * (count + 1);
     this.speed = 0.7;
     this.isFlip = false;
@@ -39,7 +39,7 @@ export default class GoldAlien extends Person {
         this.count = 0;
 
         const pi = Math.PI;
-        let deg = (pi / 180) * this.getDegree(45, this.selectedState.sprite, 4);
+        let deg = (pi / 180) * GoldAlien.getDegree(45, this.selectedState.sprite, 4);
 
         if (Math.abs(this.vector - deg) >= pi) {
           deg = deg > pi ? deg - pi : deg + pi;
@@ -60,8 +60,6 @@ export default class GoldAlien extends Person {
         } else if (this.vector < 0) {
           this.vector = 2 * pi + this.vector;
         }
-
-        // this.vector = deg;
       }
       const dx = +(this.speed * Math.cos(this.vector)).toFixed(2);
       const dy = +(-this.speed * Math.sin(this.vector)).toFixed(2);
@@ -71,9 +69,9 @@ export default class GoldAlien extends Person {
   }
 
   tryRemove(die) {
-    if (die
-      || (!this.selectedState.sprite.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox())
-        && this.health > 0)) {
+    if (die ||
+      (!this.selectedState.sprite.isStaticIntersect(this.level.levelBorder.sprite.getStaticBox()) &&
+        this.health > 0)) {
       this.level.enemyArray.splice(this.level.enemyArray.indexOf(this), 1);
     }
   }

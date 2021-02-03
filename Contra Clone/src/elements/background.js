@@ -24,7 +24,11 @@ export default class Background {
 
     for (let i = 0; i < platforms.length; i += 1) {
       const {
-        x, y, w, h, collision,
+        x,
+        y,
+        w,
+        h,
+        collision,
       } = platforms[i];
       const canFallDown = !!platforms[i].canFallDown;
       level.platformActual.push(new Platform(w, h, x, y, collision, canFallDown));
@@ -34,7 +38,10 @@ export default class Background {
 
     for (let i = 0; i < paddons.length; i += 1) {
       const {
-        x, y, length, needVertical,
+        x,
+        y,
+        length,
+        needVertical,
       } = paddons[i];
 
       let w = 48;
@@ -52,8 +59,6 @@ export default class Background {
         level.platformActual.push(new Platform(w, 40, x, y + 1, 'VERTICAL', false));
       }
     }
-
-    level.elementsActual.push(this);
   }
 
   tryAction() {

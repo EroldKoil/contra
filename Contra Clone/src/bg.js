@@ -32,7 +32,7 @@ export default class Bg extends SprObject {
       case 'k3': // вертикальные левая половина + низ
         this.platforms = [
           new Platform(width / 2 - 2, 38, x, y - 5, 'VERTICAL', false),
-          new Platform(width / 2 - 2, 2, x, y + 6, 'BOTTOM', false),
+          new Platform(width / 2 - 2, 2, x, y + 6, 'BOTTOM', false)
         ];
         break;
       case 'p1':

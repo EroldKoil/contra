@@ -108,7 +108,6 @@ export default class Boss81 {
       newRect(x + 27, y + 81, 31, 29),
       newRect(x + 15, y + 81, 43, 14),
     ];
-    level.elementsArray.push(this);
   }
 
   tryAction() {
@@ -197,8 +196,8 @@ export default class Boss81 {
     this.level.playerBulletsArray.forEach((bullet) => {
       if (this.health > 0 && bullet.needCheckCpllision) {
         aims.forEach((aim) => {
-          if (((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox()))
-              || aim.isStaticIntersect(bullet.getBox()))) {
+          if (((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
+              aim.isStaticIntersect(bullet.getBox()))) {
             Sound.play('damage');
             this.health -= bullet.damage;
             bullet.tryRemove();

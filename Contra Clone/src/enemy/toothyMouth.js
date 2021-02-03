@@ -25,7 +25,7 @@ export default class ToothyMouth extends Person {
     if (this.health > 0) {
       this.checkColission(this.aim);
       if (this.health > 0 && this.canShoot) {
-        new SnowShoot(this.xCenter, this.yBottom, this.level);
+        this.level.enemyArray.push(new SnowShoot(this.xCenter, this.yBottom, this.level));
         this.canShoot = false;
         setTimeout(() => {
           this.canShoot = true;

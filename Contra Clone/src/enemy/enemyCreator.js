@@ -3,7 +3,7 @@ import contra from '../index';
 
 export default class EnemyCreator {
   constructor(type, coords, mode, level) {
-    this.type = type; // STAY, HALF, STAYH
+    this.type = type;
     this.coords = coords;
     this.level = level;
     this.canCreate = true;
@@ -38,7 +38,7 @@ export default class EnemyCreator {
     const x = vector > 0 ? camPos - 20 : camPos + 300;
     switch (this.type) {
       case 'thief':
-        this.level.enemyArray.push(new Thief(x, y, vector, this.level, this, this.mpde));
+        this.level.enemyArray.push(new Thief(x, y, vector, this.level, this.mode));
         break;
       default:
         break;
