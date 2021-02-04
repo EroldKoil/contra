@@ -134,8 +134,8 @@ export default class Boss82 {
   checkColission(aim) {
     this.level.playerBulletsArray.forEach((bullet) => {
       if (this.health > 0 && bullet.needCheckCpllision) {
-        if (((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
-            aim.isStaticIntersect(bullet.getBox()))) {
+        if (((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox()))
+            || aim.isStaticIntersect(bullet.getBox()))) {
           Sound.play('damage');
           this.health -= bullet.damage;
           bullet.tryRemove();

@@ -159,13 +159,13 @@ export default class Thief extends Person {
       if (dx !== 0) {
         let collV = [];
         if (dx > 0) {
-          collV = this.level.platformActual.filter((platform) => platform.collision === 'VERTICAL' &&
-            platform.sprite.isStaticIntersect(
+          collV = this.level.platformActual.filter((platform) => platform.collision === 'VERTICAL'
+            && platform.sprite.isStaticIntersect(
               this.selectedState.sprite.getStaticBoxD(14, 0, -16 + this.moveSpeed),
             ));
         } else {
-          collV = this.level.platformActual.filter((platform) => platform.collision === 'VERTICAL' &&
-            platform.sprite.isStaticIntersect(
+          collV = this.level.platformActual.filter((platform) => platform.collision === 'VERTICAL'
+            && platform.sprite.isStaticIntersect(
               this.selectedState.sprite.getStaticBoxA(4 - this.moveSpeed, 0, -12),
             ));
         }
@@ -259,8 +259,8 @@ export default class Thief extends Person {
   checkPosition() {
     const spr = this.selectedState.sprite;
     const platforms = this.level.platformActual.filter(
-      (platform) => platform.collision === 'BOTTOM' &&
-      platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, 0, -2, 200)),
+      (platform) => platform.collision === 'BOTTOM'
+      && platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, 0, -2, 200)),
     );
     if (platforms.length > 0) {
       let minY = platforms[0].sprite.y;

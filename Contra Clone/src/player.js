@@ -273,7 +273,8 @@ export default class Player extends Person {
 
     this.selectState('jump');
 
-    this.medal = Player.createSprite(contra.res.elementS, ...Object.values(level.elementsInfo.medal));
+    this.medal = Player.createSprite(contra.res.elementS,
+      ...Object.values(level.elementsInfo.medal));
     this.gameOverspr = Player.createSprite(contra.res.playerS,
       ...Object.values(gameOverSpr[contra.options.options.language]));
     this.medal.y = 2;
@@ -456,12 +457,6 @@ export default class Player extends Person {
       }
     }
 
-    // ////// Дебажные кнопки
-
-    if (contra.pjs.keyControl.isDown('SHIFT')) {
-      dx *= 10;
-    }
-
     if (this.debag) {
       if (contra.pjs.keyControl.isDown('BACKSPACE')) {
         Sound.play('plusLife');
@@ -472,16 +467,6 @@ export default class Player extends Person {
         }, 700);
       }
     }
-
-    if (contra.pjs.keyControl.isDown('C')) {
-      const lastX = this.spritesMesh.x;
-      this.spritesMesh.x = this.level.length - 256;
-      this.level.moveCamera(this.spritesMesh.x - lastX);
-      this.spritesMesh.y = 40;
-      this.positionX = this.spritesMesh.x;
-    }
-
-    // ///////
 
     this.positionX += dx;
 

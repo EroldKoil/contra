@@ -21,8 +21,9 @@ function changeLanguage(contra, textLayer, touchSupported) {
 }
 
 function startGame(contra) {
+  // eslint-disable-next-line no-param-reassign
   contra.timeStart = new Date();
-  setTimeout(startScreen, 0, contra, 1, contra.startGame);
+  setTimeout(startScreen, 0, contra, 2, contra.startGame);
 }
 
 export default function mainMenu(contra) {

@@ -13,6 +13,10 @@ export default function endScreen(contra, level) {
   contra.countAccuracy();
   contra.countTime();
 
+  if (contra.results.score > contra.options.get('highScore')) {
+    contra.options.set('highScore', contra.results.score);
+  }
+
   const selEagle = pjs.game.newImageObject({
     file: '../assets/main_menu/eagle_selector.png',
     x: 0,
@@ -63,6 +67,21 @@ export default function endScreen(contra, level) {
     textLayer.addCenteredText(17 + index * 2, `${statName}${padding}${statValue}`);
   });
 
+  function clearStatistics() {
+    // eslint-disable-next-line no-param-reassign
+    contra.lives = 3;
+    const res = contra.results;
+    res.bulletsCount = 0;
+    res.scoreForLife = 0;
+    res.score = 0;
+    res.miss = 0;
+    res.stats.gameTime = 0;
+    res.stats.killed = 0;
+    res.stats.shots = 0;
+    res.stats.jumps = 0;
+    res.stats.accuracy = 0;
+  }
+
   let menuState = 0;
   const keyUp = contra.options.get('keyUp');
   const keyDown = contra.options.get('keyDown');
@@ -90,22 +109,11 @@ export default function endScreen(contra, level) {
     // Обработка активации пунктов меню
     if (pjs.keyControl.isPress(keyFire)) {
       Sound.stop('gameOver');
-      contra.lives = 3;
-      const res = contra.results;
-      res.bulletsCount = 0;
-      res.scoreForLife = 0;
-      res.score = 0;
-      res.miss = 0;
-      res.stats.gameTime = 0;
-      res.stats.killed = 0;
-      res.stats.shots = 0;
-      res.stats.jumps = 0;
-      res.stats.accuracy = 0;
-      /* contra.player.pose = 'AIR';
-      contra.player.selectState('jump'); */
+      clearStatistics();
 
       if (menuState === 0) {
         // Continue
+        // eslint-disable-next-line no-param-reassign
         contra.timeStart = new Date();
         setTimeout(startScreen, 0, contra, level, contra.startGame);
       } else {
@@ -122,17 +130,19 @@ export default function endScreen(contra, level) {
       x = (x - canvas.offsetLeft) / ratio;
       y = (y - canvas.offsetTop) / ratio;
 
-      if (13 * 8 < x && x < (13 + contra.lang.startGame.length) * 8
-        && 8 * 8 - 4 < y && y < 9 * 8 + 4) {
+      if (13 * 8 < x && x < (13 + contra.lang.startGame.length) * 8 &&
+        8 * 8 - 4 < y && y < 9 * 8 + 4) {
         // Был тач к Continue
         Sound.stop('gameOver');
+        clearStatistics();
         // eslint-disable-next-line no-param-reassign
         contra.selectedLevel = new Level(level, contra);
         contra.startGame();
-      } else if (13 * 8 < x && x < (13 + contra.lang.language.length) * 8
-        && 10 * 8 - 4 < y && y < 11 * 8 + 4) {
+      } else if (13 * 8 < x && x < (13 + contra.lang.language.length) * 8 &&
+        10 * 8 - 4 < y && y < 11 * 8 + 4) {
         // Был тач к End
         Sound.stop('gameOver');
+        clearStatistics();
         setTimeout(mainMenu, 0, contra);
       }
     }

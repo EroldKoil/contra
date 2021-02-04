@@ -51,6 +51,7 @@ export default class Background {
 
       if (paddons[i].back) {
         this.paddons[i].x -= 16;
+        console.log(this.paddons[i]);
       }
 
       const canFallDown = !paddons[i].cantFallDown;

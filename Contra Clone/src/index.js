@@ -40,7 +40,6 @@ const contra = {
     bulletsCount: 0,
     score: 0,
     scoreForLife: 0,
-    hiScore: 20000,
     stats: {
       gameTime: 0,
       killed: 0,
@@ -109,10 +108,7 @@ contra.startGame = () => {
 
 contra.addScore = (score) => {
   contra.results.score += score;
-  if (contra.results.score > contra.results.hiScore) {
-    contra.results.hiScore = contra.results.score;
-    contra.options.set('highScore', contra.results.hiScore);
-  }
+
   contra.results.stats.killed += 1;
   contra.results.scoreForLife += score;
   if (contra.results.scoreForLife > 20000) {

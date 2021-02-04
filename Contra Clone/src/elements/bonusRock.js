@@ -79,8 +79,8 @@ export default class BonusRock {
 
   checkColission(aim) {
     this.level.playerBulletsArray.forEach((bullet) => {
-      if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
-          aim.isStaticIntersect(bullet.getBox()))) {
+      if (this.health > 0 && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox()))
+          || aim.isStaticIntersect(bullet.getBox()))) {
         this.health -= bullet.damage;
         bullet.tryRemove();
         if (this.health < 1) {

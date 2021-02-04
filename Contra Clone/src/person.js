@@ -89,9 +89,9 @@ export default class Person {
   // Проверка объекта на столкновение с пулей
   checkColission(aim) {
     this.level.playerBulletsArray.forEach((bullet) => {
-      if (this.health > 0 && bullet.needCheckCpllision &&
-        ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox())) ||
-          aim.isStaticIntersect(bullet.getBox()))) {
+      if (this.health > 0 && bullet.needCheckCpllision
+        && ((bullet instanceof BulletL && aim.isDynamicIntersect(bullet.getBox()))
+          || aim.isStaticIntersect(bullet.getBox()))) {
         this.health -= bullet.damage;
         bullet.tryRemove();
         if (this.health < 1) {
@@ -134,8 +134,8 @@ export default class Person {
     sh.x = spr.x + 1;
     sh.w = spr.w - 2;
     const platforms = this.level.platformActual.filter(
-      (platform) => platform.collision === 'BOTTOM' &&
-      platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, spr.h * 0.8, -2, 40)),
+      (platform) => platform.collision === 'BOTTOM'
+      && platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, spr.h * 0.8, -2, 40)),
     );
     if (platforms.length > 0) {
       let minY = platforms[0].sprite.y;
