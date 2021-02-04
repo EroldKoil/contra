@@ -234,7 +234,8 @@ export default class Boss1 {
         contra.player.selectedState.sprite.getStaticBoxD(4, 0, -7),
       );
       contra.player.calculateMoves([false, true, false, false, needJump, false]);
-      if (needJump) {
+      if (needJump && !this.isEnd) {
+        this.isEnd = true;
         setTimeout(startScreen, 2000, contra, 2, contra.startGame);
       }
     }
@@ -293,9 +294,9 @@ export default class Boss1 {
 
   checkColission(aim, sprite) {
     this.level.playerBulletsArray.forEach((bullet) => {
-      if (this.health > 0 && bullet.needCheckCpllision
-        && ((bullet instanceof BulletL && sprite.isDynamicIntersect(bullet.getBox()))
-          || sprite.isStaticIntersect(bullet.getBox()))) {
+      if (this.health > 0 && bullet.needCheckCpllision &&
+        ((bullet instanceof BulletL && sprite.isDynamicIntersect(bullet.getBox())) ||
+          sprite.isStaticIntersect(bullet.getBox()))) {
         // eslint-disable-next-line no-param-reassign
         aim.health -= bullet.damage;
         Sound.play('damage');

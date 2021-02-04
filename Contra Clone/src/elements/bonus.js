@@ -31,8 +31,8 @@ export default class Bonus extends SprObject {
     if (this.vectorY !== 0) {
       let dy = this.vectorY;
       if (this.vectorY > 0) {
-        const collisionSArray = this.level.platformActual.filter((platform) => (platform.collision === 'BOTTOM' || platform.collision === 'WATER')
-          && platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, 0, 0, this.vectorY)));
+        const collisionSArray = this.level.platformActual.filter((platform) => (platform.collision === 'BOTTOM' || platform.collision === 'WATER') &&
+          platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, 0, 0, this.vectorY)));
         if (collisionSArray.length > 0) {
           dy = collisionSArray[0].sprite.y - (spr.y + spr.h);
           this.vectorY = 0;
@@ -62,7 +62,7 @@ export default class Bonus extends SprObject {
 
   tryRemove(die, camPos) {
     if (die || camPos > this.xCenter + 20) {
-      this.level.bonuses.splice(this.level.elementsActual.indexOf(this), 1);
+      this.level.bonuses.splice(this.level.bonuses.indexOf(this), 1);
     }
   }
 
@@ -72,8 +72,8 @@ export default class Bonus extends SprObject {
     sh.x = spr.x + 1;
     sh.w = spr.w - 2;
     const platforms = this.level.platformActual.filter(
-      (platform) => platform.collision === 'BOTTOM'
-      && platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, spr.h * 0.8, -2, 40)),
+      (platform) => platform.collision === 'BOTTOM' &&
+      platform.sprite.isStaticIntersect(spr.getStaticBoxS(0, spr.h * 0.8, -2, 40)),
     );
     if (platforms.length > 0) {
       sh.y = platforms[0].sprite.y - 2;
